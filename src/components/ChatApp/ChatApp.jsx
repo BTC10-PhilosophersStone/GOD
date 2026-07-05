@@ -2,7 +2,7 @@ import { Link } from "react-router";
 import { ChatHeader } from "./ChatHeader";
 import { MessageList } from "./MessageList";
 import { Prompt } from "./Prompt";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAtom } from "jotai";
 import { messageListAtom } from "../atoms";
 
@@ -14,10 +14,6 @@ export function ChatApp() {
     setMessageList([defaultMessage]);
   }, []);
 
-  // useEffect(() => {
-  //   console.log("messageList変更後：", messageList);
-  //   setMessageList(messageList);
-  // }, [messageList]);
   return (
     <>
       <h1>チャット画面</h1>
@@ -25,7 +21,6 @@ export function ChatApp() {
       <Link to="/product">product詳細</Link> */}
       <ChatHeader />
       <MessageList messageList={messageList} />
-      {/* <MessageList /> */}
       <Prompt />
     </>
   );

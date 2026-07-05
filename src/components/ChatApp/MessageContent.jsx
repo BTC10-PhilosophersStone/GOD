@@ -1,5 +1,5 @@
 import { Card } from "@mui/material";
-export function MessageContent({ message }) {
+export function MessageContent({ content }) {
   return (
     <>
       <Card
@@ -12,7 +12,7 @@ export function MessageContent({ message }) {
           display: "flex",
         }}
       >
-        <p>メッセージ本文</p>
+        <p>{content}</p>
       </Card>
     </>
   );

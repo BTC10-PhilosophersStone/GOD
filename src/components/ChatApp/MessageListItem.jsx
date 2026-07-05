@@ -1,7 +1,7 @@
 import { Avatar } from "./Avatar";
 import { MessageContent } from "./MessageContent";
 
-export function MessageListItem() {
+export function MessageListItem({ message }) {
   return (
     <>
       <div
@@ -11,8 +11,17 @@ export function MessageListItem() {
           justifyContent: "center",
         }}
       >
-        <Avatar />
-        <MessageContent />
+        {message.post === "GOD" ? (
+          <>
+            <Avatar post={message.post} />
+            <MessageContent content={message.content} />
+          </>
+        ) : (
+          <>
+            <MessageContent content={message.content} />
+            <Avatar post={message.post} />
+          </>
+        )}
       </div>
     </>
   );

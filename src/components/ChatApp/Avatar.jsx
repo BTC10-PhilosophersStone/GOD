@@ -1,7 +1,11 @@
-export function Avatar() {
+export function Avatar({ post }) {
   return (
     <>
-      <p style={{ backgroundColor: "gray" }}>アバター</p>
+      {post === "GOD" ? (
+        <p style={{ backgroundColor: "gold" }}>GODアイコン</p>
+      ) : (
+        <p style={{ backgroundColor: "grey" }}>userアイコン</p>
+      )}
     </>
   );
 }
