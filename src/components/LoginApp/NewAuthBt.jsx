@@ -6,7 +6,6 @@ import GroupAddIcon from "@mui/icons-material/GroupAdd";
 
 export function NewAuthBt() {
   const setNewForm = useSetAtom(atomNewForm);
-
   return (
     <Button
       id="left_button"
