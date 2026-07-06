@@ -1,15 +1,18 @@
 import { Card } from "@mui/material";
-export function MessageContent({ content }) {
+export function MessageContent({ post, content }) {
+  const isGod = post === "GOD";
   return (
     <>
       <Card
         sx={{
           maxWidth: 500,
           textAlign: "center",
-          backgroundColor: "whitesmoke",
+          backgroundColor: isGod ? "gold" : "whitesmoke",
           marginBottom: 4,
           overlay: "auto",
           display: "flex",
+          borderRadius: 4,
+          padding: "8px 16px",
         }}
       >
         <p>{content}</p>

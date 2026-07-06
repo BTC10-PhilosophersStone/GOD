@@ -14,11 +14,11 @@ export function MessageListItem({ message }) {
         {message.post === "GOD" ? (
           <>
             <Avatar post={message.post} />
-            <MessageContent content={message.content} />
+            <MessageContent post={message.post} content={message.content} />
           </>
         ) : (
           <>
-            <MessageContent content={message.content} />
+            <MessageContent post={message.post} content={message.content} />
             <Avatar post={message.post} />
           </>
         )}
