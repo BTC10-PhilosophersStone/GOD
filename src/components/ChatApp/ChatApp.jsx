@@ -18,16 +18,16 @@ export function ChatApp() {
     stakeholders: ["部署A", "部署B", "部署C"],
   };
   useEffect(() => {
-    async () => {
-      // const res = await fetch(`/api/message/${}`);
-      const data = res.json();
-      const defaultMessage = {
-        id: 1,
-        post: "GOD",
-        content: "テストメッセージ1",
-      };
-      setMessageList([defaultMessage]);
+    // async () => {
+    // const res = await fetch(`/api/message/${}`);
+    // const data = res.json();
+    // };
+    const defaultMessage = {
+      id: 1,
+      post: "GOD",
+      content: "テストメッセージ1",
     };
+    setMessageList([defaultMessage]);
   }, []);
 
   return (
