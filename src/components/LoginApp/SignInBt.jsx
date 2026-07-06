@@ -53,7 +53,7 @@ export function SignInBt() {
       endIcon={<SendIcon />}
       onClick={signIn}
     >
-      認証
+      認証（チャット画面へ）
     </Button>
   );
 }
