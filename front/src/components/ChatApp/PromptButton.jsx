@@ -1,6 +1,7 @@
 import { useAtom } from "jotai";
 import { messageListAtom, promptAtom } from "../atoms";
 import { useEffect } from "react";
+import { postMessage } from "./api/ChatAppApi";
 
 export function PromptButton() {
   const [prompt, setPrompt] = useAtom(promptAtom);
@@ -17,22 +18,28 @@ export function PromptButton() {
       return [...prev, messageItemFromUser];
     });
   };
-  const addMessageFromGod = async () => {
+  const addMessageFromGod = async (content) => {
     const messageFromGod = await "message from GOD"; //ここでAPIで得た回答に差し替える
-    setMessageList((prev) => {
-      const maxId = prev[prev.length - 1].id;
-      const messageItemFromGod = {
-        id: maxId + 1,
-        role: "GOD",
-        content: messageFromGod,
-      };
-      return [...prev, messageItemFromGod];
-    });
+    try {
+      const data = await postMessage(content);
+      setMessageList((prev) => {
+        const maxId = prev[prev.length - 1].id;
+        const messageItemFromGod = {
+          id: maxId + 1,
+          role: "GOD",
+          content: data,
+        };
+        return [...prev, messageItemFromGod];
+      });
+    } catch (error) {
+      console.log("回答の取得失敗", error);
+    }
   };
+
   const handleClick = () => {
     addMessageFromUser();
+    addMessageFromGod(prompt);
     setPrompt("");
-    addMessageFromGod();
   };
 
   useEffect(() => {
