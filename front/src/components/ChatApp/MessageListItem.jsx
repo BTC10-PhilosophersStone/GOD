@@ -11,15 +11,15 @@ export function MessageListItem({ message }) {
           justifyContent: "center",
         }}
       >
-        {message.post === "GOD" ? (
+        {message.role === "GOD" ? (
           <>
-            <Avatar post={message.post} />
-            <MessageContent post={message.post} content={message.content} />
+            <Avatar role={message.role} />
+            <MessageContent role={message.role} content={message.content} />
           </>
         ) : (
           <>
-            <MessageContent post={message.post} content={message.content} />
-            <Avatar post={message.post} />
+            <MessageContent role={message.role} content={message.content} />
+            <Avatar role={message.role} />
           </>
         )}
       </div>

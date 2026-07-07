@@ -9,13 +9,22 @@ import { ProductDialog } from "./ProductDialog";
 export function ChatApp() {
   const [messageList, setMessageList] = useAtom(messageListAtom);
   const [isOpen, setIsOpen] = useState(false);
-  const product = {
-    product: "GODの入力内容",
-    abstract: "GODの入力内容",
-    members: ["Aさん", "Bさん", "Cさん"],
-    request: "GODの入力内容",
-    stakeholders: ["部署A", "部署B", "部署C"],
-  };
+
+  const sessionMessagesKey = "messages";
+  // メッセージ配列をステートにする、初期値としてデフォルトメッセージを格納、もしくはチャット履歴を取得する
+  const [value, setValue] = useState(() => {
+    const defaultMessage = {
+      id: 1,
+      role: "GOD",
+      content: "テストメッセージ1",
+    };
+    const sessionMessages = sessionStorage.getItem(sessionMessagesKey);
+    const res = sessionMessages
+      ? JSON.parse(sessionMessages)
+      : [defaultMessage];
+    return res;
+  });
+
   useEffect(() => {
     // async () => {
     // const res = await fetch(`/api/message/${}`);
@@ -23,10 +32,11 @@ export function ChatApp() {
     // };
     const defaultMessage = {
       id: 1,
-      post: "GOD",
+      role: "GOD",
       content: "テストメッセージ1",
     };
-    setMessageList([defaultMessage]);
+    const useSessonStorage = false;
+    setMessageList(value);
   }, []);
 
   return (
@@ -34,7 +44,6 @@ export function ChatApp() {
       <h1>チャット画面</h1>
       {/* <Link to="/">ログイン画面に戻る</Link>
       <Link to="/product">product詳細</Link> */}
-      <ChatHeader />
       <MessageList messageList={messageList} />
       <Prompt />
 

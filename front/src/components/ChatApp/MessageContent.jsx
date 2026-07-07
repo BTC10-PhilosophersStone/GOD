@@ -1,6 +1,6 @@
 import { Card } from "@mui/material";
-export function MessageContent({ post, content }) {
-  const isGod = post === "GOD";
+export function MessageContent({ role, content }) {
+  const isGod = role === "GOD";
   return (
     <>
       <Card
