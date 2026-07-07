@@ -1,5 +1,6 @@
 import { useAtom } from "jotai";
 import { messageListAtom, promptAtom } from "../atoms";
+import { useEffect } from "react";
 
 export function PromptButton() {
   const [prompt, setPrompt] = useAtom(promptAtom);
@@ -10,7 +11,7 @@ export function PromptButton() {
       const maxId = prev[prev.length - 1].id;
       const messageItemFromUser = {
         id: maxId + 1,
-        post: "user",
+        role: "user",
         content: prompt,
       };
       return [...prev, messageItemFromUser];
@@ -22,7 +23,7 @@ export function PromptButton() {
       const maxId = prev[prev.length - 1].id;
       const messageItemFromGod = {
         id: maxId + 1,
-        post: "GOD",
+        role: "GOD",
         content: messageFromGod,
       };
       return [...prev, messageItemFromGod];
@@ -33,6 +34,13 @@ export function PromptButton() {
     setPrompt("");
     addMessageFromGod();
   };
+
+  useEffect(() => {
+    const sessionMessagesKey = "messages";
+    const messageListStr = JSON.stringify([...messageList]);
+    sessionStorage.setItem(sessionMessagesKey, messageListStr);
+  }, [messageList]);
+
   return (
     <>
       <button onClick={handleClick} disabled={!prompt}>

@@ -1,7 +1,7 @@
-export function Avatar({ post }) {
+export function Avatar({ role }) {
   return (
     <>
-      {post === "GOD" ? (
+      {role === "GOD" ? (
         <img src="/icon_god.png" alt="GODアイコン" width={150} height={150} />
       ) : (
         <img
