@@ -1,5 +1,4 @@
 import { Link } from "react-router";
-import { ChatHeader } from "./ChatHeader";
 import { MessageList } from "./MessageList";
 import { Prompt } from "./Prompt";
 import { useEffect, useState } from "react";
