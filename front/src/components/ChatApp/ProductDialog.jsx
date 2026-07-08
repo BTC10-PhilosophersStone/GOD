@@ -5,9 +5,7 @@ export function ProductDialog({ isDialogOpen }) {
   const [isOpen, setIsOpen] = useState(isDialogOpen);
   const sessionjsonKey = "json";
   const rawData = sessionStorage.getItem(sessionjsonKey);
-
   const parse = JSON.parse(rawData);
-
   const req = {
     product: {
       issuesWho: parse.issues.Who,
@@ -40,15 +38,19 @@ export function ProductDialog({ isDialogOpen }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(req.product),
     });
-    const dat = await vector.json();
-    console.log(dat);
+    const data = await vector.json();
+    console.log(data);
+
+    // プロダクト登録をチャットに反映する
+
+    // 総合関連度の上位5件のプロダクトを表示する
   };
 
   console.log(req);
   return (
     <>
       <Dialog open={isOpen} onClose={handleClose}>
-        <DialogTitle>神の啓示</DialogTitle>
+        <DialogTitle>議事録を元に作成したプロダクト案</DialogTitle>
         <p>ユーザーが手動入力可</p>
         <div
           style={{
@@ -89,9 +91,8 @@ export function ProductDialog({ isDialogOpen }) {
             justifyContent: "center",
           }}
         >
-          <button>削除</button>
-          <button>一時保存</button>
-          <button onClick={handleRegister}>崇拝する</button>
+          <button>キャンセル</button>
+          <button onClick={handleRegister}>このプロダクトを登録する</button>
         </div>
       </Dialog>
     </>

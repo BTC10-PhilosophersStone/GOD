@@ -42,7 +42,7 @@ export function InputPass() {
         <InputLabel
           htmlFor={`${filledPasswordId}-input`}
           onChange={(e) => {
-            console.log(e.target.value);
+            // console.log(e.target.value);
             setPass(e.target.value);
           }}
         >
@@ -52,7 +52,7 @@ export function InputPass() {
           id={`${filledPasswordId}-input`}
           type={showPassword ? "text" : "password"}
           onChange={(e) => {
-            console.log(e.target.value);
+            // console.log(e.target.value);
             setPass(e.target.value);
           }}
           endAdornment={
