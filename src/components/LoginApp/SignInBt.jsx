@@ -1,9 +1,9 @@
+import "./LoginApp.css";
 import { useAtomValue } from "jotai";
 import { atomEmail, atomPass } from "./atoms";
 import { useNavigate } from "react-router";
 import SendIcon from "@mui/icons-material/Send";
 import { Button } from "@mui/material";
-import "./LoginApp.css";
 
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebaseConfig";
@@ -50,10 +50,10 @@ export function SignInBt() {
     <Button
       id="right_button"
       variant="contained"
-      endIcon={<SendIcon />}
+      // endIcon={<SendIcon />}
       onClick={signIn}
     >
-      認証（チャット画面へ）
+      ようこそ
     </Button>
   );
 }
