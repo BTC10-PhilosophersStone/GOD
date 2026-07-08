@@ -1,4 +1,4 @@
-const baseUrl = `${baseUrl}`;
+const baseUrl = "http://localhost:8080";
 
 const apiFetch = async (path, options = {}) => {
   const res = await fetch(`${baseUrl}${path}`, {
