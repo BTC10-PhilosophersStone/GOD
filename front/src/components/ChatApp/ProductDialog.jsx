@@ -34,7 +34,14 @@ export function ProductDialog({ isDialogOpen }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(req),
     });
-    console.log(res);
+
+    const vector = await fetch("/product", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(req.product),
+    });
+    const dat = await vector.json();
+    console.log(dat);
   };
 
   console.log(req);
