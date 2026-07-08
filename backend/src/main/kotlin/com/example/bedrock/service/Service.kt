@@ -3,7 +3,6 @@ package com.example.bedrock.service
 import com.example.bedrock.controller.ReqData
 import com.example.bedrock.repository.ClassificationRepository
 import com.example.bedrock.repository.DepartmentRepository
-import com.example.bedrock.repository.Product
 import com.example.bedrock.repository.ProductRepository
 import kotlin.math.floor
 import kotlin.math.pow
@@ -61,7 +60,7 @@ class Service(
     }
   }
 
-  override fun getSimilarityList(reqData: Product): List<MutableMap<String?, Double>> {
+  override fun getSimilarityList(): List<MutableMap<String?, Double>> {
     val dataList = productRepository.findAll()
 
     // ベクトルデータのリスト取得
