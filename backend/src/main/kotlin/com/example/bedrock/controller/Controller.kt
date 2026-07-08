@@ -140,7 +140,7 @@ class Controller(
   }
 
   @GetMapping("/product")
-  fun product(): List<MutableMap<String?, Double>> {
+  fun product(): List<Map<String, MutableMap<String?, Double>>> {
 
     return handler.getSimilarityList()
   }

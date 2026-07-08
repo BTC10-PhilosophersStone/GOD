@@ -14,36 +14,30 @@ create table product (
                          issues_when VARCHAR(250),
                          issues_where VARCHAR(250),
                          issues_why VARCHAR(250),
-                         issues_embedding vector(1536),
+                         issues_how VARCHAR(250),
+                         issues_what_why TEXT,
+                         issues_vector vector(1536),
+                         issues_content TEXT,
                          provided_who VARCHAR(250),
                          provided_why VARCHAR(250),
                          provided_outcome VARCHAR(250),
-                         provided_embedding vector(1536)
-);
-
-create table product_department (
-                                    id serial primary key,
-                                    product_id int,
-                                    department VARCHAR(250),
-                                    office VARCHAR(250)
-);
-
-create  table  product_business (
-                                    id serial primary key,
-                                    product_id int,
-                                    main_category VARCHAR(250),
-                                    sub_category VARCHAR(250),
-                                    minor_category VARCHAR(250)
+                         provided_vector vector(1536),
+                         department_combine VARCHAR(250),
+                         department_vector vector(1536),
+                         classification_combine VARCHAR(250),
+                         classification_vector vector(1536)
 );
 
 create table department (
                             id serial primary key,
-                            department VARCHAR(250),
-                            office VARCHAR(250)
+                            product_id int,
+                            department_name VARCHAR(250),
+                            office_name VARCHAR(250)
 );
 
 create table  classification (
                                  id serial primary key,
+                                 product_id int,
                                  main_category VARCHAR(250),
                                  sub_category VARCHAR(250),
                                  minor_category VARCHAR(250)
