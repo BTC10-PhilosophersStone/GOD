@@ -7,6 +7,32 @@ export function PromptButton() {
   const [prompt, setPrompt] = useAtom(promptAtom);
   const [messageList, setMessageList] = useAtom(messageListAtom);
 
+  const dataLabels = {
+    "issues.Who": "誰が困っているか",
+    "issues.What": "何に困っているか",
+    "issues.When": "いつ",
+    "issues.Where": "どこで",
+    "issues.Why": "なぜ",
+    "issues.How": "どのように",
+    "issues.What_Why": "何を・なぜ",
+    "issues.Content": "内容",
+    "provided.Who": "誰に提供するか",
+    "provided.What": "何を提供するか",
+    "provided.Outcome": "期待される成果",
+  };
+
+  const makeShortageQuestion = (shortageList) => {
+    const lines = shortageList.map((key) => `・${dataLabels[key] ?? key}`);
+    return `以下の項目が議事録から読み取れませんでした。追加で教えてください。\n${lines.join("\n")}`;
+  };
+
+  const addMessageItem = (role, content) => {
+    setMessageList((prev) => {
+      const maxId = prev[prev.length - 1].id;
+      return [...prev, { id: maxId + 1, role, content }];
+    });
+  };
+
   const addMessageFromUser = () => {
     setMessageList((prev) => {
       const maxId = prev[prev.length - 1].id;
@@ -33,15 +59,21 @@ export function PromptButton() {
       .trim();
 
     sessionStorage.setItem(sessionjsonKey, cleaned);
-    setMessageList((prev) => {
-      const maxId = prev[prev.length - 1].id;
-      const messageItemFromGod = {
-        id: maxId + 1,
-        role: "GOD",
-        content: cleaned,
-      };
-      return [...prev, messageItemFromGod];
-    });
+    const productData = JSON.parse(cleaned);
+    const shortage = checkShortage(productData);
+    console.log("shortage", shortage);
+    !shortage
+      ? addMessageItem("GOD", makeShortageQuestion(shortage))
+      : addMessageItem("GOD", cleaned);
+    // setMessageList((prev) => {
+    //   const maxId = prev[prev.length - 1].id;
+    //   const messageItemFromGod = {
+    //     id: maxId + 1,
+    //     role: "GOD",
+    //     content: cleaned,
+    //   };
+    //   return [...prev, messageItemFromGod];
+    // });
   };
   const getSessionStorage = (key) => {
     const dataStr = sessionStorage.getItem(key);
@@ -50,14 +82,18 @@ export function PromptButton() {
   };
   console.log(getSessionStorage("json"));
 
-  const checkShortage = () => {
+  const checkShortage = (data) => {
     // プロダクト情報のオブジェクト取得、オブジェクトのループで値に不明がある場合はキーを返す、ひとつも無い場合はnullを返す
     const obj = getSessionStorage("json");
-    const shotageList = [];
-    for (const key in obj) {
-      obj[key].includes("不明") && shotageList.push(key);
+    const shortageList = [];
+    const sections = { issues: data.issues, provided: data.provided };
+    for (const sectionName in sections) {
+      const section = sections[sectionName];
+      for (const key in section) {
+        section[key] === "不明" && shortageList.push(`${sectionName}.${key}`);
+      }
     }
-    return shotageList.length === 0 ? null : shotageList;
+    return shortageList.length === 0 ? null : shortageList;
   };
   const handleClick = () => {
     addMessageFromUser();
