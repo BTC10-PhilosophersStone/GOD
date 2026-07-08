@@ -16,7 +16,8 @@ export function ChatApp() {
     const defaultMessage = {
       id: 1,
       role: "GOD",
-      content: "テストメッセージ1",
+      content:
+        "そなたのやりたいプロダクトに近しいプロダクト情報がないか、教えてやろう。そなたのしたいことはなんだ？？　議事録でも良いぞ",
     };
     const sessionMessages = sessionStorage.getItem(sessionMessagesKey);
     const res = sessionMessages
