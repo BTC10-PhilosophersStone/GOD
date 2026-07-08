@@ -60,7 +60,7 @@ class Service(
     }
   }
 
-  override fun getSimilarityList(): List<MutableMap<String?, Double>> {
+  override fun getSimilarityList(): List<Map<String, MutableMap<String?, Double>>> {
     val dataList = productRepository.findAll()
 
     // ベクトルデータのリスト取得
@@ -105,32 +105,57 @@ class Service(
     val departmentResult: MutableMap<String?, Double> = mutableMapOf()
     val classificationResult: MutableMap<String?, Double> = mutableMapOf()
 
+    // 総合類似度準備
+    val overall: MutableMap<String?, Double> = mutableMapOf()
+
     // リザルトMap入力
     for (i in issuesList.indices) {
       // 類似度が0.7以上だったら入力
-      if (issuesSimilarityList[i] > 0.7)
-          issuesResult["No.${i + 1} ${issuesList[i]}"] =
-              floor((issuesSimilarityList[i] - 0.7) / 0.3 * 100)
+      //      if (issuesSimilarityList[i] > 0.7)
+      //      issuesResult["No.${i + 1} ${issuesList[i]}"] =
+      //          floor((issuesSimilarityList[i] - 0.7) / 0.3 * 100)
+      issuesResult["No.${i + 1} ${issuesList[i]}"] = floor((issuesSimilarityList[i]) * 100)
     }
     for (i in providedList.indices) {
-      if (providedSimilarityList[i] > 0.7)
-          providedResult["No.${i + 1} ${providedList[i]}"] =
-              floor((providedSimilarityList[i] - 0.7) / 0.3 * 100)
+      //      if (providedSimilarityList[i] > 0.7)
+      //          providedResult["No.${i + 1} ${providedList[i]}"] =
+      //              floor((providedSimilarityList[i] - 0.7) / 0.3 * 100)
+      providedResult["No.${i + 1} ${providedList[i]}"] = floor((providedSimilarityList[i]) * 100)
     }
 
     for (i in departmentList.indices) {
-      if (departmentSimilarityList[i] > 0.7)
-          departmentResult["No.${i + 1} ${departmentList[i]}"] =
-              floor((departmentSimilarityList[i] - 0.7) / 0.3 * 100)
+      //      if (departmentSimilarityList[i] > 0.7)
+      //          departmentResult["No.${i + 1} ${departmentList[i]}"] =
+      //              floor((departmentSimilarityList[i] - 0.7) / 0.3 * 100)
+      departmentResult["No.${i + 1} ${departmentList[i]}"] =
+          floor((departmentSimilarityList[i]) * 100)
     }
 
     for (i in classificationList.indices) {
-      if (classificationSimilarityList[i] > 0.7)
-          classificationResult["No.${i + 1} ${classificationList[i]}"] =
-              floor((classificationSimilarityList[i] - 0.7) / 0.3 * 100)
+      //      if (classificationSimilarityList[i] > 0.7)
+      //          classificationResult["No.${i + 1} ${classificationList[i]}"] =
+      //              floor((classificationSimilarityList[i] - 0.7) / 0.3 * 100)
+      classificationResult["No.${i + 1} ${classificationList[i]}"] =
+          floor((classificationSimilarityList[i]) * 100)
     }
 
-    return listOf(issuesResult, providedResult, departmentResult, classificationResult)
+    // 総合類似度計算
+    for (i in issuesList.indices) {
+      val result =
+          ((issuesSimilarityList[i] * 100 * 0.3) +
+              (providedSimilarityList[i] * 100 * 0.45) +
+              (departmentSimilarityList[i] * 100 * 0.1) +
+              (classificationSimilarityList[i] * 100 * 0.15))
+      overall["No.${i + 1}"] = floor(result)
+    }
+
+    return listOf(
+        mapOf("総合類似度" to overall),
+        mapOf("課題" to issuesResult),
+        mapOf("提供価値" to providedResult),
+        mapOf("関連部署" to departmentResult),
+        mapOf("業務階層" to classificationResult),
+    )
   }
 }
 
