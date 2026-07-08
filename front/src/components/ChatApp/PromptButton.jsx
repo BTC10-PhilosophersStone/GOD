@@ -18,22 +18,9 @@ export function PromptButton() {
       return [...prev, messageItemFromUser];
     });
   };
+  const sessionjsonKey = "json";
+
   const addMessageFromGod = async (content) => {
-    // const messageFromGod = await "message from GOD"; //ここでAPIで得た回答に差し替える
-    // try {
-    //   const data = await postMessage(content);
-    //   setMessageList((prev) => {
-    //     const maxId = prev[prev.length - 1].id;
-    //     const messageItemFromGod = {
-    //       id: maxId + 1,
-    //       role: "GOD",
-    //       content: data,
-    //     };
-    //     return [...prev, messageItemFromGod];
-    //   });
-    // } catch (error) {
-    //   console.log("回答の取得失敗", error);
-    // }
     const res = await fetch("/datasummary", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -45,7 +32,6 @@ export function PromptButton() {
       .replace(/```/g, "")
       .trim();
 
-    const sessionjsonKey = "json";
     sessionStorage.setItem(sessionjsonKey, cleaned);
     setMessageList((prev) => {
       const maxId = prev[prev.length - 1].id;
@@ -57,7 +43,22 @@ export function PromptButton() {
       return [...prev, messageItemFromGod];
     });
   };
+  const getSessionStorage = (key) => {
+    const dataStr = sessionStorage.getItem(key);
+    const data = JSON.parse(dataStr);
+    return data;
+  };
+  console.log(getSessionStorage("json"));
 
+  const checkShortage = () => {
+    // プロダクト情報のオブジェクト取得、オブジェクトのループで値に不明がある場合はキーを返す、ひとつも無い場合はnullを返す
+    const obj = getSessionStorage("json");
+    const shotageList = [];
+    for (const key in obj) {
+      obj[key].includes("不明") && shotageList.push(key);
+    }
+    return shotageList.length === 0 ? null : shotageList;
+  };
   const handleClick = () => {
     addMessageFromUser();
     addMessageFromGod(prompt);
