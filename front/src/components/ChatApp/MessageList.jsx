@@ -12,7 +12,7 @@ export function MessageList() {
   return (
     <>
       <div
-        style={{ border: "solid", height: "200px", overflowY: "auto" }}
+        style={{ border: "solid", height: "500px", overflowY: "auto" }}
         ref={scrollRef}
       >
         {messageList.map((message) => (

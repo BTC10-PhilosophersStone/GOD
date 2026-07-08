@@ -19,3 +19,11 @@ export const postMessage = async (message) => {
     body: JSON.stringify({ message }),
   });
 };
+
+// 議事録（文字列？）を渡して、テンプレートに整形したカルテを受け取る
+export const postMinutes = async (minutes) => {
+  return apiFetch("/api/chat/minutes", {
+    method: "POST",
+    body: JSON.stringify({ minutes }),
+  });
+};
