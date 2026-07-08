@@ -27,24 +27,41 @@ export function InputPass() {
 
   return (
     <>
-      {/* <input
-        ref={ref}
-        type="password"
-        placeholder=""
-        onChange={() => {
-          console.log(ref.current.value);
-          setPass(ref.current.value);
+      <FormControl
+        sx={{ m: 1, width: "275px" }}
+        variant="outlined"
+        sx={{
+          width: "275px",
+          // 1. デフォルト状態 (通常時)
+          "& .MuiOutlinedInput-root": {
+            "& fieldset": { borderColor: "gray" },
+            "& input": { color: "black" },
+          },
+          "& .MuiInputLabel-root": { color: "gray" },
+
+          // 2. ホバー状態 (Hover)
+          "& .MuiOutlinedInput-root:hover": {
+            "& fieldset": { borderColor: "black" },
+            "& input": { color: "black" },
+          },
+
+          // 3. 無効化状態 (Disabled)
+          "& .MuiOutlinedInput-root.Mui-disabled": {
+            "& fieldset": { borderColor: "lightgray" },
+            "& input": { color: "lightgray" },
+          },
+          "& .MuiInputLabel-root.Mui-disabled": { color: "lightgray" },
+
+          // 4. エラー状態 (Error)
+          "& .MuiOutlinedInput-root.Mui-error": {
+            "& fieldset": { borderColor: "red" },
+            "& input": { color: "black" },
+          },
+          "& .MuiInputLabel-root.Mui-error": { color: "red" },
         }}
-      /> */}
-      <FormControl sx={{ m: 1, width: "275px" }} variant="filled">
-        <InputLabel
-          htmlFor={`${filledPasswordId}-input`}
-          onChange={(e) => {
-            console.log(e.target.value);
-            setPass(e.target.value);
-          }}
-        >
-          Password
+      >
+        <InputLabel htmlFor={`${filledPasswordId}-input`}>
+          パスワード
         </InputLabel>
 
         <OutlinedInput
