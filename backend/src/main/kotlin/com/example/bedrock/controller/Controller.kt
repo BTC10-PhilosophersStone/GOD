@@ -1,13 +1,11 @@
 package com.example.bedrock.controller
 
-import com.example.bedrock.repository.Product
 import com.example.bedrock.service.ServiceHandler
 import org.springframework.ai.chat.client.ChatClient
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
-import software.amazon.awssdk.regions.Region
-import software.amazon.awssdk.services.bedrockruntime.BedrockRuntimeClient
 
 @RestController
 class Controller(
@@ -141,21 +139,9 @@ class Controller(
     return result
   }
 
-  @PostMapping("/embed-test")
-  fun test(@RequestBody body: Product): String {
-    val bedrockClient = BedrockRuntimeClient.builder().region(Region.US_EAST_1).build()
-    return handler.generateEmbedding(body.providedOutcome, bedrockClient).toString()
-  }
+  @GetMapping("/product")
+  fun product(): List<MutableMap<String?, Double>> {
 
-  @PostMapping("/product")
-  fun product(@RequestBody body: Product): List<MutableMap<String?, Double>> {
-    val bedrockClient = BedrockRuntimeClient.builder().region(Region.US_EAST_1).build()
-
-    body.issuesVector = handler.generateEmbedding(body.issuesWhatWhy, bedrockClient)
-    body.providedVector = handler.generateEmbedding(body.providedOutcome, bedrockClient)
-    body.departmentVector = handler.generateEmbedding(body.departmentCombine, bedrockClient)
-    body.classificationVector = handler.generateEmbedding(body.classificationCombine, bedrockClient)
-
-    return handler.getSimilarityList(body)
+    return handler.getSimilarityList()
   }
 }
