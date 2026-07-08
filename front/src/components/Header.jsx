@@ -23,7 +23,6 @@ export function Header({}) {
   //   const [link, setLink] = useState(null);
   const [userId, setUserId] = useState(null);
   const authState = false;
-  console.log("authState");
   //   const signOut = async () => {
   //     const reqSignOut = await fetch("/api/firebase/signOut");
   //     const json = await reqSignOut.json();
