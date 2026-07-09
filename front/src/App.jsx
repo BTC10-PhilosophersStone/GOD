@@ -6,7 +6,7 @@ Modal.setAppElement("#root");
 function App() {
   return (
     <>
-      <Text />
+      <RoutesApp />
     </>
   );
 }
