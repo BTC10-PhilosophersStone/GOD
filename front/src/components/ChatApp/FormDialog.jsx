@@ -4,11 +4,13 @@ import { useAtom } from "jotai";
 import { isFormDialogOpenAtom } from "../atoms";
 import { dataLabels } from "./dataLabels";
 import { FormDialogField } from "./FormDialogField";
+import { getSessionStorage } from "./sessionStorage";
 
 export function FormDialog() {
   const [isOpen, setIsOpen] = useAtom(isFormDialogOpenAtom);
   const sessionjsonKey = "productData";
-  const productData = JSON.parse(sessionStorage.getItem(sessionjsonKey));
+  // const productData = JSON.parse(sessionStorage.getItem(sessionjsonKey));
+  const productData = getSessionStorage(sessionjsonKey);
   const sectionNames = ["issues", "provided"];
 
   const [formValues, setFormValues] = useState(() => {
