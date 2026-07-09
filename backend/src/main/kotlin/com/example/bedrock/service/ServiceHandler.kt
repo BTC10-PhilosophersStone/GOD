@@ -23,5 +23,5 @@ interface ServiceHandler {
     return ObjectMapper().readTree(json)["embedding"].map { it.asDouble().toFloat() }.toFloatArray()
   }
 
-  fun getSimilarityList(): List<Map<String, MutableMap<String?, Double>>>
+  fun getSimilarityList(): List<Map<String, Double>>
 }
