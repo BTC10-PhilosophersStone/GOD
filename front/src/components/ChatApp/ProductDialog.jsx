@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export function ProductDialog({ isDialogOpen }) {
   const [isOpen, setIsOpen] = useState(isDialogOpen);
-  const sessionjsonKey = "json";
+  const sessionjsonKey = "productData";
   const rawData = sessionStorage.getItem(sessionjsonKey);
   const parse = JSON.parse(rawData);
   const req = {

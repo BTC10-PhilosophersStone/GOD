@@ -3,29 +3,16 @@ import { messageListAtom, promptAtom, isFormDialogOpenAtom } from "../atoms";
 import { useEffect } from "react";
 import { postMessage } from "./api/ChatAppApi";
 import { dataLabels } from "./dataLabels";
+import { getSessionStorage, setSessionStorage } from "./sessionStorage";
 
 export function PromptButton() {
   const [prompt, setPrompt] = useAtom(promptAtom);
   const [messageList, setMessageList] = useAtom(messageListAtom);
   const setIsFormDialogOpen = useSetAtom(isFormDialogOpenAtom);
 
-  // const dataLabels = {
-  //   "issues.Who": "誰が困っているか",
-  //   "issues.What": "何に困っているか",
-  //   "issues.When": "いつ",
-  //   "issues.Where": "どこで",
-  //   "issues.Why": "なぜ",
-  //   "issues.How": "どのように",
-  //   "issues.What_Why": "何を・なぜ",
-  //   "issues.Content": "内容",
-  //   "provided.Who": "誰に提供するか",
-  //   "provided.What": "何を提供するか",
-  //   "provided.Outcome": "期待される成果",
-  // };
-
   const makeShortageQuestion = (shortageList) => {
-    const lines = shortageList.map((key) => `・${dataLabels[key] ?? key}`);
-    return `以下の項目が議事録から読み取れませんでした。フォームの赤枠欄に入力してください。\n${lines.join("\n")}`;
+    const list = shortageList.map((key) => `・${dataLabels[key] ?? key}`);
+    return `以下の項目が議事録から読み取れませんでした。フォームの赤枠欄に入力してください。\n${list.join("\n")}`;
   };
 
   const addMessageItem = (role, content) => {
@@ -35,18 +22,19 @@ export function PromptButton() {
     });
   };
 
-  const addMessageFromUser = () => {
-    setMessageList((prev) => {
-      const maxId = prev[prev.length - 1].id;
-      const messageItemFromUser = {
-        id: maxId + 1,
-        role: "user",
-        content: prompt,
-      };
-      return [...prev, messageItemFromUser];
-    });
-  };
-  const sessionjsonKey = "json";
+  // const addMessageFromUser = () => {
+  //   addMessageItem("user", prompt);
+  //   // setMessageList((prev) => {
+  //   //   const maxId = prev[prev.length - 1].id;
+  //   //   const messageItemFromUser = {
+  //   //     id: maxId + 1,
+  //   //     role: "user",
+  //   //     content: prompt,
+  //   //   };
+  //   //   return [...prev, messageItemFromUser];
+  //   // });
+  // };
+  const sessionjsonKey = "productData";
 
   const addMessageFromGod = async (content) => {
     const res = await fetch("/datasummary", {
@@ -61,7 +49,10 @@ export function PromptButton() {
       .trim();
 
     sessionStorage.setItem(sessionjsonKey, cleaned);
-    const productData = JSON.parse(cleaned);
+    // ここまででproductData保存完了
+
+    // const productData = JSON.parse(cleaned);
+    const productData = getSessionStorage(sessionjsonKey);
     const shortage = checkShortage(productData);
     console.log("shortage", shortage);
     if (shortage) {
@@ -70,44 +61,46 @@ export function PromptButton() {
     } else {
       addMessageItem("GOD", cleaned);
     }
-    // setMessageList((prev) => {
-    //   const maxId = prev[prev.length - 1].id;
-    //   const messageItemFromGod = {
-    //     id: maxId + 1,
-    //     role: "GOD",
-    //     content: cleaned,
-    //   };
-    //   return [...prev, messageItemFromGod];
-    // });
-  };
-  const getSessionStorage = (key) => {
-    const dataStr = sessionStorage.getItem(key);
-    const data = JSON.parse(dataStr);
-    return data;
   };
 
-  const checkShortage = (data) => {
+  // ストレージからプロダクト情報を取得、不足項目取得、ダイアログ表示切り替え
+  const checkShortage = () => {
+    const data = getSessionStorage(sessionjsonKey);
+    console.log("data", data);
     // プロダクト情報のオブジェクト取得、オブジェクトのループで値に不明がある場合はキーを返す、ひとつも無い場合はnullを返す
     const shortageList = [];
-    const sections = { issues: data.issues, provided: data.provided };
-    for (const sectionName in sections) {
-      const section = sections[sectionName];
-      for (const key in section) {
-        section[key] === "不明" && shortageList.push(`${sectionName}.${key}`);
+    // const sections = { issues: data.issues, provided: data.provided };
+    // for (const sectionName in sections) {
+    //   const section = sections[sectionName];
+    //   for (const key in section) {
+    //     section[key] === "不明" && shortageList.push(`${sectionName}.${key}`);
+    //   }
+    // }
+    for (const key in data) {
+      if (Array.isArray(data[key])) {
+        // for (const subKey in data[key][0]) {
+        // data[key][0][subKey] === "不明" &&
+        //   shortageList.push(`${key}[0].${subKey}`);
+        // }
+      } else {
+        for (const subKey in data[key]) {
+          data[key][subKey] === "不明" && shortageList.push(`${key}.${subKey}`);
+        }
       }
     }
+    console.log("shortageList", shortageList);
     return shortageList.length === 0 ? null : shortageList;
   };
-  const handleClick = () => {
-    addMessageFromUser();
+  const handleClick = async () => {
+    await addMessageItem("user", prompt);
+
     addMessageFromGod(prompt);
     setPrompt("");
   };
 
   useEffect(() => {
     const sessionMessagesKey = "messages";
-    const messageListStr = JSON.stringify([...messageList]);
-    sessionStorage.setItem(sessionMessagesKey, messageListStr);
+    setSessionStorage(sessionMessagesKey, [...messageList]);
   }, [messageList]);
 
   return (
@@ -115,6 +108,7 @@ export function PromptButton() {
       <button onClick={handleClick} disabled={!prompt}>
         送信
       </button>
+      <button onClick={() => setIsFormDialogOpen(true)}>確認</button>
     </>
   );
 }

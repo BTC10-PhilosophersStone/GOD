@@ -4,23 +4,9 @@ import { useAtom } from "jotai";
 import { isFormDialogOpenAtom } from "../atoms";
 import { dataLabels } from "./dataLabels";
 
-function FormField({ label, value, isUnknown, onChange }) {
-  return (
-    <li>
-      <label>{label}</label>
-      <textarea
-        value={value}
-        placeholder={isUnknown ? "読み取り不可" : ""}
-        style={isUnknown && value === "" ? { border: "2px solid #d32f2f" } : {}}
-        onChange={(e) => onChange(e.target.value)}
-      />
-    </li>
-  );
-}
-
 export function FormDialog() {
   const [isOpen, setIsOpen] = useAtom(isFormDialogOpenAtom);
-  const sessionjsonKey = "json";
+  const sessionjsonKey = "productData";
   const productData = JSON.parse(sessionStorage.getItem(sessionjsonKey));
   const sectionNames = ["issues", "provided"];
 
@@ -79,5 +65,19 @@ export function FormDialog() {
         <button onClick={handleSubmit}>保存する</button>
       </div>
     </Dialog>
+  );
+}
+
+function FormField({ label, value, isUnknown, onChange }) {
+  return (
+    <li>
+      <label>{label}</label>
+      <textarea
+        value={value}
+        placeholder={isUnknown ? "読み取りNG" : ""}
+        style={isUnknown && value === "" ? { border: "2px solid red" } : {}}
+        onChange={(e) => onChange(e.target.value)}
+      />
+    </li>
   );
 }
