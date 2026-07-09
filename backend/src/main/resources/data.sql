@@ -9,6 +9,7 @@ create extension vector;
 create table product (
                          id serial primary key,
                          create_at_data date,
+                         name VARCHAR(250),
                          issues_who VARCHAR(250),
                          issues_what VARCHAR(250),
                          issues_when VARCHAR(250),
