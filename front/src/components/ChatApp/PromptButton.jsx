@@ -1,15 +1,13 @@
 import { useAtom, useSetAtom } from "jotai";
-import { messageListAtom, promptAtom } from "../atoms";
+import { messageListAtom, promptAtom, isFormDialogOpenAtom } from "../atoms";
 import { useEffect } from "react";
 import { postMessage } from "./api/ChatAppApi";
 import { dataLabels } from "./dataLabels";
-import { isFormDialogOpenAtom } from "./atoms";
 
 export function PromptButton() {
   const [prompt, setPrompt] = useAtom(promptAtom);
   const [messageList, setMessageList] = useAtom(messageListAtom);
   const setIsFormDialogOpen = useSetAtom(isFormDialogOpenAtom);
-  const setIsProductDialogOpen = useAtom(isFormDialogOpenAtom);
 
   // const dataLabels = {
   //   "issues.Who": "誰が困っているか",
@@ -68,7 +66,7 @@ export function PromptButton() {
     console.log("shortage", shortage);
     if (shortage) {
       addMessageItem("GOD", makeShortageQuestion(shortage));
-      setIsProductDialogOpen(true);
+      setIsFormDialogOpen(true);
     } else {
       addMessageItem("GOD", cleaned);
     }

@@ -3,9 +3,8 @@ import { MessageList } from "./MessageList";
 import { Prompt } from "./Prompt";
 import { useEffect, useState } from "react";
 import { useAtom } from "jotai";
-import { messageListAtom } from "../atoms";
+import { messageListAtom, isFormDialogOpenAtom } from "../atoms";
 import { ProductDialog } from "./ProductDialog";
-import { isFormDialogOpenAtom } from "./atoms";
 import { FormDialog } from "./FormDialog";
 
 export function ChatApp() {
