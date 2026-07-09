@@ -1,5 +1,6 @@
 package com.example.bedrock.controller
 
+import com.example.bedrock.repository.Result
 import com.example.bedrock.service.ServiceHandler
 import org.springframework.ai.chat.client.ChatClient
 import org.springframework.web.bind.annotation.GetMapping
@@ -140,7 +141,7 @@ class Controller(
   }
 
   @GetMapping("/product")
-  fun product(): List<Map<String, Double>> {
+  fun product(): List<Result> {
 
     return handler.getSimilarityList()
   }
