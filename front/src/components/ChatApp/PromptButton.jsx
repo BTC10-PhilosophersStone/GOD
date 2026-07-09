@@ -22,18 +22,6 @@ export function PromptButton() {
     });
   };
 
-  // const addMessageFromUser = () => {
-  //   addMessageItem("user", prompt);
-  //   // setMessageList((prev) => {
-  //   //   const maxId = prev[prev.length - 1].id;
-  //   //   const messageItemFromUser = {
-  //   //     id: maxId + 1,
-  //   //     role: "user",
-  //   //     content: prompt,
-  //   //   };
-  //   //   return [...prev, messageItemFromUser];
-  //   // });
-  // };
   const sessionjsonKey = "productData";
 
   const addMessageFromGod = async (content) => {
