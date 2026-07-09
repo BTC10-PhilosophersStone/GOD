@@ -9,7 +9,7 @@ import software.amazon.awssdk.services.bedrockruntime.model.InvokeModelRequest
 interface ServiceHandler {
   fun createData(reqData: ReqData)
 
-  fun generateEmbedding(text: String? = null, bedrockClient: BedrockRuntimeClient): FloatArray {
+  fun generateEmbedding(text: String?, bedrockClient: BedrockRuntimeClient): FloatArray {
     val requestJson = """ { "inputText": "$text" } """.trimIndent()
     val request =
         InvokeModelRequest.builder()
@@ -23,5 +23,5 @@ interface ServiceHandler {
     return ObjectMapper().readTree(json)["embedding"].map { it.asDouble().toFloat() }.toFloatArray()
   }
 
-  fun getSimilarityList(): List<MutableMap<String?, Double>>
+  fun getSimilarityList(): List<Map<String, Double>>
 }

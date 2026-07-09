@@ -1,14 +1,15 @@
 package com.example.bedrock.repository
 
 import jakarta.persistence.*
-import org.hibernate.annotations.ColumnTransformer
 import java.time.LocalDateTime
+import org.hibernate.annotations.ColumnTransformer
 
 @Entity
 @Table(name = "product")
 class Product(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) val id: Long = 0,
     @Column(name = "create_at_data") val dateCreated: LocalDateTime = LocalDateTime.now(),
+    @Column(name = "name") val name: String? = null,
     @Column(name = "issues_who") val issuesWho: String? = null,
     @Column(name = "issues_what") val issuesWhat: String? = null,
     @Column(name = "issues_when") val issuesWhen: String? = null,
