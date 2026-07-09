@@ -21,6 +21,9 @@ object ModifyPrompt {
 
 ## issues
 
+### Name
+プロダクトの名称のみ抽出する
+
 ### Who
 人物名のみ抽出する
 

@@ -51,12 +51,11 @@ class Controller(
 
     @GetMapping("/department")
     fun department(): List<DepartmentMst> {
-        return departmentMstRepository.findAll()
+        return handler.getDepartmentList()
     }
 
   @PostMapping("/productmodify")
   fun productModify(@RequestBody body: String): String {
-      println(body)
     val chatClient = builder.build()
     val result = chatClient.prompt()
       .system(ModifyPrompt.SYSTEM_PROMPT)

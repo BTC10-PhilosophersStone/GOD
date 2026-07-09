@@ -23,7 +23,7 @@ object AnalysisPrompt {
 課題とそれに対する解決内容を抽出すること。
 
 ## 抽出項目
-
+- name
 - Who
 - What
 - When
@@ -34,6 +34,11 @@ object AnalysisPrompt {
 - Content
 
 ## 抽出ルール
+
+### Name
+
+-全体の内容から、プロダクトの名称となるような情報を抽出する
+
 
 ### Who
 
@@ -490,6 +495,7 @@ departmentNameおよびofficeNameとして出力してはいけない。
 
 {
   "issues": {
+    "Name: "",
     "Who": "",
     "What": "",
     "When": "",

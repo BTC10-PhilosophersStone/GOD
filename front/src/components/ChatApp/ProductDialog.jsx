@@ -10,6 +10,7 @@ export function ProductDialog({ isDialogOpen }) {
     // Nameカラム追加に伴うバックエンド実装完了次第、
     // プロパティを追加すること
     product: {
+      name: parse.issues.Name,
       issuesWho: parse.issues.Who,
       issuesWhat: parse.issues.What,
       issuesWhen: parse.issues.When,
@@ -49,7 +50,6 @@ export function ProductDialog({ isDialogOpen }) {
     // 総合関連度の上位5件のプロダクトを表示する
   };
 
-  console.log(req);
   return (
     <>
       <Dialog open={isOpen} onClose={handleClose}>
