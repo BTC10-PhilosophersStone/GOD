@@ -1,29 +1,33 @@
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import { messageListAtom, promptAtom } from "../atoms";
 import { useEffect } from "react";
 import { postMessage } from "./api/ChatAppApi";
+import { dataLabels } from "./dataLabels";
+import { isFormDialogOpenAtom } from "./atoms";
 
 export function PromptButton() {
   const [prompt, setPrompt] = useAtom(promptAtom);
   const [messageList, setMessageList] = useAtom(messageListAtom);
+  const setIsFormDialogOpen = useSetAtom(isFormDialogOpenAtom);
+  const setIsProductDialogOpen = useAtom(isFormDialogOpenAtom);
 
-  const dataLabels = {
-    "issues.Who": "誰が困っているか",
-    "issues.What": "何に困っているか",
-    "issues.When": "いつ",
-    "issues.Where": "どこで",
-    "issues.Why": "なぜ",
-    "issues.How": "どのように",
-    "issues.What_Why": "何を・なぜ",
-    "issues.Content": "内容",
-    "provided.Who": "誰に提供するか",
-    "provided.What": "何を提供するか",
-    "provided.Outcome": "期待される成果",
-  };
+  // const dataLabels = {
+  //   "issues.Who": "誰が困っているか",
+  //   "issues.What": "何に困っているか",
+  //   "issues.When": "いつ",
+  //   "issues.Where": "どこで",
+  //   "issues.Why": "なぜ",
+  //   "issues.How": "どのように",
+  //   "issues.What_Why": "何を・なぜ",
+  //   "issues.Content": "内容",
+  //   "provided.Who": "誰に提供するか",
+  //   "provided.What": "何を提供するか",
+  //   "provided.Outcome": "期待される成果",
+  // };
 
   const makeShortageQuestion = (shortageList) => {
     const lines = shortageList.map((key) => `・${dataLabels[key] ?? key}`);
-    return `以下の項目が議事録から読み取れませんでした。追加で教えてください。\n${lines.join("\n")}`;
+    return `以下の項目が議事録から読み取れませんでした。フォームの赤枠欄に入力してください。\n${lines.join("\n")}`;
   };
 
   const addMessageItem = (role, content) => {
@@ -62,9 +66,12 @@ export function PromptButton() {
     const productData = JSON.parse(cleaned);
     const shortage = checkShortage(productData);
     console.log("shortage", shortage);
-    !shortage
-      ? addMessageItem("GOD", makeShortageQuestion(shortage))
-      : addMessageItem("GOD", cleaned);
+    if (shortage) {
+      addMessageItem("GOD", makeShortageQuestion(shortage));
+      setIsProductDialogOpen(true);
+    } else {
+      addMessageItem("GOD", cleaned);
+    }
     // setMessageList((prev) => {
     //   const maxId = prev[prev.length - 1].id;
     //   const messageItemFromGod = {
@@ -80,11 +87,9 @@ export function PromptButton() {
     const data = JSON.parse(dataStr);
     return data;
   };
-  console.log(getSessionStorage("json"));
 
   const checkShortage = (data) => {
     // プロダクト情報のオブジェクト取得、オブジェクトのループで値に不明がある場合はキーを返す、ひとつも無い場合はnullを返す
-    const obj = getSessionStorage("json");
     const shortageList = [];
     const sections = { issues: data.issues, provided: data.provided };
     for (const sectionName in sections) {
