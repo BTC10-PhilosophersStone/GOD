@@ -1,39 +1,30 @@
-import { useAtom } from "jotai";
-import { messageListAtom, promptAtom } from "../atoms";
+import { useAtom, useSetAtom } from "jotai";
+import { messageListAtom, promptAtom, isFormDialogOpenAtom } from "../atoms";
 import { useEffect } from "react";
 import { postMessage } from "./api/ChatAppApi";
+import { dataLabels } from "./dataLabels";
+import { getSessionStorage, setSessionStorage } from "./sessionStorage";
 
 export function PromptButton() {
   const [prompt, setPrompt] = useAtom(promptAtom);
   const [messageList, setMessageList] = useAtom(messageListAtom);
+  const setIsFormDialogOpen = useSetAtom(isFormDialogOpenAtom);
 
-  const addMessageFromUser = () => {
+  const makeShortageQuestion = (shortageList) => {
+    const list = shortageList.map((key) => `・${dataLabels[key] ?? key}`);
+    return `以下の項目が議事録から読み取れませんでした。フォームの赤枠欄に入力してください。\n${list.join("\n")}`;
+  };
+
+  const addMessageItem = (role, content) => {
     setMessageList((prev) => {
       const maxId = prev[prev.length - 1].id;
-      const messageItemFromUser = {
-        id: maxId + 1,
-        role: "user",
-        content: prompt,
-      };
-      return [...prev, messageItemFromUser];
+      return [...prev, { id: maxId + 1, role, content }];
     });
   };
+
+  const sessionjsonKey = "productData";
+
   const addMessageFromGod = async (content) => {
-    // const messageFromGod = await "message from GOD"; //ここでAPIで得た回答に差し替える
-    // try {
-    //   const data = await postMessage(content);
-    //   setMessageList((prev) => {
-    //     const maxId = prev[prev.length - 1].id;
-    //     const messageItemFromGod = {
-    //       id: maxId + 1,
-    //       role: "GOD",
-    //       content: data,
-    //     };
-    //     return [...prev, messageItemFromGod];
-    //   });
-    // } catch (error) {
-    //   console.log("回答の取得失敗", error);
-    // }
     const res = await fetch("/datasummary", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -45,29 +36,59 @@ export function PromptButton() {
       .replace(/```/g, "")
       .trim();
 
-    const sessionjsonKey = "json";
     sessionStorage.setItem(sessionjsonKey, cleaned);
-    setMessageList((prev) => {
-      const maxId = prev[prev.length - 1].id;
-      const messageItemFromGod = {
-        id: maxId + 1,
-        role: "GOD",
-        content: cleaned,
-      };
-      return [...prev, messageItemFromGod];
-    });
+    // ここまででproductData保存完了
+
+    // const productData = JSON.parse(cleaned);
+    const productData = getSessionStorage(sessionjsonKey);
+    const shortage = checkShortage(productData);
+    console.log("shortage", shortage);
+    if (shortage) {
+      addMessageItem("GOD", makeShortageQuestion(shortage));
+      setIsFormDialogOpen(true);
+    } else {
+      addMessageItem("GOD", cleaned);
+    }
   };
 
-  const handleClick = () => {
-    addMessageFromUser();
+  // ストレージからプロダクト情報を取得、不足項目取得、ダイアログ表示切り替え
+  const checkShortage = () => {
+    const data = getSessionStorage(sessionjsonKey);
+    console.log("data", data);
+    // プロダクト情報のオブジェクト取得、オブジェクトのループで値に不明がある場合はキーを返す、ひとつも無い場合はnullを返す
+    const shortageList = [];
+    // const sections = { issues: data.issues, provided: data.provided };
+    // for (const sectionName in sections) {
+    //   const section = sections[sectionName];
+    //   for (const key in section) {
+    //     section[key] === "不明" && shortageList.push(`${sectionName}.${key}`);
+    //   }
+    // }
+    for (const key in data) {
+      if (Array.isArray(data[key])) {
+        // for (const subKey in data[key][0]) {
+        // data[key][0][subKey] === "不明" &&
+        //   shortageList.push(`${key}[0].${subKey}`);
+        // }
+      } else {
+        for (const subKey in data[key]) {
+          data[key][subKey] === "不明" && shortageList.push(`${key}.${subKey}`);
+        }
+      }
+    }
+    console.log("shortageList", shortageList);
+    return shortageList.length === 0 ? null : shortageList;
+  };
+  const handleClick = async () => {
+    await addMessageItem("user", prompt);
+
     addMessageFromGod(prompt);
     setPrompt("");
   };
 
   useEffect(() => {
     const sessionMessagesKey = "messages";
-    const messageListStr = JSON.stringify([...messageList]);
-    sessionStorage.setItem(sessionMessagesKey, messageListStr);
+    setSessionStorage(sessionMessagesKey, [...messageList]);
   }, [messageList]);
 
   return (

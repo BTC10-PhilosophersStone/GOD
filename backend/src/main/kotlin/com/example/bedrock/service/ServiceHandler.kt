@@ -2,6 +2,7 @@ package com.example.bedrock.service
 
 import com.example.bedrock.controller.ReqData
 import com.example.bedrock.repository.Result
+import com.example.bedrock.repository.DepartmentMst
 import com.fasterxml.jackson.databind.ObjectMapper
 import software.amazon.awssdk.core.SdkBytes
 import software.amazon.awssdk.services.bedrockruntime.BedrockRuntimeClient
@@ -9,6 +10,7 @@ import software.amazon.awssdk.services.bedrockruntime.model.InvokeModelRequest
 
 interface ServiceHandler {
   fun createData(reqData: ReqData)
+  fun getDepartmentList(): List<DepartmentMst>
 
   fun generateEmbedding(text: String?, bedrockClient: BedrockRuntimeClient): FloatArray {
     val requestJson = """ { "inputText": "$text" } """.trimIndent()

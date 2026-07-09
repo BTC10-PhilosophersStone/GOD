@@ -3,12 +3,14 @@ import { MessageList } from "./MessageList";
 import { Prompt } from "./Prompt";
 import { useEffect, useState } from "react";
 import { useAtom } from "jotai";
-import { messageListAtom } from "../atoms";
+import { messageListAtom, isFormDialogOpenAtom } from "../atoms";
 import { ProductDialog } from "./ProductDialog";
+import { FormDialog } from "./FormDialog";
 
 export function ChatApp() {
   const [messageList, setMessageList] = useAtom(messageListAtom);
   const [isOpen, setIsOpen] = useState(false);
+  const [isFormOpen] = useAtom(isFormDialogOpenAtom);
 
   const sessionMessagesKey = "messages";
   // メッセージ配列をステートにする、初期値としてデフォルトメッセージを格納、もしくはチャット履歴を取得する
@@ -51,6 +53,8 @@ export function ChatApp() {
       {/* 確認用 */}
       <button onClick={() => setIsOpen(!isOpen)}>ダイアログ表示</button>
       {isOpen && <ProductDialog isDialogOpen={isOpen} />}
+
+      {isFormOpen && <FormDialog />}
     </>
   );
 }

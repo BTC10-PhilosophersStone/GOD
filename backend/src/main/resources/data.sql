@@ -43,3 +43,8 @@ create table  classification (
                                  sub_category VARCHAR(250),
                                  minor_category VARCHAR(250)
 );
+
+create  table  department_mst (
+                                  id serial primary key,
+                                  department_name VARCHAR(250)
+);

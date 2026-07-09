@@ -3,11 +3,14 @@ import { useState } from "react";
 
 export function ProductDialog({ isDialogOpen }) {
   const [isOpen, setIsOpen] = useState(isDialogOpen);
-  const sessionjsonKey = "json";
+  const sessionjsonKey = "productData";
   const rawData = sessionStorage.getItem(sessionjsonKey);
   const parse = JSON.parse(rawData);
   const req = {
+    // Nameカラム追加に伴うバックエンド実装完了次第、
+    // プロパティを追加すること
     product: {
+      name: parse.issues.Name,
       issuesWho: parse.issues.Who,
       issuesWhat: parse.issues.What,
       issuesWhen: parse.issues.When,
@@ -33,11 +36,12 @@ export function ProductDialog({ isDialogOpen }) {
       body: JSON.stringify(req),
     });
 
-    const vector = await fetch("/product", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(req.product),
-    });
+    // const vector = await fetch("/product", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify(req.product),
+    // });
+    const vector = await fetch("/product");
     const data = await vector.json();
     console.log(data);
 
@@ -46,7 +50,6 @@ export function ProductDialog({ isDialogOpen }) {
     // 総合関連度の上位5件のプロダクトを表示する
   };
 
-  console.log(req);
   return (
     <>
       <Dialog open={isOpen} onClose={handleClose}>

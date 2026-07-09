@@ -2,6 +2,8 @@ package com.example.bedrock.service
 
 import com.example.bedrock.controller.ReqData
 import com.example.bedrock.repository.ClassificationRepository
+import com.example.bedrock.repository.DepartmentMst
+import com.example.bedrock.repository.DepartmentMstRepository
 import com.example.bedrock.repository.DepartmentRepository
 import com.example.bedrock.repository.ProductRepository
 import com.example.bedrock.repository.Result
@@ -17,6 +19,7 @@ class Service(
     private val productRepository: ProductRepository,
     private val departmentRepository: DepartmentRepository,
     private val classificationRepository: ClassificationRepository,
+    private val departmentMstRepository: DepartmentMstRepository
 ) : ServiceHandler {
   override fun createData(reqData: ReqData) {
     val bedrockClient = BedrockRuntimeClient.builder().region(Region.US_EAST_1).build()
@@ -59,6 +62,14 @@ class Service(
       }
       classificationRepository.save(it)
     }
+  }
+
+
+  
+
+
+  override fun getDepartmentList(): List<DepartmentMst> {
+    return departmentMstRepository.findAll()
   }
 
   override fun getSimilarityList(): List<Result> {
