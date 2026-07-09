@@ -24,6 +24,20 @@ export function PromptButton() {
 
   const sessionjsonKey = "productData";
 
+  const getMessageFromGod = async (content) => {
+    const res = await fetch("/datasummary", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ minutes: prompt }),
+    });
+    const data = await res.text();
+    const cleaned = data
+      .replace(/```json/g, "")
+      .replace(/```/g, "")
+      .trim();
+    sessionStorage.setItem(sessionjsonKey, cleaned);
+  };
+
   const addMessageFromGod = async (content) => {
     const res = await fetch("/datasummary", {
       method: "POST",
@@ -37,10 +51,16 @@ export function PromptButton() {
       .trim();
 
     sessionStorage.setItem(sessionjsonKey, cleaned);
-    // ここまででproductData保存完了
+
+    // getMessageFromGod(content);
 
     // const productData = JSON.parse(cleaned);
     const productData = getSessionStorage(sessionjsonKey);
+    console.log(
+      JSON.stringify(productData) === JSON.stringify(JSON.parse(cleaned)),
+    );
+    console.log("productData", productData);
+    console.log("cleaned", JSON.parse(cleaned));
     const shortage = checkShortage(productData);
     console.log("shortage", shortage);
     if (shortage) {
