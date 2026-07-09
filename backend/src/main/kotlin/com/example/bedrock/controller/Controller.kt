@@ -1,5 +1,6 @@
 package com.example.bedrock.controller
 
+import com.example.bedrock.repository.Result
 import com.example.bedrock.prompt.AnalysisPrompt
 import com.example.bedrock.prompt.ModifyPrompt
 import com.example.bedrock.repository.DepartmentMst
@@ -44,7 +45,7 @@ class Controller(
     }
 
   @GetMapping("/product")
-  fun product(): List<Map<String, Double>> {
+  fun product(): List<Result> {
 
     return handler.getSimilarityList()
   }

@@ -6,6 +6,7 @@ import com.example.bedrock.repository.DepartmentMst
 import com.example.bedrock.repository.DepartmentMstRepository
 import com.example.bedrock.repository.DepartmentRepository
 import com.example.bedrock.repository.ProductRepository
+import com.example.bedrock.repository.Result
 import kotlin.math.floor
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -64,11 +65,14 @@ class Service(
   }
 
 
+  
+
+
   override fun getDepartmentList(): List<DepartmentMst> {
     return departmentMstRepository.findAll()
   }
 
-  override fun getSimilarityList(): List<Map<String, Double>> {
+  override fun getSimilarityList(): List<Result> {
     val dataList = productRepository.findAll()
 
     // ベクトルデータのリスト取得
@@ -116,7 +120,7 @@ class Service(
     val classificationResult: MutableMap<String, Double> = mutableMapOf()
 
     // 総合類似度準備
-    val overall: MutableMap<String, Double> = mutableMapOf()
+    val overall: MutableList<Result> = mutableListOf()
 
     // リザルトMap入力
     for (i in issuesList.indices) {
@@ -157,19 +161,22 @@ class Service(
               (providedSimilarityList[i] * 100 * 0.6) +
               (departmentSimilarityList[i] * 100 * 0.1) +
               (classificationSimilarityList[i] * 100 * 0.1))
-      if (result >= 70) overall["No.${idList[i]} ${nameList[i]}"] = floor(result)
+      if (result >= 70) {
+        overall.add(
+            Result(
+                id = idList[i],
+                name = nameList[i],
+                percent = floor(result),
+            )
+        )
+      }
     }
+    println(overall)
 
     // 類似度で順位付け
     val overallRank =
-        if (overall.toList().size <= 4)
-            overall.toList().sortedByDescending { it.second }.map { mapOf(it.first to it.second) }
-        else
-            overall
-                .toList()
-                .sortedByDescending { it.second }
-                .map { mapOf(it.first to it.second) }
-                .slice(0..4)
+        if (overall.size <= 4) overall.sortedByDescending { it.percent }
+        else overall.sortedByDescending { it.percent }.slice(0..4)
 
     return overallRank
   }

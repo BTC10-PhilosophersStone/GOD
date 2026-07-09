@@ -1,6 +1,7 @@
 package com.example.bedrock.service
 
 import com.example.bedrock.controller.ReqData
+import com.example.bedrock.repository.Result
 import com.example.bedrock.repository.DepartmentMst
 import com.fasterxml.jackson.databind.ObjectMapper
 import software.amazon.awssdk.core.SdkBytes
@@ -25,5 +26,5 @@ interface ServiceHandler {
     return ObjectMapper().readTree(json)["embedding"].map { it.asDouble().toFloat() }.toFloatArray()
   }
 
-  fun getSimilarityList(): List<Map<String, Double>>
+  fun getSimilarityList(): List<Result>
 }
