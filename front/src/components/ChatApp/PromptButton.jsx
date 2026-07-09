@@ -96,7 +96,6 @@ export function PromptButton() {
       <button onClick={handleClick} disabled={!prompt}>
         送信
       </button>
-      <button onClick={() => setIsFormDialogOpen(true)}>確認</button>
     </>
   );
 }
