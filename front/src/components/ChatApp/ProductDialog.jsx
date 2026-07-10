@@ -1,11 +1,32 @@
-import { Dialog, DialogTitle } from "@mui/material";
-import { useState } from "react";
+import { Dialog, DialogTitle, Autocomplete, TextField } from "@mui/material";
+import { useState, useEffect } from "react";
 
 export function ProductDialog({ isDialogOpen }) {
   const [isOpen, setIsOpen] = useState(isDialogOpen);
   const sessionjsonKey = "productData";
   const rawData = sessionStorage.getItem(sessionjsonKey);
   const parse = JSON.parse(rawData);
+  const [departmentOptions, setDepartmentOptions] = useState([]);
+  const [selectedDepartments, setSelectedDepartments] = useState(
+    parse.department.map((d) => d.departmentName),
+  );
+
+  useEffect(() => {
+    const fetchDepartments = async () => {
+      try {
+        const res = await fetch("/departments");
+        if (!res.ok) {
+          throw new Error(`APIエラー: ${res.status}`);
+        }
+        const data = await res.json();
+        setDepartmentOptions(data.map((d) => d.departmentName));
+      } catch (error) {
+        console.error("部署一覧の取得に失敗しました", error);
+      }
+    };
+    fetchDepartments();
+  }, []);
+
   const req = {
     // Nameカラム追加に伴うバックエンド実装完了次第、
     // プロパティを追加すること
@@ -22,34 +43,45 @@ export function ProductDialog({ isDialogOpen }) {
       providedWhy: parse.provided.What,
       providedOutcome: parse.provided.Outcome,
     },
-    department: parse.department,
+    department: selectedDepartments.map((name) => ({ departmentName: name })),
     classification: parse.classification,
   };
 
   const handleClose = () => setIsOpen(false);
 
   const handleRegister = async () => {
-    const res = await fetch("/projectdata", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(req),
-    });
+    try {
+      const res = await fetch("/projectdata", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(req),
+      });
+      if (!res.ok) {
+        throw new Error(`APIエラー: ${res.status}`);
+      }
 
-    // const vector = await fetch("/product", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify(req.product),
-    // });
-    const vector = await fetch("/product");
-    const data = await vector.json();
-    console.log(data);
+      // const vector = await fetch("/product", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify(req.product),
+      // });
+      const vector = await fetch("/product");
+      if (!vector.ok) {
+        throw new Error(`APIエラー: ${vector.status}`);
+      }
+      const data = await vector.json();
+      console.log(data);
 
-    // プロダクト登録をチャットに反映する
+      // プロダクト登録をチャットに反映する
 
-    // 総合関連度の上位5件のプロダクトを表示する
+      // 総合関連度の上位5件のプロダクトを表示する
+    } catch (error) {
+      console.error("プロダクト登録に失敗しました", error);
+    }
   };
-
-  console.log(req);
+  const handleChange = (e, newValue) => {
+    setSelectedDepartments(newValue);
+  };
   return (
     <>
       <Dialog open={isOpen} onClose={handleClose}>
@@ -82,7 +114,15 @@ export function ProductDialog({ isDialogOpen }) {
               </li>
               <li>
                 <label>ステークホルダー</label>
-                <textarea defaultValue={req.department[0].departmentName} />
+                <Autocomplete
+                  multiple
+                  options={departmentOptions}
+                  value={selectedDepartments}
+                  onChange={handleChange}
+                  renderInput={(params) => (
+                    <TextField {...params} placeholder="部署名を候補から選択" />
+                  )}
+                />
               </li>
             </ul>
           </div>
@@ -94,7 +134,7 @@ export function ProductDialog({ isDialogOpen }) {
             justifyContent: "center",
           }}
         >
-          <button>キャンセル</button>
+          <button onClick={handleClose}>キャンセル</button>
           <button onClick={handleRegister}>このプロダクトを登録する</button>
         </div>
       </Dialog>

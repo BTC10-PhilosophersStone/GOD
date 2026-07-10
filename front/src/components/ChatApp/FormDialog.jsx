@@ -4,12 +4,11 @@ import { useAtom } from "jotai";
 import { isFormDialogOpenAtom } from "../atoms";
 import { dataLabels } from "./dataLabels";
 import { FormDialogField } from "./FormDialogField";
-import { getSessionStorage } from "./sessionStorage";
+import { getSessionStorage, setSessionStorage } from "./sessionStorage";
 
 export function FormDialog() {
   const [isOpen, setIsOpen] = useAtom(isFormDialogOpenAtom);
   const sessionjsonKey = "productData";
-  // const productData = JSON.parse(sessionStorage.getItem(sessionjsonKey));
   const productData = getSessionStorage(sessionjsonKey);
   const sectionNames = ["issues", "provided"];
 
@@ -40,7 +39,8 @@ export function FormDialog() {
       updated[sectionName][key] =
         formValues[id].trim() === "" ? "不明" : formValues[id];
     }
-    sessionStorage.setItem(sessionjsonKey, JSON.stringify(updated));
+    // sessionStorage.setItem(sessionjsonKey, JSON.stringify(updated));
+    setSessionStorage(sessionjsonKey, updated);
     setIsOpen(false);
   };
 
