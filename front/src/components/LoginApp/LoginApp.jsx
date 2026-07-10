@@ -19,24 +19,28 @@ export function LoginApp() {
         <p id="title">
           <img src={godImage} alt="GOD" />
         </p>
-        <p id="user_id">
-          {/* {newForm ? "【新規登録】" : ""}
-          利用者IDを入力してください　　　（メールアドレス） */}
-        </p>
-        <InputEmail />
+        <div className="sing-area">
+          <div>
+            {/* <p id="user_id">
+              {newForm ? "【新規登録】" : ""}
+          利用者IDを入力してください　　　（メールアドレス）
+            </p> */}
+            <InputEmail />
+          </div>
 
-        <p id="pass">
-          {/* {newForm ? "【新規登録】" : ""}
+          <div>
+            {/* <p id="pass">
+              {newForm ? "【新規登録】" : ""}
           パスワードを入力してください
-          {newForm ? "（英大小数字８桁以上）" : ""} */}
-        </p>
-        <InputPass />
+          {newForm ? "（英大小数字８桁以上）" : ""}
+            </p> */}
+            <InputPass />
+          </div>
 
-        <div>
-          <SignInBt />
-        </div>
-
-        {/* {newForm ? (
+          <div>
+            <SignInBt />
+          </div>
+          {/* {newForm ? (
           <div>
             <BackBt />
             <SignUpBt />
@@ -47,6 +51,7 @@ export function LoginApp() {
             <SignInBt />
           </div>
         )} */}
+        </div>
       </div>
     </>
   );
