@@ -1,6 +1,12 @@
 import { useAtom, useSetAtom } from "jotai";
-import { messageListAtom, promptAtom, isFormDialogOpenAtom } from "../atoms";
-import { useEffect } from "react";
+import {
+  messageListAtom,
+  promptAtom,
+  isFormDialogOpenAtom,
+  productDataAtom,
+  isShortProductDataAtom,
+} from "../atoms";
+import { useEffect, useState } from "react";
 import { postMessage } from "./api/ChatAppApi";
 import { dataLabels } from "./dataLabels";
 import { getSessionStorage, setSessionStorage } from "./sessionStorage";
@@ -9,6 +15,9 @@ export function PromptButton() {
   const [prompt, setPrompt] = useAtom(promptAtom);
   const [messageList, setMessageList] = useAtom(messageListAtom);
   const setIsFormDialogOpen = useSetAtom(isFormDialogOpenAtom);
+  const [productAtom, setProductAtom] = useAtom(productDataAtom);
+  const [isShort, setIsShort] = useAtom(isShortProductDataAtom);
+  const [question, setQuestion] = useState(null);
 
   const makeShortageQuestion = (shortageList) => {
     const list = shortageList.map((key) => `・${dataLabels[key] ?? key}`);
@@ -24,19 +33,19 @@ export function PromptButton() {
 
   const sessionjsonKey = "productData";
 
-  const getMessageFromGod = async (content) => {
-    const res = await fetch("/datasummary", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ minutes: prompt }),
-    });
-    const data = await res.text();
-    const cleaned = data
-      .replace(/```json/g, "")
-      .replace(/```/g, "")
-      .trim();
-    sessionStorage.setItem(sessionjsonKey, cleaned);
-  };
+  // const getMessageFromGod = async (content) => {
+  //   const res = await fetch("/datasummary", {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({ minutes: prompt }),
+  //   });
+  //   const data = await res.text();
+  //   const cleaned = data
+  //     .replace(/```json/g, "")
+  //     .replace(/```/g, "")
+  //     .trim();
+  //   sessionStorage.setItem(sessionjsonKey, cleaned);
+  // };
 
   const addMessageFromGod = async (content) => {
     const res = await fetch("/datasummary", {
@@ -49,13 +58,12 @@ export function PromptButton() {
       .replace(/```json/g, "")
       .replace(/```/g, "")
       .trim();
-
     sessionStorage.setItem(sessionjsonKey, cleaned);
-
     // getMessageFromGod(content);
 
     // const productData = JSON.parse(cleaned);
     const productData = getSessionStorage(sessionjsonKey);
+    setProductAtom(productData);
     console.log(
       JSON.stringify(productData) === JSON.stringify(JSON.parse(cleaned)),
     );
@@ -64,11 +72,23 @@ export function PromptButton() {
     const shortage = checkShortage(productData);
     console.log("shortage", shortage);
     if (shortage) {
-      addMessageItem("GOD", makeShortageQuestion(shortage));
-      setIsFormDialogOpen(true);
+      // addMessageItem("GOD", makeShortageQuestion(shortage));
+      // setIsFormDialogOpen(true);
+      setIsShort(true);
     } else {
       addMessageItem("GOD", cleaned);
     }
+  };
+
+  const setAnswer = () => {
+    const obj = getSessionStorage(sessionjsonKey);
+    console.log("question", question);
+    const key = question.split(".")[0];
+    const subKey = question.split(".")[1];
+    const newObj = { ...obj, [key]: { ...obj[key], [subKey]: prompt } };
+    console.log("newObj", newObj);
+    setQuestion([...question.slice(1)]);
+    // setSessionStorage(sessionjsonKey);
   };
 
   // ストレージからプロダクト情報を取得、不足項目取得、ダイアログ表示切り替え
@@ -100,9 +120,19 @@ export function PromptButton() {
     return shortageList.length === 0 ? null : shortageList;
   };
   const handleClick = async () => {
-    await addMessageItem("user", prompt);
-
-    addMessageFromGod(prompt);
+    if (!question) {
+      await addMessageItem("user", prompt);
+    } else {
+      await addMessageItem("user", prompt);
+      setAnswer();
+      // productAtomの更新
+      const productData = getSessionStorage(sessionjsonKey);
+      setProductAtom(productData);
+      setSessionStorage;
+      console.log("checkShortage実行前");
+      checkShortage();
+    }
+    !question ? addMessageFromGod(prompt) : setQuestion(null);
     setPrompt("");
   };
 
@@ -110,6 +140,21 @@ export function PromptButton() {
     const sessionMessagesKey = "messages";
     setSessionStorage(sessionMessagesKey, [...messageList]);
   }, [messageList]);
+
+  useEffect(() => {
+    if (isShort) {
+      const list = checkShortage();
+      console.log("list[0]", list[0]);
+      addMessageItem(
+        "GOD",
+        `さすがの神でももう少し情報が欲しいところがある。
+        ${dataLabels[list[0]]}はなんじゃ？`,
+      );
+      // 何を聞いているか残す、
+      !question && setQuestion(list[0]);
+    }
+    // isShort && console.log(checkShortage());
+  }, [productAtom]);
 
   return (
     <>
