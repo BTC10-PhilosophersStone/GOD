@@ -25,7 +25,7 @@ export function PromptButton() {
   const sessionjsonKey = "productData";
 
   const addMessageFromGod = async (content) => {
-    const res = await fetch("/datasummary", {
+    const res = await fetch("/api/datasummary", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ minutes: prompt }),
