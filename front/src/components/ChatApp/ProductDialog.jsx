@@ -30,7 +30,7 @@ export function ProductDialog({ isDialogOpen }) {
   const handleClose = () => setIsOpen(false);
 
   const handleRegister = async () => {
-    const res = await fetch("/projectdata", {
+    const res = await fetch("/api/projectdata", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(req),
@@ -41,9 +41,9 @@ export function ProductDialog({ isDialogOpen }) {
     //   headers: { "Content-Type": "application/json" },
     //   body: JSON.stringify(req.product),
     // });
-    const vector = await fetch("/product");
-    const data = await vector.json();
-    console.log(data);
+    // const vector = await fetch("/api/product");
+    // const data = await vector.json();
+    // console.log(data);
 
     // プロダクト登録をチャットに反映する
 
