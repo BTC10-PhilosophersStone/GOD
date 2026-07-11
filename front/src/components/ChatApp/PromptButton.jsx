@@ -67,7 +67,7 @@ export function PromptButton() {
     // );
     // console.log("productData", productData);
     // console.log("cleaned", JSON.parse(cleaned));
-    const shortage = checkShortage(productData);
+    const shortage = checkShortage(JSON.parse(cleaned));
     // console.log("shortage", shortage);
     if (shortage) {
       // addMessageItem("GOD", makeShortageQuestion(shortage));
