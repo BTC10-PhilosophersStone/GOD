@@ -58,20 +58,10 @@ export function PromptButton() {
       .replace(/```json/g, "")
       .replace(/```/g, "")
       .trim();
-    // sessionStorage.setItem(sessionjsonKey, cleaned);
-    // const productData = getSessionStorage(sessionjsonKey);
     // atomに保存と同時にsessionstorageにも保存する（キーはproductDataで固定）
     setProductAtom(JSON.parse(cleaned));
-    // console.log(
-    //   JSON.stringify(productData) === JSON.stringify(JSON.parse(cleaned)),
-    // );
-    // console.log("productData", productData);
-    // console.log("cleaned", JSON.parse(cleaned));
     const shortage = checkShortage(JSON.parse(cleaned));
-    // console.log("shortage", shortage);
     if (shortage) {
-      // addMessageItem("GOD", makeShortageQuestion(shortage));
-      // setIsFormDialogOpen(true);
       setIsShort(true);
     } else {
       addMessageItem("GOD", cleaned);
@@ -126,17 +116,17 @@ export function PromptButton() {
   }, [messageList]);
 
   useEffect(() => {
-    if (isShort) {
-      const list = checkShortage(productAtom);
-      console.log("list[0]", list[0]);
-      addMessageItem(
-        "GOD",
-        `さすがの神でももう少し情報が欲しいところがある。
+    if (!isShort) return;
+    const list = checkShortage(productAtom);
+    console.log("list[0]", list[0]);
+    addMessageItem(
+      "GOD",
+      `さすがの神でももう少し情報が欲しいところがある。
         ${dataLabels[list[0]]}はなんじゃ？`,
-      );
-      // 何を聞いているか残す、
-      !question && setQuestion(list[0]);
-    }
+    );
+    // 何を聞いているか残す、
+    !question && setQuestion(list[0]);
+
     // isShort && console.log(checkShortage());
   }, [productAtom]);
 
