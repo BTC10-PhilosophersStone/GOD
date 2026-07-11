@@ -118,7 +118,10 @@ export function PromptButton() {
   useEffect(() => {
     if (!isShort) return;
     const list = checkShortage(productAtom);
-    console.log("list[0]", list[0]);
+    if (!list) {
+      setIsShort(false);
+      addMessageItem("GOD", "これで情報が揃ったぞ。");
+    }
     addMessageItem(
       "GOD",
       `さすがの神でももう少し情報が欲しいところがある。
