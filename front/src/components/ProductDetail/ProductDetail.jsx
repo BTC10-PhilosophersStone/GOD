@@ -1,21 +1,140 @@
-import { useState } from "react";
-import { Button, Container } from "@mui/material";
+import { useState, useEffect } from "react";
+import {
+  Avatar,
+  Chip,
+  IconButton,
+  Stack,
+  Tab,
+  Tabs,
+  Button,
+  Container,
+  Typography,
+  Box,
+  Tooltip,
+  Card,
+  CardContent,
+} from "@mui/material";
 import Modal from "react-modal";
-
-const customStyles = {
-  content: {
-    top: "20%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    minWidth: "40%",
-  },
-};
+import CloseIcon from "@mui/icons-material/Close";
+import {
+  Timeline,
+  TimelineItem,
+  TimelineSeparator,
+  TimelineConnector,
+  TimelineContent,
+  TimelineDot,
+} from "@mui/lab";
+import PersonIcon from "@mui/icons-material/Person";
+import WorkIcon from "@mui/icons-material/Work";
+import ButtonBase from "@mui/material/ButtonBase";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded";
 
 export function ProductDetail() {
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
+  const [tab, setTab] = useState(0);
+  const [tabSelected, setTabSelected] = useState("overview");
+  const [isHovered, setIsHovered] = useState(false);
+  const [isBookmark, setIsBookmark] = useState(false);
+
+  const stakeholders = [
+    "品質保証部 - 車体維持管理室",
+    "サービス部 - お客様支援室",
+    "サービス部 - お客様支援室",
+  ];
+
+  const members = ["中山 晋之介", "下川 和希", "真子 龍臣", "上谷 圭人"];
+
+  const profileCard = (name) => (
+    <Card
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start",
+        paddingTop: "8px",
+        paddingLeft: "8px",
+        gap: "6px",
+        position: "relative",
+        width: "176px",
+        height: "108px",
+        boxShadow: "none",
+        backgroundColor: "transparent",
+      }}
+    >
+      <CardContent
+        sx={{
+          p: 0,
+          "&:last-child": { paddingBottom: 0 }, // MUIのデフォルト設定を強制上書き
+        }}
+      >
+        <Typography
+          variant="subtitle2"
+          sx={{
+            fontFamily: "Zen Kaku Gothic New",
+            fontStyle: "normal",
+            fontWeight: 700,
+            fontSize: "16px",
+            lineHeight: "34px",
+            color: "#252e37",
+            marginBottom: "8px",
+          }}
+        >
+          {name}
+        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "flex-end",
+            padding: "0px",
+            gap: "4px",
+            width: "52px",
+            height: "18px",
+            marginBottom: "8px",
+          }}
+        >
+          <PersonIcon sx={{ fontSize: 16 }} />
+          <Typography
+            variant="body1"
+            sx={{
+              fontFamily: "Zen Kaku Gothic New",
+              fontStyle: "normal",
+              fontWeight: 400,
+              fontSize: "16px",
+              lineHeight: "18px",
+              color: "#252e37",
+            }}
+          >
+            CEO
+          </Typography>
+        </Box>
+
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: "4px",
+            padding: "0px",
+          }}
+        >
+          <WorkIcon sx={{ fontSize: 16 }} />
+          <Typography
+            variant="body1"
+            sx={{
+              fontFamily: "Zen Kaku Gothic New",
+              fontStyle: "normal",
+              fontWeight: 400,
+              fontSize: "16px",
+              lineHeight: "18px",
+              color: "#252e37",
+            }}
+          >
+            デジタル変革推進室
+          </Typography>
+        </Box>
+      </CardContent>
+    </Card>
+  );
 
   return (
     <Container maxWidth="sm">
@@ -31,48 +150,544 @@ export function ProductDetail() {
       <Modal
         appElement={document.getElementById("root")}
         isOpen={editModalIsOpen}
+        style={{ content: { borderRadius: "32px" } }}
       >
-        <h1>プロダクト名</h1>
-        <p>ユーザーが手動入力可</p>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-start",
+        <Box
+          component="section"
+          data-model-id="1261:1488"
+          sx={{
+            minWidth: 1257,
+            minHeight: 700,
+            position: "relative",
           }}
         >
-          <div
-            style={{
+          <Box
+            component="article"
+            sx={{
+              position: "relative",
+              minWidth: 1257,
+              height: "240px", // 固定高さにする
+              bgcolor: "background.paper",
+              borderRadius: "40px",
+              overflow: "hidden",
+
               display: "flex",
               flexDirection: "column",
-              justifyContent: "flex-start",
             }}
           >
-            <ul>
-              <li>
-                <label>概要</label>
-              </li>
-              <li>
-                <label>開発チームメンバー</label>
-              </li>
-              <li>
-                <label>困りごと（依頼内容）</label>
-              </li>
-              <li>
-                <label>ステークホルダー</label>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => {
-            setEditModalIsOpen(false);
-          }}
-        >
-          閉じる
-        </Button>
+            <Stack
+              direction="row"
+              spacing={2.5}
+              sx={{ px: "8px", pt: 3.5, pl: "51px", alignItems: "center" }}
+            >
+              <Typography
+                variant="h2"
+                sx={{
+                  fontFamily:
+                    '"Sawarabi Gothic","Zen kaku Gothic New","Roboto",sans-serif',
+                  fontWeight: 400,
+                  color: "#252e37",
+                  fontSize: "20px",
+                  lineHeight: "30px",
+                  letterSpacing: "-0.022em",
+                }}
+              >
+                プロダクトID
+              </Typography>
+              <Chip
+                label="企画検討"
+                size="small"
+                sx={{
+                  height: 24,
+                  bgcolor: "rgba(37, 46, 55, 0.08)",
+                  "& .MuiChip-label": {
+                    px: 1.5,
+                    fontFamily:
+                      '"Sawarabi Gothic","Zen kaku Gothic New","Roboto",sans-serif',
+                    fontWeight: 400,
+                    fontSize: 13,
+                    lineHeight: "18px",
+                    letterSpacing: "1px",
+                    color: "rgba(0, 0, 0, 0.87)",
+                  },
+                }}
+              />
+            </Stack>
+            <Typography
+              component="h1"
+              variant="h1"
+              sx={{
+                mt: "29px",
+                ml: "51px",
+                fontFamily: '"Zen Kaku Gothic New","Roboto",sans-serif',
+                fontWeight: 700,
+                color: "#252e37",
+                fontSize: "40px",
+                lineHeight: "34px",
+                letterSpacing: "0.125em",
+              }}
+            >
+              AIエージェント構想
+            </Typography>
+            <IconButton
+              aria-label="close"
+              sx={{
+                position: "absolute",
+                top: 20,
+                right: 48,
+                width: 40,
+                height: 40,
+                color: "#252e37",
+              }}
+              onClick={() => {
+                setEditModalIsOpen(false);
+              }}
+            >
+              <CloseIcon sx={{ fontSize: 40 }} />
+            </IconButton>
+            <Box sx={{ mt: "32px" }}>
+              <Tabs
+                value={tab}
+                onChange={(_, newValue) => {
+                  setTab(newValue);
+                  setTabSelected((ele) =>
+                    ele === "overview" ? "transition" : "overview",
+                  );
+                }}
+                aria-label="content tabs"
+                textColor="inherit"
+                sx={{
+                  minHeight: 76,
+                  px: 0,
+                  borderTop: "1px solid #ebebe7",
+                  borderBottom: "1px solid #ebebe7",
+                  "& .MuiTabs-flexContainer": {
+                    pl: "53px",
+                    pr: 10,
+                  },
+                  "& .MuiTabs-indicator": {
+                    backgroundColor: "#b78f00",
+                    height: 4,
+                  },
+                }}
+              >
+                <Tab
+                  label="概要"
+                  sx={{
+                    fontWeight: tabSelected === "overview" ? 700 : 400,
+                    fontSize: "20px",
+                    lineHeight: "24px",
+                    letterSpacing: "0.15px",
+                    color: "#252e37",
+                    minHeight: 76,
+                    paddingLeft: "40px",
+                    paddingRight: "40px",
+                    textTransform: "none",
+                    opacity: 1,
+                    "& Mui-selected": {
+                      color: "#252e37",
+                    },
+                  }}
+                />
+                <Tab
+                  label="変遷"
+                  disabled
+                  sx={{
+                    fontWeight: tabSelected === "transition" ? 700 : 400,
+                    fontSize: "20px",
+                    lineHeight: "24px",
+                    letterSpacing: "0.15px",
+                    color: "#252e37",
+                    minHeight: 76,
+                    paddingLeft: "40px",
+                    paddingRight: "40px",
+                    textTransform: "none",
+                    opacity: 1,
+                    "& Mui-selected": {
+                      color: "#252e37",
+                    },
+                  }}
+                />
+              </Tabs>
+            </Box>
+          </Box>
+          <Stack
+            direction="row"
+            spacing={3}
+            sx={{
+              px: "24px",
+              pt: 3.5,
+              pb: 6,
+              flex: 1,
+              minHeight: 0,
+            }}
+          >
+            <Box
+              sx={{
+                flex: 1,
+                minWidth: 0,
+                minHeight: 0,
+                height: 384,
+                overflowY: "auto",
+                // scrollbarWidth: "thin",
+                scrollbarColor: "#B78F00 #D9D9D9",
+                // "&::-webkit-scrollbar": { width: "px" },
+              }}
+            >
+              <Stack spacing={3}>
+                <Box component="section">
+                  <Typography
+                    variant="subtitle2"
+                    sx={{
+                      mb: 1,
+                      fontWeight: 600,
+                      color: "#252e37",
+                      fontSize: "16px",
+                      lineHeight: "24px",
+                      letterSpacing: "0.15px",
+                    }}
+                  >
+                    解決したい課題
+                  </Typography>
+                  <Box
+                    sx={{
+                      px: 2,
+                      py: 1.625,
+                      borderRadius: "5px",
+                      bgcolor: "background.paper",
+                    }}
+                  >
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        color: "#252e37",
+                        fontWeight: 400,
+                        fontSize: "16px",
+                        lineHeight: "24px",
+                        letterSpacing: "0.15px",
+                      }}
+                    >
+                      AIエージェントを活用した問い合わせ対応業務の自動化により、問い合わせ対応業務の工数削減と自動化による少人化を実現する。
+                    </Typography>
+                  </Box>
+                </Box>
+                <Box component="section">
+                  <Typography
+                    variant="subtitle2"
+                    sx={{
+                      mb: 1,
+                      fontWeight: 600,
+                      color: "#252e37",
+                      fontSize: "16px",
+                      lineHeight: "24px",
+                      letterSpacing: "0.15px",
+                    }}
+                  >
+                    提供価値
+                  </Typography>
+                  <Box
+                    sx={{
+                      px: 2,
+                      py: 1.625,
+                      borderRadius: "5px",
+                      bgcolor: "background.paper",
+                    }}
+                  >
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        color: "#252e37",
+                        fontWeight: 400,
+                        fontSize: "16px",
+                        lineHeight: "24px",
+                        letterSpacing: "0.15px",
+                      }}
+                    >
+                      問い合わせリードタイムの短縮、人員削減
+                    </Typography>
+                  </Box>
+                </Box>
+                <Stack
+                  direction={{ xs: "column", md: "row" }}
+                  spacing={{ xs: 3, md: 8 }}
+                  sx={{ maxWidth: 820 }}
+                >
+                  <Box component="section" sx={{ minWidth: 246 }}>
+                    <Typography
+                      sx={{
+                        md: 2,
+                        fontFamily: '"Noto Sans JP","Roboto",sans-serif',
+                        fontWeight: 700,
+                        fontSize: 16,
+                        lineHeight: "normal",
+                        color: "#252e37",
+                        paddingBottom: "16px",
+                      }}
+                    >
+                      ステークホルダー
+                    </Typography>
+                    <Stack spacing="23px" sx={{ pl: 2 }}>
+                      {stakeholders.map((item, index) => {
+                        return (
+                          <Box
+                            key={`${item}-${index}`}
+                            sx={{
+                              display: "inline-flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              px: "11px",
+                              bgcolor: "#ebebe7",
+                              alignSelf: "flex-start",
+                            }}
+                          >
+                            <Typography
+                              sx={{
+                                fontFamily:
+                                  '"Zen Kaku Gothic New","Roboto",sans-self',
+                                fontWeight: 400,
+                                fontSize: 16,
+                                lineHeight: "34px",
+                                color: "#252e37",
+                                whiteSpace: "nowrap",
+                              }}
+                            >
+                              {item}
+                            </Typography>
+                          </Box>
+                        );
+                      })}
+                    </Stack>
+                  </Box>
+                  <Stack
+                    component="section"
+                    spacing={3}
+                    sx={{
+                      width: 600,
+                      pt: "2px",
+                      position: "relative",
+                    }}
+                  >
+                    <Timeline>
+                      <TimelineItem>
+                        <TimelineSeparator>
+                          <TimelineDot
+                            sx={{
+                              backgroundColor: "#b78f00",
+                              boxShadow: "none",
+                            }}
+                          />
+                          <TimelineConnector
+                            sx={{
+                              backgroundColor: "#b78f00",
+                              boxShadow: "none",
+                            }}
+                          />
+                        </TimelineSeparator>
+                        <TimelineContent>
+                          <Typography
+                            variant="subtitle2"
+                            sx={{
+                              fontWeight: 600,
+                              color: "#252e37",
+                              fontSize: "16px",
+                            }}
+                          >
+                            業務カテゴリ
+                          </Typography>
+                          <Typography
+                            variant="body1"
+                            sx={{
+                              pl: "8px",
+                              color: "#252e37",
+                              whiteSpace: "nowrap",
+                              fontSize: "16px",
+                            }}
+                          >
+                            問い合わせ対応
+                          </Typography>
+                        </TimelineContent>
+                      </TimelineItem>
+                      <TimelineItem>
+                        <TimelineSeparator>
+                          <TimelineDot
+                            sx={{
+                              backgroundColor: "#b78f00",
+                              boxShadow: "none",
+                            }}
+                          />
+                          <TimelineConnector
+                            sx={{
+                              backgroundColor: "#b78f00",
+                              boxShadow: "none",
+                            }}
+                          />
+                        </TimelineSeparator>
+                        <TimelineContent>
+                          <Typography
+                            variant="subtitle2"
+                            sx={{
+                              fontWeight: 600,
+                              color: "#252e37",
+                              fontSize: "16px",
+                            }}
+                          >
+                            業務領域
+                          </Typography>
+                          <Typography
+                            variant="body1"
+                            sx={{
+                              pl: "8px",
+                              color: "#252e37",
+                              whiteSpace: "nowrap",
+                              fontSize: "16px",
+                            }}
+                          >
+                            業務自動化
+                          </Typography>
+                        </TimelineContent>
+                      </TimelineItem>
+                      <TimelineItem>
+                        <TimelineSeparator>
+                          <TimelineDot
+                            sx={{
+                              backgroundColor: "#b78f00",
+                              boxShadow: "none",
+                            }}
+                          />
+                        </TimelineSeparator>
+                        <TimelineContent>
+                          <Typography
+                            variant="subtitle2"
+                            sx={{
+                              fontWeight: 600,
+                              color: "#252e37",
+                              fontSize: "16px",
+                            }}
+                          >
+                            業務
+                          </Typography>
+                          <Typography
+                            variant="body1"
+                            sx={{
+                              pl: "8px",
+                              color: "#252e37",
+                              whiteSpace: "nowrap",
+                              fontSize: "16px",
+                            }}
+                          >
+                            AIエージェント活用
+                          </Typography>
+                        </TimelineContent>
+                      </TimelineItem>
+                    </Timeline>
+                  </Stack>
+                </Stack>
+                <Box component="section" sx={{ width: 572, pd: 2 }}>
+                  <Typography
+                    variant="subtitle2"
+                    sx={{
+                      mb: "19px",
+                      fontWeight: 700,
+                      color: "#252e37",
+                      fontSize: "16px",
+                      lineHeight: "24px",
+                      letterSpacing: "0.15px",
+                    }}
+                  >
+                    開発メンバー
+                  </Typography>
+                  <Stack
+                    direction="row"
+                    spacing="38px"
+                    sx={{
+                      alignItems: "center",
+                    }}
+                  >
+                    {members.map((src, index) => (
+                      <Tooltip
+                        key={`tooltip-${src}-${index}`}
+                        title={profileCard(src)}
+                        placement="top-start"
+                        slotProps={{
+                          tooltip: {
+                            sx: {
+                              backgroundColor: "#ebebe7",
+                              borderRadius: "16px",
+                            },
+                          },
+                          popper: {
+                            modifiers: [
+                              {
+                                name: "offset",
+                                options: {
+                                  offset: [72, -52],
+                                },
+                              },
+                            ],
+                          },
+                        }}
+                      >
+                        <Avatar
+                          key={`${src}-${index}`}
+                          src={src}
+                          alt={`${src}-${index + 1}`}
+                          component={ButtonBase}
+                          sx={{
+                            width: 84,
+                            height: 84,
+                            "&:active": {
+                              transform: "scale(0.94) translateY(2px)",
+                              boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.1)",
+                            },
+                          }}
+                          onClick={() =>
+                            window.open(
+                              "https://teams.microsoft.com/l/chat/0/0?users=keito_kamiya@mail.toyota.co.jp&message=【メッセージ欄】",
+                            )
+                          }
+                        />
+                      </Tooltip>
+                    ))}
+                  </Stack>
+                </Box>
+              </Stack>
+            </Box>
+          </Stack>
+          <Box
+            component={ButtonBase}
+            onClick={() => setIsBookmark(!isBookmark)}
+            sx={{
+              position: "absolute",
+              top: 96,
+              left: 1350,
+              bgcolor: "#b78f00",
+              borderRadius: "0px 8px 8px 0px",
+              p: 1.25,
+              display: "inline-flex",
+              "&:active": {
+                transform: "scale(0.94) translateY(2px)",
+                boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.1)",
+              },
+            }}
+          >
+            {isBookmark ? (
+              <BookmarkIcon
+                sx={{
+                  fontSize: 40,
+                  color: "#ffffff",
+                }}
+              />
+            ) : (
+              <BookmarkBorderRoundedIcon
+                sx={{
+                  fontWeight: 2,
+                  fontSize: 40,
+                  color: "#ffffff",
+                }}
+              />
+            )}
+          </Box>
+        </Box>
       </Modal>
     </Container>
   );
