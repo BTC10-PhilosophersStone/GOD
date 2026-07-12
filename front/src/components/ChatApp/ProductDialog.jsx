@@ -9,6 +9,12 @@ export function ProductDialog({ isDialogOpen, onClose }) {
   const [selectedDepartments, setSelectedDepartments] = useState(
     parse.department.map((d) => d.departmentName),
   );
+  const [issuesContent, setIssuesContent] = useState(parse.issues.Content);
+  const [providedOutcome, setProvidedOutcome] = useState(
+    parse.provided.Outcome,
+  );
+  const [providedWho, setProvidedWho] = useState(parse.provided.Who);
+  const [issuesWhat, setIssuesWhat] = useState(parse.issues.What);
 
   useEffect(() => {
     const fetchDepartments = async () => {
@@ -31,16 +37,16 @@ export function ProductDialog({ isDialogOpen, onClose }) {
     // プロパティを追加すること
     product: {
       issuesWho: parse.issues.Who,
-      issuesWhat: parse.issues.What,
+      issuesWhat,
       issuesWhen: parse.issues.When,
       issuesWhere: parse.issues.Where,
       issuesWhy: parse.issues.Why,
       issuesHow: parse.issues.How,
       issuesWhatWhy: parse.issues.What_Why,
-      issuesContent: parse.issues.Content,
-      providedWho: parse.provided.Who,
+      issuesContent,
+      providedWho,
       providedWhy: parse.provided.What,
-      providedOutcome: parse.provided.Outcome,
+      providedOutcome,
     },
     department: selectedDepartments.map((name) => ({ departmentName: name })),
     classification: parse.classification,
@@ -59,12 +65,15 @@ export function ProductDialog({ isDialogOpen, onClose }) {
         throw new Error(`APIエラー: ${res.status}`);
       }
 
-      // const vector = await fetch("/product", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify(req.product),
-      // });
-      const vector = await fetch("/product");
+      const vector = await fetch("/product", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(req.product),
+      });
+
+      // バックエンドでエンドポイントのメソッドをGETに変更したらこちらを採用する
+      // const vector = await fetch("/product");
+
       if (!vector.ok) {
         throw new Error(`APIエラー: ${vector.status}`);
       }
@@ -97,19 +106,31 @@ export function ProductDialog({ isDialogOpen, onClose }) {
             <ul>
               <li>
                 <label>プロダクト名</label>
-                <textarea defaultValue={req.product.issuesContent} />
+                <textarea
+                  value={issuesContent}
+                  onChange={(e) => setIssuesContent(e.target.value)}
+                />
               </li>
               <li>
                 <label>概要</label>
-                <textarea defaultValue={req.product.providedOutcome} />
+                <textarea
+                  value={providedOutcome}
+                  onChange={(e) => setProvidedOutcome(e.target.value)}
+                />
               </li>
               <li>
                 <label>開発チームメンバー</label>
-                <textarea defaultValue={req.product.providedWho} />
+                <textarea
+                  value={providedWho}
+                  onChange={(e) => setProvidedWho(e.target.value)}
+                />
               </li>
               <li>
                 <label>困りごと（依頼内容）</label>
-                <textarea defaultValue={req.product.issuesWhat} />
+                <textarea
+                  value={issuesWhat}
+                  onChange={(e) => setIssuesWhat(e.target.value)}
+                />
               </li>
               <li>
                 <label>ステークホルダー</label>

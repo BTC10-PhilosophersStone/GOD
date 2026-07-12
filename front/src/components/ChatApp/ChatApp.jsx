@@ -55,15 +55,12 @@ export function ChatApp() {
       <Prompt />
 
       {/* 確認用 */}
-      <button onClick={() => setIsOpen(!isOpen)}>ダイアログ表示</button>
+      {/* <button onClick={() => setIsOpen(!isOpen)}>ダイアログ表示</button> */}
       {isOpen && (
-        <ProductDialog
-          isDialogOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-        />
+        <ProductDialog isDialogOpen={isOpen} onClose={() => setIsOpen(false)} />
       )}
 
-      {isFormOpen && <FormDialog />}
+      {/* {isFormOpen && <FormDialog />} */}
     </>
   );
 }
