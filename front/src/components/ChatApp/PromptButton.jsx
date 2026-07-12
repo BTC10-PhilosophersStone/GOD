@@ -48,34 +48,50 @@ export function PromptButton() {
   // };
 
   const addMessageFromGod = async (content) => {
-    const res = await fetch("/datasummary", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ minutes: prompt }),
-    });
-    const data = await res.text();
-    const cleaned = data
-      .replace(/```json/g, "")
-      .replace(/```/g, "")
-      .trim();
-    // atomに保存と同時にsessionstorageにも保存する（キーはproductDataで固定）
-    setProductAtom(JSON.parse(cleaned));
-    const shortage = checkShortage(JSON.parse(cleaned));
-    if (shortage) {
-      setIsShort(true);
-    } else {
-      addMessageItem("GOD", cleaned);
+    try {
+      const res = await fetch("/datasummary", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ minutes: content }),
+      });
+      if (!res.ok) {
+        throw new Error(res.status);
+      }
+      const data = await res.text();
+      const cleaned = data
+        .replace(/```json/g, "")
+        .replace(/```/g, "")
+        .trim();
+      const productData = JSON.parse(cleaned);
+      // atomに保存と同時にsessionstorageにも保存する（キーはproductDataで固定）
+      setProductAtom(productData);
+      // const shortage = checkShortage(productData);
+      if (checkShortage(productData)) {
+        setIsShort(true);
+      } else {
+        addMessageItem("GOD", cleaned);
+      }
+    } catch (error) {
+      console.error(error);
+      addMessageItem(
+        "GOD",
+        "うまく読み取れなかった、もう一度議事録を送ってくれ。",
+      );
     }
   };
 
   const setAnswer = () => {
-    const obj = getSessionStorage(sessionjsonKey);
+    // const obj = getSessionStorage(sessionjsonKey);
     // console.log("question", question);
-    const key = question.split(".")[0];
-    const subKey = question.split(".")[1];
-    const newObj = { ...obj, [key]: { ...obj[key], [subKey]: prompt } };
+    // const key = question.split(".")[0];
+    // const subKey = question.split(".")[1];
+    const [key, subKey] = question.split(".");
+    const newObj = {
+      ...productAtom,
+      [key]: { ...productAtom[key], [subKey]: prompt },
+    };
     setProductAtom(newObj);
-    setQuestion([...question.slice(1)]);
+    // setQuestion([...question.slice(1)]);
   };
 
   // ストレージからプロダクト情報を取得、不足項目取得、ダイアログ表示切り替え
@@ -95,19 +111,22 @@ export function PromptButton() {
     }
     return shortageList.length === 0 ? null : shortageList;
   };
-  const handleClick = async () => {
+  const handleClick = () => {
+    addMessageItem("user", prompt);
     if (!question) {
-      addMessageItem("user", prompt);
+      // addMessageItem("user", prompt);
+      addMessageFromGod(prompt);
     } else {
-      addMessageItem("user", prompt);
+      // addMessageItem("user", prompt);
       setAnswer();
       // productAtomの更新
-      const productData = getSessionStorage(sessionjsonKey);
-      setProductAtom(productData);
-      setSessionStorage;
-      console.log("checkShortage実行前");
+      // const productData = getSessionStorage(sessionjsonKey);
+      // setProductAtom(productData);
+      // setSessionStorage;
+      // console.log("checkShortage実行前");
+      setQuestion(null);
     }
-    !question ? addMessageFromGod(prompt) : setQuestion(null);
+    // !question ? addMessageFromGod(prompt) : setQuestion(null);
     setPrompt("");
   };
 
@@ -121,11 +140,11 @@ export function PromptButton() {
     if (!list) {
       setIsShort(false);
       addMessageItem("GOD", "これで情報が揃ったぞ。");
+      return;
     }
     addMessageItem(
       "GOD",
-      `さすがの神でももう少し情報が欲しいところがある。
-        ${dataLabels[list[0]]}はなんじゃ？`,
+      `さすがの神でももう少し情報が欲しいところがある。\n${dataLabels[list[0]] ?? list[0]}はなんじゃ？`,
     );
     // 何を聞いているか残す、
     !question && setQuestion(list[0]);
