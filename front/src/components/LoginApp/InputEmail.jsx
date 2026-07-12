@@ -1,15 +1,16 @@
 import "./LoginApp.css";
-import { useSetAtom } from "jotai";
-import { atomEmail } from "./atoms";
+import { useSetAtom, useAtomValue } from "jotai";
+import { atomEmail, atomAuthError } from "./atoms";
 import { TextField } from "@mui/material";
 
 export function InputEmail() {
   const setEmail = useSetAtom(atomEmail);
+  const authError = useAtomValue(atomAuthError); // エラー状態を監視
 
   return (
     <>
       <TextField
-        id="outlined-basic"
+        // id="outlined-basic"
         label="メールアドレス"
         variant="outlined"
         aria-invalid="false"
@@ -20,9 +21,9 @@ export function InputEmail() {
         onChange={(e) => {
           setEmail(e.target.value);
         }}
+        error={!!authError}
+        helperText={authError}
         sx={{
-          width: "275px",
-
           // 1. デフォルト状態 (通常時)
           "& .MuiOutlinedInput-root": {
             "& fieldset": { borderColor: "gray" },

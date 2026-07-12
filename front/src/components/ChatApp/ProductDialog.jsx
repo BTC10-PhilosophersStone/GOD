@@ -45,6 +45,7 @@ export function ProductDialog({ isDialogOpen, onClose }) {
     // Nameカラム追加に伴うバックエンド実装完了次第、
     // プロパティを追加すること
     product: {
+      name: parse.issues.Name,
       issuesWho: parse.issues.Who,
       issuesWhat,
       issuesWhen: parse.issues.When,
