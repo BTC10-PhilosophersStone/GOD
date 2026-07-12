@@ -11,6 +11,8 @@ import { useEffect, useState } from "react";
 import { postMessage } from "./api/ChatAppApi";
 import { dataLabels } from "./dataLabels";
 import { getSessionStorage, setSessionStorage } from "./sessionStorage";
+import { IconButton } from "@mui/material";
+import NorthIcon from "@mui/icons-material/North";
 
 export function PromptButton() {
   const [prompt, setPrompt] = useAtom(promptAtom);
@@ -158,6 +160,24 @@ export function PromptButton() {
 
   return (
     <>
+      <IconButton
+        aria-label="send"
+        onClick={handleClick}
+        disabled={!prompt}
+        sx={{
+          width: 40,
+          height: 40,
+          bgcolor: "primary.main",
+          color: "primary.contrastText",
+          borderRadius: 1,
+          flexShrink: 0,
+          "&:hover": {
+            bgcolor: "primary.main",
+          },
+        }}
+      >
+        <NorthIcon sx={{ fontSize: 27 }} />
+      </IconButton>
       <button onClick={handleClick} disabled={!prompt}>
         送信
       </button>

@@ -13,11 +13,13 @@ import {
   DialogContent,
   IconButton,
   Tooltip,
+  Menu,
 } from "@mui/material";
 
 import AlbumIcon from "@mui/icons-material/Album";
 import { useRef, useState, useEffect } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, Link, useLocation } from "react-router";
+import MenuIcon from "@mui/icons-material/Menu";
 
 export function Header({}) {
   //   const [link, setLink] = useState(null);
@@ -43,60 +45,77 @@ export function Header({}) {
   //   });
 
   return (
-    <Box
+    // <Box
+    //   sx={{
+    //     flexGrow: 0,
+    //     mb: "32px",
+    //     width: "100%",
+    //   }}
+    // >
+    <AppBar
+      position="fixed"
+      color="transparent"
+      elevation={0}
       sx={{
-        flexGrow: 0,
-        mb: "32px",
-        width: "100%",
+        bgcolor: "transparent",
+        boxShadow: "none",
       }}
     >
-      <AppBar
-        position="static"
+      <Toolbar
+        disableGutters
         sx={{
-          height: 60,
-          backgroundColor: alpha("#ffffff", 0.5),
-          justifyContent: "space-between",
-          width: "100%",
+          px: 3,
+          pt: 3,
+          minHeight: "auto",
+          alignItems: "flex-start",
         }}
       >
-        <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
-          <IconButton
-            size="large"
-            edge="start"
-            aria-label="menu"
-            sx={{ ml: 1, mr: 2 }}
-            // onClick={() => {
-            //   if (userId) {
-            //     setLink("/team");
-            //   }
-            // }}
-            // href={link}
-          >
-            <AlbumIcon color="primary" sx={{ mr: 2 }} />
+        <IconButton
+          aria-label="menu"
+          component={Link}
+          to="/"
+          sx={{
+            width: 40,
+            height: 40,
+            color: "custom.menuIcon",
+            p: 0,
+          }} // size="large"
+          // edge="start"
+          // aria-label="menu"
+          // sx={{ ml: 1, mr: 2 }}
+          // onClick={() => {
+          //   if (userId) {
+          //     setLink("/team");
+          //   }
+          // }}
+          // href={link}
+        >
+          {/* <AlbumIcon color="primary" sx={{ mr: 2 }} /> */}
 
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              color="primary"
-              fontWeight="bold"
-              sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
-            >
-              GOD
-            </Typography>
-          </IconButton>
-          <Button
-            variant="outlined"
-            // onClick={signOut}
-            href="/"
-            sx={{
-              mr: 2,
-            }}
+          {/* <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            color="primary"
+            fontWeight="bold"
+            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
           >
-            Logout
-          </Button>
-        </Toolbar>
-      </AppBar>
-    </Box>
+            GOD
+          </Typography> */}
+          <MenuIcon sx={{ fontSize: 30 }} />
+        </IconButton>
+        {/* <Button
+          variant="outlined"
+          // onClick={signOut}
+          href="/"
+          sx={{
+            mr: 2,
+          }}
+        >
+          Logout
+        </Button> */}
+      </Toolbar>
+    </AppBar>
+    // </Box>
   );
 }

@@ -1,13 +1,15 @@
-import { Route, Routes } from "react-router";
+import { Route, Routes, useLocation } from "react-router";
 import { LoginApp } from "./LoginApp/LoginApp";
 import { ChatApp } from "./ChatApp/ChatApp";
 import { ProductDetail } from "./ProductDetail/ProductDetail";
 import { Header } from "./Header";
 
 function RoutesApp() {
+  const location = useLocation();
+  const isLoginScreen = location.pathname === "/";
   return (
     <>
-      <Header />
+      {!isLoginScreen && <Header />}
       <Routes>
         <Route path="/" element={<LoginApp />} />
         <Route path="/chat" element={<ChatApp />} />
