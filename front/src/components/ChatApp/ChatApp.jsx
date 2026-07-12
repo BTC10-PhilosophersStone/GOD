@@ -3,13 +3,17 @@ import { MessageList } from "./MessageList";
 import { Prompt } from "./Prompt";
 import { useEffect, useState } from "react";
 import { useAtom } from "jotai";
-import { messageListAtom, isFormDialogOpenAtom } from "../atoms";
+import {
+  messageListAtom,
+  isFormDialogOpenAtom,
+  isProductDialogOpenAtom,
+} from "../atoms";
 import { ProductDialog } from "./ProductDialog";
 import { FormDialog } from "./FormDialog";
 
 export function ChatApp() {
   const [messageList, setMessageList] = useAtom(messageListAtom);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useAtom(isProductDialogOpenAtom);
   const [isFormOpen] = useAtom(isFormDialogOpenAtom);
 
   const sessionMessagesKey = "messages";
@@ -52,7 +56,12 @@ export function ChatApp() {
 
       {/* 確認用 */}
       <button onClick={() => setIsOpen(!isOpen)}>ダイアログ表示</button>
-      {isOpen && <ProductDialog isDialogOpen={isOpen} />}
+      {isOpen && (
+        <ProductDialog
+          isDialogOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+        />
+      )}
 
       {isFormOpen && <FormDialog />}
     </>

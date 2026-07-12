@@ -1,8 +1,7 @@
 import { Dialog, DialogTitle, Autocomplete, TextField } from "@mui/material";
 import { useState, useEffect } from "react";
 
-export function ProductDialog({ isDialogOpen }) {
-  const [isOpen, setIsOpen] = useState(isDialogOpen);
+export function ProductDialog({ isDialogOpen, onClose }) {
   const sessionjsonKey = "productData";
   const rawData = sessionStorage.getItem(sessionjsonKey);
   const parse = JSON.parse(rawData);
@@ -47,7 +46,7 @@ export function ProductDialog({ isDialogOpen }) {
     classification: parse.classification,
   };
 
-  const handleClose = () => setIsOpen(false);
+  const handleClose = () => onClose();
 
   const handleRegister = async () => {
     try {
@@ -84,7 +83,7 @@ export function ProductDialog({ isDialogOpen }) {
   };
   return (
     <>
-      <Dialog open={isOpen} onClose={handleClose}>
+      <Dialog open={isDialogOpen} onClose={handleClose}>
         <DialogTitle>議事録を元に作成したプロダクト案</DialogTitle>
         <p>ユーザーが手動入力可</p>
         <div

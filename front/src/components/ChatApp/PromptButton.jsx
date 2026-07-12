@@ -5,6 +5,7 @@ import {
   isFormDialogOpenAtom,
   productDataAtom,
   isShortProductDataAtom,
+  isProductDialogOpenAtom,
 } from "../atoms";
 import { useEffect, useState } from "react";
 import { postMessage } from "./api/ChatAppApi";
@@ -17,6 +18,7 @@ export function PromptButton() {
   // const setIsFormDialogOpen = useSetAtom(isFormDialogOpenAtom);
   const [productAtom, setProductAtom] = useAtom(productDataAtom);
   const [isShort, setIsShort] = useAtom(isShortProductDataAtom);
+  const setIsProductDialogOpen = useSetAtom(isProductDialogOpenAtom);
   const [question, setQuestion] = useState(null);
 
   // const makeShortageQuestion = (shortageList) => {
@@ -70,6 +72,7 @@ export function PromptButton() {
         setIsShort(true);
       } else {
         addMessageItem("GOD", cleaned);
+        setIsProductDialogOpen(true);
       }
     } catch (error) {
       console.error(error);
@@ -140,6 +143,7 @@ export function PromptButton() {
     if (!list) {
       setIsShort(false);
       addMessageItem("GOD", "これで情報が揃ったぞ。");
+      setIsProductDialogOpen(true);
       return;
     }
     addMessageItem(

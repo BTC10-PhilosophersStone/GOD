@@ -9,6 +9,7 @@ const storage = createJSONStorage(() => sessionStorage);
 const productDataAtom = atomWithStorage("productData", null, storage, {
   getOnInit: true,
 });
+const isProductDialogOpenAtom = atom(false);
 
 export {
   messageListAtom,
@@ -16,4 +17,5 @@ export {
   isFormDialogOpenAtom,
   productDataAtom,
   isShortProductDataAtom,
+  isProductDialogOpenAtom,
 };
