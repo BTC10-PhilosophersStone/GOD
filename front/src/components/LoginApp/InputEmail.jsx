@@ -22,7 +22,7 @@ export function InputEmail() {
           setEmail(e.target.value);
         }}
         error={!!authError}
-        helperText={authError}
+        // helperText={authError}
         sx={{
           // 1. デフォルト状態 (通常時)
           "& .MuiOutlinedInput-root": {

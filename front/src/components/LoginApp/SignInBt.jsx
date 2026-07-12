@@ -3,8 +3,7 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { atomEmail, atomPass, atomAuthError } from "./atoms";
 import { useNavigate } from "react-router";
 // import SendIcon from "@mui/icons-material/Send";
-import { Button } from "@mui/material";
-
+import { Button, Box, Typography } from "@mui/material";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebaseConfig";
 
@@ -15,7 +14,7 @@ export function SignInBt() {
   const authError = useAtomValue(atomAuthError); // 自身のエラー状態を監視
   const nav = useNavigate();
 
-  // メールアドレスとパスワードが未入力の場合はボタンを無効化（必要に応じて有効にしてください）
+  // メールアドレスとパスワードが未入力の場合はボタンを無効化
   const isDisabled = !email || !pass;
 
   const signIn = async () => {
@@ -23,14 +22,13 @@ export function SignInBt() {
 
     // 認証開始時に前回の認証エラーをクリア
     setAuthError("");
-
     let message = "";
 
     try {
       await signInWithEmailAndPassword(auth, email, pass);
       nav("/chat");
     } catch (error) {
-      console.error("Login Error:", error);
+      // console.error("Login Error:", error);
       const errorCode = error?.code;
 
       if (errorCode) {
@@ -52,38 +50,64 @@ export function SignInBt() {
     }
   };
   return (
-    <Button
-      id="right_button"
-      variant="contained"
-      // disabled={isDisabled} // 未入力時にボタン自体を押せなくする場合はコメントアウトを解除
-      onClick={signIn}
-      className={authError ? "Mui-error" : ""}
+    <Box
       sx={{
-        // 1. デフォルト状態 (通常時)
-        bgcolor: "#d9b300",
-        color: "#ffffff",
-        textTransform: "none",
-
-        // 2. ホバー状態 (Hover)
-        "&:hover": {
-          bgcolor: "#A38600",
-          color: "#ffffff",
-          textTransform: "none",
-        },
-
-        // 3. 無効化状態 (Disabled)
-        "&.Mui-disabled": {
-          bgcolor: "#d9b300",
-          color: "#ffffff",
-        },
-        // 4. エラー状態 (Error)
-        "&.Mui-error": {
-          bgcolor: "#e0e0e0",
-          color: "#a6a6a6",
-        },
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 1,
+        width: "100%",
+        maxWidth: "448px",
       }}
     >
-      ようこそ
-    </Button>
+      <Button
+        id="right_button"
+        variant="contained"
+        onClick={signIn}
+        className={authError ? "Mui-error" : ""}
+        sx={{
+          // 1. デフォルト状態 (通常時)
+          bgcolor: "rgba(183, 143, 0, 1)",
+          color: "rgba(255, 255, 255, 1)",
+          textTransform: "none",
+
+          // 2. ホバー状態 (Hover)
+          "&:hover": {
+            bgcolor: "rgba(152, 119, 0, 1)",
+            color: "rgba(255, 255, 255, 1)",
+            textTransform: "none",
+          },
+
+          // 3. 無効化状態 (Disabled)
+          "&.Mui-disabled": {
+            bgcolor: "rgba(228, 202, 77, 1)",
+            color: "rgba(255, 255, 255, 1)",
+          },
+          // 4. エラー状態 (Error)
+          "&.Mui-error": {
+            bgcolor: "rgba(0, 0, 0, 0.12)",
+            color: "rgba(0, 0, 0, 0.26)",
+          },
+        }}
+      >
+        ようこそ
+      </Button>
+
+      {authError && (
+        <Typography
+          id="right_button_m"
+          variant="caption"
+          color="error"
+          sx={{
+            width: "100%",
+            textAlign: "left",
+            mt: 0.0,
+            px: 1,
+          }}
+        >
+          {authError}
+        </Typography>
+      )}
+    </Box>
   );
 }
