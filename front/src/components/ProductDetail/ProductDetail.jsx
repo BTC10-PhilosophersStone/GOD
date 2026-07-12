@@ -29,7 +29,6 @@ import WorkIcon from "@mui/icons-material/Work";
 import ButtonBase from "@mui/material/ButtonBase";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded";
-import { ChatDesin } from "./ChatDesin";
 
 export function ProductDetail() {
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
@@ -178,7 +177,6 @@ export function ProductDetail() {
       >
         モーダル開く
       </Button>
-      <ChatDesin></ChatDesin>
       <Modal
         appElement={document.getElementById("root")}
         isOpen={editModalIsOpen}
