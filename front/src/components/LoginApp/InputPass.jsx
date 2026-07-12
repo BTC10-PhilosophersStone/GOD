@@ -61,7 +61,7 @@ export function InputPass() {
             "& fieldset": { borderColor: "red" },
             "& input": { color: "black" },
           },
-          "& .MuiInputLabel-root.Mui-error": { color: "red" },
+          // "& .MuiInputLabel-root.Mui-error": { color: "red" },
         }}
       >
         <InputLabel htmlFor={`${filledPasswordId}-input`}>
@@ -75,7 +75,7 @@ export function InputPass() {
           placeholder="Password"
           className="cert-con"
           onChange={(e) => {
-            console.log(e.target.value);
+            // console.log(e.target.value);
             setPass(e.target.value);
           }}
           endAdornment={
@@ -93,7 +93,7 @@ export function InputPass() {
             </InputAdornment>
           }
         />
-        {authError && <FormHelperText>{authError}</FormHelperText>}
+        {/* {authError && <FormHelperText>{authError}</FormHelperText>} */}
       </FormControl>
     </>
   );

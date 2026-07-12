@@ -26,8 +26,8 @@
   margin-top: 30px;
 } */
 #right_button {
-  margin: 30px 50px;
-  margin-bottom: 100px;
+  margin: 15px 50px;
+  margin-bottom: 10px;
   width: 448px;
 }
 
@@ -57,7 +57,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 32px;
+  gap: 15px;
   width: 448px;
   height: 202px;
   margin: 30px auto 100px auto;
