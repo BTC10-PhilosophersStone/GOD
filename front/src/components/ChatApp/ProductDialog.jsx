@@ -19,12 +19,21 @@ export function ProductDialog({ isDialogOpen, onClose }) {
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
-        const res = await fetch("/departments");
-        if (!res.ok) {
-          throw new Error(`APIエラー: ${res.status}`);
-        }
-        const data = await res.json();
-        setDepartmentOptions(data.map((d) => d.departmentName));
+        // const res = await fetch("/departments");
+        // if (!res.ok) {
+        //   throw new Error(`APIエラー: ${res.status}`);
+        // }
+        // const data = await res.json();
+        // setDepartmentOptions(data.map((d) => d.departmentName));
+
+        // 動作確認用の配列
+        setDepartmentOptions([
+          "ＴＧＲ－ＷＲＴ",
+          "Ｂ．Ｎ．Ｉ．Ｎ．",
+          "Ｔ．Ｍ．Ｍ．Ｔ．",
+          "国際エネルギー機関",
+          "連合燃料電池システム研究開発",
+        ]);
       } catch (error) {
         console.error("部署一覧の取得に失敗しました", error);
       }
