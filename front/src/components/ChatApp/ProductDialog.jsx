@@ -28,6 +28,13 @@ const parse = {
     work: "サンプル業務",
   },
 };
+
+const memberImages = [
+  "front/src/assets/hero.png",
+  "front/src/assets/react.svg",
+  "front/src/assets/vite.svg",
+];
+
 export function ProductDialog({ isDialogOpen }) {
   const [isOpen, setIsOpen] = useState(isDialogOpen);
   const sessionjsonKey = "productData";
@@ -38,6 +45,7 @@ export function ProductDialog({ isDialogOpen }) {
     "人事部",
     "人材開発",
     "人材開発G",
+    // parse.department.map((d) => d.departmentName),
   ]);
   const [productName, setProductName] = useState(parse.issue.name);
   const [issue, setIssue] = useState(parse.issue.issue);
@@ -45,29 +53,37 @@ export function ProductDialog({ isDialogOpen }) {
   const [category, setCategory] = useState(parse.issue.category);
   const [domain, setDomain] = useState(parse.issue.domain);
   const [work, setWork] = useState(parse.issue.work);
-
+  // const [issuesContent, setIssuesContent] = useState(parse.issues.Content);
+  // const [providedOutcome, setProvidedOutcome] = useState(
+  //   parse.provided.Outcome,
+  // );
+  // const [providedWho, setProvidedWho] = useState(parse.provided.Who);
+  // const [issuesWhat, setIssuesWhat] = useState(parse.issues.What);  //これは何？
   const categoryFields = [
     { label: "業務カテゴリ", value: category },
     { label: "業務領域", value: domain },
     { label: "業務", value: work },
   ];
-  const memberImages = [
-    "front/src/assets/hero.png",
-    "front/src/assets/react.svg",
-    "front/src/assets/vite.svg",
-  ];
-  // parse.department.map((d) => d.departmentName),
 
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
         const res = await fetch("/departments");
+
         // if (!res.ok) {
         //   throw new Error(`APIエラー: ${res.status}`);
         // }
         // const data = await res.json();
         // setDepartmentOptions(data.map((d) => d.departmentName));
-        setDepartmentOptions(["人事部", "人材開発", "人材開発G"]);
+
+        // 動作確認用の配列
+        setDepartmentOptions([
+          "ＴＧＲ－ＷＲＴ",
+          "Ｂ．Ｎ．Ｉ．Ｎ．",
+          "Ｔ．Ｍ．Ｍ．Ｔ．",
+          "国際エネルギー機関",
+          "連合燃料電池システム研究開発",
+        ]);
       } catch (error) {
         console.error("部署一覧の取得に失敗しました", error);
       }
@@ -75,27 +91,29 @@ export function ProductDialog({ isDialogOpen }) {
     fetchDepartments();
   }, []);
 
-  const req = {
-    // Nameカラム追加に伴うバックエンド実装完了次第、
-    // プロパティを追加すること
-    // product: {
-    //   issuesWho: parse.issues.Who,
-    //   issuesWhat: parse.issues.What,
-    //   issuesWhen: parse.issues.When,
-    //   issuesWhere: parse.issues.Where,
-    //   issuesWhy: parse.issues.Why,
-    //   issuesHow: parse.issues.How,
-    //   issuesWhatWhy: parse.issues.What_Why,
-    //   issuesContent: parse.issues.Content,
-    //   providedWho: parse.provided.Who,
-    //   providedWhy: parse.provided.What,
-    //   providedOutcome: parse.provided.Outcome,
-    // },
-    // department: selectedDepartments.map((name) => ({ departmentName: name })),
-    // classification: parse.classification,
-  };
+  // const req = {
+  //   // Nameカラム追加に伴うバックエンド実装完了次第、
+  //   // プロパティを追加すること
 
-  const handleClose = () => setIsOpen(false);
+  //   product: {
+  //     name: parse.issues.Name,
+  //     issuesWho: parse.issues.Who,
+  //     issuesWhat,
+  //     issuesWhen: parse.issues.When,
+  //     issuesWhere: parse.issues.Where,
+  //     issuesWhy: parse.issues.Why,
+  //     issuesHow: parse.issues.How,
+  //     issuesWhatWhy: parse.issues.What_Why,
+  //     issuesContent,
+  //     providedWho,
+  //     providedWhy: parse.provided.What,
+  //     providedOutcome,
+  //   },
+  //   department: selectedDepartments.map((name) => ({ departmentName: name })),
+  //   classification: parse.classification,
+  // };
+
+  const handleClose = () => onClose();
 
   const handleRegister = async () => {
     try {
@@ -108,12 +126,15 @@ export function ProductDialog({ isDialogOpen }) {
         throw new Error(`APIエラー: ${res.status}`);
       }
 
-      // const vector = await fetch("/product", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify(req.product),
-      // });
-      const vector = await fetch("/product");
+      const vector = await fetch("/product", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(req.product),
+      });
+
+      // バックエンドでエンドポイントのメソッドをGETに変更したらこちらを採用する
+      // const vector = await fetch("/product");
+
       if (!vector.ok) {
         throw new Error(`APIエラー: ${vector.status}`);
       }
