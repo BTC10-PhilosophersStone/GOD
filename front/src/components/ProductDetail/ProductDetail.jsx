@@ -29,6 +29,7 @@ import WorkIcon from "@mui/icons-material/Work";
 import ButtonBase from "@mui/material/ButtonBase";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded";
+import { ChatDesin } from "./ChatDesin";
 
 export function ProductDetail() {
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
@@ -43,9 +44,36 @@ export function ProductDetail() {
     "サービス部 - お客様支援室",
   ];
 
-  const members = ["中山 晋之介", "下川 和希", "真子 龍臣", "上谷 圭人"];
+  // productをインサートする処理にテーブルを追加して、抽出するときも同じようにすると成り立つ res.mebers的なイメージ
+  // そうなると、issuesWhoの部分から、対象のユーザーを取得する
+  const members = [
+    {
+      name: "中山 晋之介",
+      department: "トヨタ車体",
+      position: "Devs",
+      eMail: "shinnosuke_nakayama@mail.toyota.co.jp",
+    },
+    {
+      name: "下川 和希",
+      department: "トヨタ記念病院",
+      position: "Devs",
+      eMail: "simo@mail.toyota.co.jp",
+    },
+    {
+      name: "上谷 圭人",
+      department: "トヨタ記念病院",
+      position: "PM",
+      eMail: "keito_kamiya@mail.toyota.co.jp",
+    },
+    {
+      name: "竹口 慧",
+      department: "設計部",
+      position: "PD",
+      eMail: "satoshi_takeguchi@mail.toyota.co.jp",
+    },
+  ];
 
-  const profileCard = (name) => (
+  const profileCard = (member) => (
     <Card
       sx={{
         display: "flex",
@@ -64,7 +92,7 @@ export function ProductDetail() {
       <CardContent
         sx={{
           p: 0,
-          "&:last-child": { paddingBottom: 0 }, // MUIのデフォルト設定を強制上書き
+          "&:last-child": { paddingBottom: 0 },
         }}
       >
         <Typography
@@ -79,7 +107,7 @@ export function ProductDetail() {
             marginBottom: "8px",
           }}
         >
-          {name}
+          {member.name}
         </Typography>
         <Box
           sx={{
@@ -104,7 +132,7 @@ export function ProductDetail() {
               color: "#252e37",
             }}
           >
-            CEO
+            {member.position}
           </Typography>
         </Box>
 
@@ -129,7 +157,7 @@ export function ProductDetail() {
               color: "#252e37",
             }}
           >
-            デジタル変革推進室
+            {member.department}
           </Typography>
         </Box>
       </CardContent>
@@ -137,16 +165,20 @@ export function ProductDetail() {
   );
 
   return (
-    <Container maxWidth="sm">
+    <>
       <Button
         variant="contained"
         color="primary"
         onClick={() => {
           setEditModalIsOpen(true);
         }}
+        style={{
+          marginBottom: "32px",
+        }}
       >
         モーダル開く
       </Button>
+      <ChatDesin></ChatDesin>
       <Modal
         appElement={document.getElementById("root")}
         isOpen={editModalIsOpen}
@@ -239,8 +271,9 @@ export function ProductDetail() {
                 height: 40,
                 color: "#252e37",
               }}
-              onClick={() => {
+              onClick={async () => {
                 setEditModalIsOpen(false);
+                const res = await fetch("/summarize");
               }}
             >
               <CloseIcon sx={{ fontSize: 40 }} />
@@ -605,14 +638,17 @@ export function ProductDetail() {
                   >
                     {members.map((src, index) => (
                       <Tooltip
-                        key={`tooltip-${src}-${index}`}
+                        key={`tooltip-${src.name}-${index}`}
                         title={profileCard(src)}
                         placement="top-start"
                         slotProps={{
                           tooltip: {
                             sx: {
                               backgroundColor: "#ebebe7",
-                              borderRadius: "16px",
+                              borderTopLeftRadius: "16px",
+                              borderTopRightRadius: "16px",
+                              borderBottomRightRadius: "16px",
+                              borderBottomLeftRadius: "0px",
                             },
                           },
                           popper: {
@@ -628,13 +664,14 @@ export function ProductDetail() {
                         }}
                       >
                         <Avatar
-                          key={`${src}-${index}`}
-                          src={src}
-                          alt={`${src}-${index + 1}`}
+                          key={`${src.name}-${index}`}
+                          src={src.name}
+                          alt={`${src.name}-${index + 1}`}
                           component={ButtonBase}
                           sx={{
                             width: 84,
                             height: 84,
+                            backgroundColor: "#b78f00",
                             "&:active": {
                               transform: "scale(0.94) translateY(2px)",
                               boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.1)",
@@ -642,7 +679,7 @@ export function ProductDetail() {
                           }}
                           onClick={() =>
                             window.open(
-                              "https://teams.microsoft.com/l/chat/0/0?users=keito_kamiya@mail.toyota.co.jp&message=【メッセージ欄】",
+                              `https://teams.microsoft.com/l/chat/0/0?users=${src.eMail}&message=【メッセージ欄】`,
                             )
                           }
                         />
@@ -689,6 +726,6 @@ export function ProductDetail() {
           </Box>
         </Box>
       </Modal>
-    </Container>
+    </>
   );
 }
