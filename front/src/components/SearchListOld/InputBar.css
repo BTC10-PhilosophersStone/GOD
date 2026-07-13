@@ -1,0 +1,440 @@
+/* input var */
+.inputBar {
+  box-sizing: border-box;
+
+  position: absolute;
+  width: 1440px;
+  height: 128px;
+  left: calc(50% - 1440px / 2);
+  top: 772px;
+
+  background: #ffffff;
+  border-top: 1px solid #ebebe7;
+
+  /* *Custom / Table / Toolbar */
+
+  position: absolute;
+  width: 708px;
+  height: 92px;
+  left: calc(50% - 708px / 2);
+  top: 20px;
+}
+
+/* *Custom / Table / Toolbar */
+.toolBar {
+  /* オートレイアウト */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: flex-start;
+  padding: 16px;
+  gap: 16px;
+
+  position: absolute;
+  width: 711px;
+  height: 88px;
+  left: -3px;
+  top: 3px;
+}
+
+.queries {
+  /* Queries */
+
+  /* オートレイアウト */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 16px;
+
+  width: 679px;
+  min-width: 400px;
+  height: 56px;
+
+  /* オートレイアウト内部 */
+  flex: none;
+  order: 0;
+  flex-grow: 1;
+}
+
+.textField {
+  /* <TextField>
+  
+  import TextField from &#39;@mui/material/TextField&#39;;
+  
+  export default function TextFieldDemo() {
+    return &lt;TextField label=&quot;Label&quot; variant=&quot;outlined&quot; size=&quot;medium&quot;/&gt;;
+  }
+  
+  */
+
+  /* オートレイアウト */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px;
+
+  width: 679px;
+  min-width: 200px;
+  height: 56px;
+}
+
+/* .clickableLayer { */
+/* *library/clickableLayer */
+/* background: rgba(0, 0, 0, 0.001); */
+
+/* オートレイアウト内部 */
+/* flex: none;
+  order: 0;
+  flex-grow: 1; */
+/* } */
+
+.input {
+  /* Input */
+
+  box-sizing: border-box;
+
+  /* オートレイアウト */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px 14px;
+
+  width: 679px;
+  height: 56px;
+
+  border: 1px solid rgba(0, 0, 0, 0.23);
+  border-radius: 8px;
+
+  /* オートレイアウト内部 */
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.content {
+  /* Content */
+
+  /* オートレイアウト */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 16px 0px;
+
+  width: 651px;
+  height: 56px;
+  min-height: 24px;
+
+  /* オートレイアウト内部 */
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.startContainer {
+  /* Adorn. Start Container */
+
+  /* オートレイアウト */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px 8px 0px 0px;
+
+  width: 32px;
+  height: 24px;
+
+  /* オートレイアウト内部 */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.addFilled {
+  /* AddFilled */
+
+  width: 24px;
+  height: 24px;
+
+  /* オートレイアウト内部 */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.vector {
+  /* Vector */
+
+  position: absolute;
+  left: 20.83%;
+  right: 20.83%;
+  top: 20.83%;
+  bottom: 20.83%;
+
+  background: rgba(0, 0, 0, 0.54);
+}
+
+.lavelDiv {
+  /* Label */
+
+  /* オートレイアウト */
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px;
+
+  width: 146px;
+  height: 24px;
+
+  /* オートレイアウト内部 */
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+.labal {
+  /* Label */
+
+  width: 146px;
+  height: 24px;
+
+  font-family: "Zen Kaku Gothic New";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  /* ボックスの高さと同一、または150% */
+  letter-spacing: 0.15px;
+
+  color: rgba(0, 0, 0, 0.6);
+
+  /* オートレイアウト内部 */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+/* Label */
+
+/* display: none;
+width: 12px;
+height: 24px; */
+
+/* input/value */
+font-family: "Roboto";
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+/* ボックスの高さと同一、または150% */
+letter-spacing: 0.15px;
+
+color: rgba(0, 0, 0, 0.6);
+
+/* オートレイアウト内部 */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+/* Adorn. End Container */
+
+/* オートレイアウト */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 0px;
+
+display: none;
+width: 24px;
+height: 24px;
+
+/* オートレイアウト内部 */
+flex: none;
+order: 2;
+flex-grow: 0;
+
+/* type: number */
+
+/* オートレイアウト */
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 4px;
+
+display: none;
+width: 16.49px;
+height: 24.97px;
+
+background: #e0e0e0;
+
+/* オートレイアウト内部 */
+flex: none;
+order: 3;
+flex-grow: 0;
+
+/* <FormHelperText>
+
+import FormHelperText from &#39;@mui/material/FormHelperText&#39;;
+
+export default function FormHelperTextDemo() {
+  return &lt;FormHelperText&gt;Name&lt;/FormHelperText&gt;;
+}
+
+*/
+
+/* オートレイアウト */
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 3px 14px 0px;
+
+display: none;
+width: 220px;
+height: 23px;
+
+/* オートレイアウト内部 */
+flex: none;
+order: 1;
+align-self: stretch;
+flex-grow: 0;
+
+/* <Select>
+
+import * as React from &#39;react&#39;;
+import InputLabel from &#39;@mui/material/InputLabel&#39;;
+import MenuItem from &#39;@mui/material/MenuItem&#39;;
+import FormControl from &#39;@mui/material/FormControl&#39;;
+import Select from &#39;@mui/material/Select&#39;;
+
+export default function SelectDemo() {
+  const [value, selectValue] = React.useState(&#39;&#39;);
+
+  const handleChange = (event) =&gt; {
+    selectValue(event.target.value);
+  };
+
+  return (
+    &lt;FormControl size=&quot;medium&quot; variant=&quot;outlined&quot; fullWidth&gt;
+      &lt;InputLabel id=&quot;select-label&quot;&gt;Label&lt;/InputLabel&gt;
+      &lt;Select
+        labelId=&quot;select-label&quot;
+        id=&quot;select-demo&quot;
+        value={value}
+        label=&quot;Label&quot;
+        onChange={handleChange}
+      &gt;
+        &lt;MenuItem value={10}&gt;Ten&lt;/MenuItem&gt;
+        &lt;MenuItem value={20}&gt;Twenty&lt;/MenuItem&gt;
+        &lt;MenuItem value={30}&gt;Thirty&lt;/MenuItem&gt;
+      &lt;/Select&gt;
+    &lt;/FormControl&gt;
+  );
+}
+
+*/
+
+/* オートレイアウト */
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 0px;
+
+display: none;
+width: 269px;
+min-width: 200px;
+height: 56px;
+
+/* *library/clickableLayer */
+background: rgba(0, 0, 0, 0.001);
+
+/* オートレイアウト内部 */
+flex: none;
+order: 1;
+flex-grow: 1;
+
+/* <IconButton>
+
+Icon buttons are commonly found in app bars and toolbars.
+*/
+
+/* オートレイアウト */
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 8px;
+
+display: none;
+width: 40px;
+height: 40px;
+
+border-radius: 100px;
+
+/* オートレイアウト内部 */
+flex: none;
+order: 2;
+flex-grow: 0;
+
+/* Actions */
+
+/* オートレイアウト */
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 0px;
+gap: 16px;
+
+display: none;
+width: 242px;
+min-width: 242px;
+height: 40px;
+
+/* オートレイアウト内部 */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+/* Frame 168 */
+
+/* オートレイアウト */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 10px;
+gap: 10px;
+
+position: absolute;
+width: 40px;
+height: 40px;
+left: calc(50% - 40px / 2 + 310px);
+top: calc(50% - 40px / 2 + 1px);
+
+background: #466584;
+border-radius: 4px;
+
+/* ArrowUpwardFilled */
+
+width: 27px;
+height: 27px;
+
+background: #466584;
+border-radius: 4px;
+
+/* オートレイアウト内部 */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+/* Vector */
+
+position: absolute;
+left: 16.67%;
+right: 16.67%;
+top: 16.67%;
+bottom: 16.67%;
+
+background: #ffffff;
