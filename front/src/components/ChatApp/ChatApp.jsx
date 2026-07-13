@@ -10,6 +10,9 @@ import {
 } from "../atoms";
 import { ProductDialog } from "./ProductDialog";
 import { FormDialog } from "./FormDialog";
+import { AppBar, Box, IconButton, Toolbar } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import ThemeProvider from "../../theme/ThemeProvider";
 
 export function ChatApp() {
   const [messageList, setMessageList] = useAtom(messageListAtom);
@@ -47,8 +50,55 @@ export function ChatApp() {
   }, []);
 
   return (
-    <>
-      <h1>チャット画面</h1>
+    // <ThemeProvider>
+    <Box
+      component="main"
+      data-model-id="893:26"
+      sx={{
+        bgcolor: "background.default",
+        minHeight: "100vh",
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <AppBar
+        position="fixed"
+        color="transparent"
+        elevation={0}
+        sx={{
+          bgcolor: "transparent",
+          boxShadow: "none",
+        }}
+      >
+        <Toolbar
+          disableGutters
+          sx={{
+            px: 3,
+            pt: 3,
+            minHeight: "auto",
+            alignItems: "flex-start",
+          }}
+        >
+          <Box sx={{ position: "relative", width: 40, height: 40 }}>
+            <IconButton
+              aria-label="menu"
+              component={Link}
+              to="/"
+              sx={{
+                width: 40,
+                height: 40,
+                color: "custom.menuIcon",
+                p: 0,
+                alignItems: "flex-start",
+                justifyContent: "flex-start",
+              }}
+            >
+              <MenuIcon sx={{ fontSize: 30 }} />
+            </IconButton>
+          </Box>
+        </Toolbar>
+      </AppBar>
       {/* <Link to="/">ログイン画面に戻る</Link>
       <Link to="/product">product詳細</Link> */}
       <MessageList messageList={messageList} />
@@ -61,6 +111,7 @@ export function ChatApp() {
       )}
 
       {/* {isFormOpen && <FormDialog />} */}
-    </>
+    </Box>
+    // </ThemeProvider>
   );
 }

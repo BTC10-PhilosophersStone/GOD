@@ -7,7 +7,7 @@ Modal.setAppElement("#root");
 function App() {
   return (
     <>
-      <ChatApp />
+      <RoutesApp />
     </>
   );
 }
