@@ -44,11 +44,10 @@ export function ProductDialog({ isDialogOpen }) {
   const rawData = sessionStorage.getItem(sessionjsonKey);
   const parse = JSON.parse(rawData);
   const [departmentOptions, setDepartmentOptions] = useState([]);
-  const [selectedDepartments, setSelectedDepartments] = useState([
-    parse.department.map((d) => d.departmentName),
-  ]);
+  const [selectedDepartments, setSelectedDepartments] = useState([]);
   const [productName, setProductName] = useState(parse.issues.Name);
   const [issuesContent, setIssuesContent] = useState(parse.issues.Content);
+
   const [providedOutcome, setProvidedOutcome] = useState(
     parse.provided.Outcome,
   );
@@ -58,9 +57,10 @@ export function ProductDialog({ isDialogOpen }) {
   const [subCategory, setSubCategory] = useState(
     parse.classification[0].subCategory,
   );
-  const [minorCategory, setWMinorCategory] = useState(
+  const [minorCategory, setMinorCategory] = useState(
     parse.classification[0].minorCategory,
   );
+
   const categoryFields = [
     { label: "業務カテゴリ", value: mainCategory },
     { label: "業務領域", value: subCategory },
@@ -68,33 +68,34 @@ export function ProductDialog({ isDialogOpen }) {
   ];
   // const [providedWho, setProvidedWho] = useState(parse.provided.Who);
   // const [issuesWhat, setIssuesWhat] = useState(parse.issues.What);  //これは何？
-
+  const datas = [];
   useEffect(() => {
     console.log(parse);
 
     const fetchDepartments = async () => {
       try {
-        const res = await fetch("/departments");
+        const res = await fetch("/department");
 
-        // if (!res.ok) {
-        //   throw new Error(`APIエラー: ${res.status}`);
-        // }
-        // const data = await res.json();
-        // setDepartmentOptions(data.map((d) => d.departmentName));
+        if (!res.ok) {
+          throw new Error(`APIエラー: ${res.status}`);
+        }
+        const data = await res.json();
+        setDepartmentOptions(data.map((d) => d.departmentName));
 
         // 動作確認用の配列
-        setDepartmentOptions([
-          "ＴＧＲ－ＷＲＴ",
-          "Ｂ．Ｎ．Ｉ．Ｎ．",
-          "Ｔ．Ｍ．Ｍ．Ｔ．",
-          "国際エネルギー機関",
-          "連合燃料電池システム研究開発",
-        ]);
+        // setDepartmentOptions([
+        //   "ＴＧＲ－ＷＲＴ",
+        //   "Ｂ．Ｎ．Ｉ．Ｎ．",
+        //   "Ｔ．Ｍ．Ｍ．Ｔ．",
+        //   "国際エネルギー機関",
+        //   "連合燃料電池システム研究開発",
+        // ]);
       } catch (error) {
         console.error("部署一覧の取得に失敗しました", error);
       }
     };
     fetchDepartments();
+    console.log(departmentOptions);
   }, []);
 
   const handleClose = () => onClose();
@@ -115,16 +116,23 @@ export function ProductDialog({ isDialogOpen }) {
         issuesWhatWhy: parse.issues.What_Why,
         issuesContent: issuesContent,
         providedWho: parse.issues.Who,
-        providedWhy: parse.provided.What,
+        providedWhat: parse.provided.What,
         providedOutcome: providedOutcome,
       },
-      department: selectedDepartments.map((name) => ({ departmentName: name })),
-      classification: {
-        mainCategory: mainCategory,
-        subCategory: subCategory,
-        minorCategory: minorCategory,
-      },
+      department: selectedDepartments.map((name) => ({
+        departmentName: name,
+        officeName: "",
+      })),
+
+      classification: [
+        {
+          mainCategory: mainCategory,
+          subCategory: subCategory,
+          minorCategory: minorCategory,
+        },
+      ],
     };
+    console.log(req);
     try {
       const res = await fetch("/projectdata", {
         method: "POST",
@@ -135,14 +143,7 @@ export function ProductDialog({ isDialogOpen }) {
         throw new Error(`APIエラー: ${res.status}`);
       }
 
-      const vector = await fetch("/product", {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(req.product),
-      });
-
-      // バックエンドでエンドポイントのメソッドをGETに変更したらこちらを採用する
-      // const vector = await fetch("/product");
+      const vector = await fetch("/product");
 
       if (!vector.ok) {
         throw new Error(`APIエラー: ${vector.status}`);
@@ -204,6 +205,7 @@ export function ProductDialog({ isDialogOpen }) {
       <TextField
         fullWidth
         value={value}
+        getOptionLabel={(option) => option}
         onChange={onChange}
         {...props}
         sx={{
@@ -225,7 +227,7 @@ export function ProductDialog({ isDialogOpen }) {
   return (
     <>
       <Dialog
-        open={true}
+        open={isOpen}
         onClose={handleClose}
         component="section"
         fullWidth={true}
@@ -254,7 +256,6 @@ export function ProductDialog({ isDialogOpen }) {
           }}
         >
           <Stack direction="row" sx={{ mb: 2, justifyContent: "flex-end" }}>
-            {" "}
             <IconButton
               aria-label="close"
               size="large"
@@ -298,12 +299,26 @@ export function ProductDialog({ isDialogOpen }) {
                   >
                     ステークホルダー
                   </Typography>
-
                   <Autocomplete
                     multiple
                     options={departmentOptions}
                     value={selectedDepartments}
-                    disableClearable
+                    onChange={handleChange}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        placeholder="部署名を候補から選択"
+                      />
+                    )}
+                  />
+                  {/* <Autocomplete
+                    multiple
+                    options={departmentOptions}
+                    value={selectedDepartments}
+                    // disableClearable
+                    onChange={(event, newValue) => {
+                      setSelectedValue(newValue);
+                    }}
                     popupIcon={
                       <KeyboardArrowDownIcon
                         sx={{ color: "#252e37", fontSize: 20 }}
@@ -350,15 +365,8 @@ export function ProductDialog({ isDialogOpen }) {
                         );
                       })
                     }
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label=""
-                        placeholder=""
-                        InputProps={{ ...params.InputProps, readOnly: true }}
-                      />
-                    )}
-                  />
+                    renderInput={(params) => <TextField {...params} />}
+                  /> */}
                 </Stack>
                 <LabeledTextField
                   label="解決したい課題"
@@ -429,7 +437,7 @@ export function ProductDialog({ isDialogOpen }) {
                 </Stack>
               </Stack>
             </Box>
-          </Stack>{" "}
+          </Stack>
           <Divider sx={{ opacity: 0, my: 2 }} />
           <Stack
             direction="row"
