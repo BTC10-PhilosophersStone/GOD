@@ -212,7 +212,7 @@ export function ProductDialog({ isDialogOpen }) {
           bgcolor: "#ffffff",
           "& .MuiOutlinedInput-root": {
             "& fieldset": {
-              borderColor: "ddd",
+              borderColor: "#ddd",
               borderWidth: "2px",
             },
             "&.Mui-focused fieldset": {
@@ -304,6 +304,17 @@ export function ProductDialog({ isDialogOpen }) {
                     options={departmentOptions}
                     value={selectedDepartments}
                     onChange={handleChange}
+                    sx={{
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": {
+                          borderColor: "#b30b0b",
+                          borderWidth: "2px",
+                        },
+                        "&.Mui-focused fieldset": {
+                          borderColor: "#b78f00",
+                        },
+                      },
+                    }}
                     renderInput={(params) => (
                       <TextField
                         {...params}
@@ -311,62 +322,6 @@ export function ProductDialog({ isDialogOpen }) {
                       />
                     )}
                   />
-                  {/* <Autocomplete
-                    multiple
-                    options={departmentOptions}
-                    value={selectedDepartments}
-                    // disableClearable
-                    onChange={(event, newValue) => {
-                      setSelectedValue(newValue);
-                    }}
-                    popupIcon={
-                      <KeyboardArrowDownIcon
-                        sx={{ color: "#252e37", fontSize: 20 }}
-                      />
-                    }
-                    sx={{
-                      maxWidth: 609,
-                      "& .MuiOutlinedInput-root": {
-                        minHeight: 50,
-                        py: 0,
-                        pr: 0,
-                        borderRadius: 1,
-                        bgcolor: "background.paper",
-                        "& .MuiAutocomplete-input": { minWidth: 0 },
-                      },
-                      "& .MuiAutocomplete-endAdornment": {
-                        position: "static",
-                        transform: "none",
-                        margin: 0,
-                        alignSelf: "stretch",
-                        display: "flex",
-                        alignItems: "stretch",
-                      },
-                      "& .MuiAutocomplete-popupIndicator": {
-                        borderLeft: "1px solid #49454f",
-                        borderRadius: 0,
-                        px: 1.5,
-                        color: "#252e37",
-                      },
-                      "& .MuiAutocomplete-clearIndicator": {
-                        display: "none",
-                      },
-                    }}
-                    renderTags={(value, getTagProps) =>
-                      value.map((option, index) => {
-                        const { key, ...tagProps } = getTagProps({ index });
-                        return (
-                          <Chip
-                            key={key}
-                            label={option}
-                            deleteIcon={<CloseIcon sx={{ fontSize: 14 }} />}
-                            {...tagProps}
-                          />
-                        );
-                      })
-                    }
-                    renderInput={(params) => <TextField {...params} />}
-                  /> */}
                 </Stack>
                 <LabeledTextField
                   label="解決したい課題"
