@@ -7,9 +7,7 @@ Modal.setAppElement("#root");
 function App() {
   return (
     <>
-      <ThemeProvider>
-        <RoutesApp />
-      </ThemeProvider>
+      <RoutesApp />
     </>
   );
 }

@@ -9,7 +9,7 @@ function RoutesApp() {
   const isLoginScreen = location.pathname === "/";
   return (
     <>
-      {!isLoginScreen && <Header />}
+      {/* {!isLoginScreen && <Header />} */}
       <Routes>
         <Route path="/" element={<LoginApp />} />
         <Route path="/chat" element={<ChatApp />} />

@@ -7,7 +7,16 @@ export function MessageList() {
   const [messageList, setMessageList] = useAtom(messageListAtom);
   const scrollRef = useRef(null);
   useEffect(() => {
-    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    const container = scrollRef.current;
+    if (!container || messageList.length === 0) return;
+    const lastMessage = messageList[messageList.length - 1];
+    const lastElement = container.children[messageList.length - 1];
+    if (!lastElement) return;
+    if (lastMessage.role === "GOD") {
+      lastElement.scrollIntoView({ block: "start" });
+    } else {
+      container.scrollTop = container.scrollHeight;
+    }
   }, [messageList]);
   return (
     <>
@@ -23,6 +32,7 @@ export function MessageList() {
         {messageList.map((message) => (
           <MessageListItem key={message.id} message={message} />
         ))}
+        <div style={{ height: "500px" }} aria-hidden="true" />
       </div>
     </>
   );
