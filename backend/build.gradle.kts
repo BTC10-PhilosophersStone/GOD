@@ -36,6 +36,7 @@ dependencies {
 	runtimeOnly("com.h2database:h2")
 	runtimeOnly("org.postgresql:postgresql")
 	implementation("com.pgvector:pgvector:0.1.6")
+	implementation("org.apache.poi:poi-ooxml:5.4.1")
 }
 allOpen {
 	annotation("javax.persistence.Entity")

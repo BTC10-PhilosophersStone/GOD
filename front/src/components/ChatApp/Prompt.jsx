@@ -1,6 +1,7 @@
 import { Autocomplete, Box, Stack, TextField } from "@mui/material";
 import { PromptButton } from "./PromptButton";
 import { PromptInput } from "./PromptInput";
+import { PromptInputArea } from "./PromptInputArea";
 import { useAtom } from "jotai";
 import { promptAtom } from "../atoms";
 
@@ -56,8 +57,11 @@ export function Prompt() {
           flexDirection: "row",
           justifyContent: "center",
         }}
-      > */}
-      {/* </div> */}
+
+      >
+        {/* <PromptInput />
+        <PromptButton /> 
+       <PromptInputArea></PromptInputArea>*/}
     </>
   );
 }

@@ -13,18 +13,23 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { PromptInputArea } from "../ChatApp/PromptInputArea";
+import { ProductDetail } from "../ProductDetail/ProductDetail";
 import { useEffect, useState } from "react";
 import "@fontsource/hina-mincho";
 import "@fontsource/zen-kaku-gothic-new";
 
 export const ListView = () => {
   const [products, setProducts] = useState([]);
+  const [editModalIsOpen, setEditModalIsOpen] = useState(false);
+  const [productDetail, setproductDetail] = useState({});
 
   useEffect(() => {
     const getProduct = async () => {
       try {
         const res = await fetch("/product");
         const data = await res.json();
+        console.log(data);
         setProducts(data);
       } catch {
         console.error("error");
@@ -45,16 +50,25 @@ export const ListView = () => {
         pb: "180px",
       }}
     >
-      <IconButton
-        aria-label="menu"
-        sx={{
-          position: "fixed",
-          top: 16,
-          left: 16,
-          zIndex: 3,
-          color: "text.secoundary",
-        }}
-      >
+        {editModalIsOpen && (
+          <ProductDetail
+            editModalIsOpen={editModalIsOpen}
+            setEditModalIsOpen={setEditModalIsOpen}
+            productDetail={productDetail}
+            setproductDetail={setproductDetail}
+            onClose={() => setEditModalIsOpen(false)}
+          />
+        )}
+        <IconButton
+          aria-label="menu"
+          sx={{
+            position: "fixed",
+            top: 16,
+            left: 16,
+            zIndex: 3,
+            color: "text.secoundary",
+          }}
+        >
         <MenuIcon sx={{ fontSize: 40 }} />
       </IconButton>
       <Container
@@ -100,6 +114,8 @@ export const ListView = () => {
                     const res = await fetch(`/product/${product.id}`);
                     const data = await res.json();
                     console.log(data);
+                    setproductDetail(data);
+                    setEditModalIsOpen(true);
                   } catch {
                     console.error("error");
                   }
@@ -218,7 +234,7 @@ export const ListView = () => {
                             whiteSpace: "nowrap",
                           }}
                         >
-                          88
+                          {product.percent}
                         </Typography>
                         <Typography
                           component="span"
@@ -239,7 +255,7 @@ export const ListView = () => {
                     </Stack>
                     <LinearProgress
                       variant="determinate"
-                      value={88}
+                      value={product.percent}
                       sx={{
                         width: "100%",
                         height: 8,
@@ -290,7 +306,7 @@ export const ListView = () => {
           spacing={2}
           sx={{ width: "100%", maxWidth: "620px", alignItems: "center" }}
         >
-          <TextField
+           <TextField
             fullWidth
             variant="outlined"
             placeholder="神に話しかけてみる"
