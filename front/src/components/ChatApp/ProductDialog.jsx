@@ -18,107 +18,120 @@ import CloseIcon from "@mui/icons-material/Close";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useState, useEffect } from "react";
 
-const parse = {
-  issue: {
-    name: "サンプルネーム",
-    issue: "サンプルイッシュー",
-    value: "サンプルバリュー",
-    category: "サンプルカテゴリー",
-    domain: "サンプルドメイン",
-    work: "サンプル業務",
-  },
-};
+// const parse = {
+//   issues: {
+//     Name: "サンプルネーム",
+//     Content: "サンプルイッシュー",
+//     value: "サンプルバリュー",
+//   },
+//   provided: { Outcome: "カチカチ" },
+//   classification: {
+//     mainCategory: "メインカテゴリー",
+//     subCategory: "サブカテゴリー",
+//     minorCategory: "マイクロカテゴリー",
+//   },
+// };
 
 const memberImages = [
-  "front/src/assets/hero.png",
-  "front/src/assets/react.svg",
-  "front/src/assets/vite.svg",
+  "/kkrn_icon_user_1.png",
+  "/kkrn_icon_user_1.png",
+  "/kkrn_icon_user_1.png",
 ];
 
 export function ProductDialog({ isDialogOpen }) {
   const [isOpen, setIsOpen] = useState(isDialogOpen);
-
   const sessionjsonKey = "productData";
   const rawData = sessionStorage.getItem(sessionjsonKey);
   const parse = JSON.parse(rawData);
-  console.log(parse);
-
   const [departmentOptions, setDepartmentOptions] = useState([]);
-  const [selectedDepartments, setSelectedDepartments] = useState([
-    "人事部",
-    "人材開発",
-    "人材開発G",
-    // parse.department.map((d) => d.departmentName),
-  ]);
-  const [productName, setProductName] = useState(parse.issues.name);
-  const [issue, setIssue] = useState(parse.issues.issue);
-  const [value, setValue] = useState(parse.issues.value);
-  const [category, setCategory] = useState(parse.issues.category);
-  const [domain, setDomain] = useState(parse.issues.domain);
-  const [work, setWork] = useState(parse.issues.work);
-  // const [issuesContent, setIssuesContent] = useState(parse.issues.Content);
-  // const [providedOutcome, setProvidedOutcome] = useState(
-  //   parse.provided.Outcome,
-  // );
+  const [selectedDepartments, setSelectedDepartments] = useState([]);
+  const [productName, setProductName] = useState(parse.issues.Name);
+  const [issuesContent, setIssuesContent] = useState(parse.issues.Content);
+
+  const [providedOutcome, setProvidedOutcome] = useState(
+    parse.provided.Outcome,
+  );
+  const [mainCategory, setMainCategory] = useState(
+    parse.classification[0].mainCategory,
+  );
+  const [subCategory, setSubCategory] = useState(
+    parse.classification[0].subCategory,
+  );
+  const [minorCategory, setMinorCategory] = useState(
+    parse.classification[0].minorCategory,
+  );
+
+  const categoryFields = [
+    { label: "業務カテゴリ", value: mainCategory },
+    { label: "業務領域", value: subCategory },
+    { label: "業務", value: minorCategory },
+  ];
   // const [providedWho, setProvidedWho] = useState(parse.provided.Who);
   // const [issuesWhat, setIssuesWhat] = useState(parse.issues.What);  //これは何？
-  const categoryFields = [
-    { label: "業務カテゴリ", value: category },
-    { label: "業務領域", value: domain },
-    { label: "業務", value: work },
-  ];
-
+  const datas = [];
   useEffect(() => {
+    console.log(parse);
+
     const fetchDepartments = async () => {
       try {
-        const res = await fetch("/departments");
+        const res = await fetch("/department");
 
-        // if (!res.ok) {
-        //   throw new Error(`APIエラー: ${res.status}`);
-        // }
-        // const data = await res.json();
-        // setDepartmentOptions(data.map((d) => d.departmentName));
+        if (!res.ok) {
+          throw new Error(`APIエラー: ${res.status}`);
+        }
+        const data = await res.json();
+        setDepartmentOptions(data.map((d) => d.departmentName));
 
         // 動作確認用の配列
-        setDepartmentOptions([
-          "ＴＧＲ－ＷＲＴ",
-          "Ｂ．Ｎ．Ｉ．Ｎ．",
-          "Ｔ．Ｍ．Ｍ．Ｔ．",
-          "国際エネルギー機関",
-          "連合燃料電池システム研究開発",
-        ]);
+        // setDepartmentOptions([
+        //   "ＴＧＲ－ＷＲＴ",
+        //   "Ｂ．Ｎ．Ｉ．Ｎ．",
+        //   "Ｔ．Ｍ．Ｍ．Ｔ．",
+        //   "国際エネルギー機関",
+        //   "連合燃料電池システム研究開発",
+        // ]);
       } catch (error) {
         console.error("部署一覧の取得に失敗しました", error);
       }
     };
     fetchDepartments();
+    console.log(departmentOptions);
   }, []);
-
-  const req = {
-    // Nameカラム追加に伴うバックエンド実装完了次第、
-    // プロパティを追加すること
-
-    product: {
-      name: parse.issues.Name,
-      issuesWho: parse.issues.Who[0],
-      issuesWhat: parse.issues.What,
-      issuesWhen: parse.issues.When,
-      issuesWhere: parse.issues.Where,
-      issuesWhy: parse.issues.Why,
-      issuesHow: parse.issues.How,
-      issuesWhatWhy: parse.issues.What_Why,
-      issuesContent: parse.issues.Content,
-      providedWho: parse.provided.Who[0],
-      providedWhy: parse.provided.What,
-      providedOutcome: parse.provided.Outcome,
-    },
-    department: selectedDepartments.map((name) => ({ departmentName: name })),
-    classification: parse.classification,
-  };
 
   const handleClose = () => onClose();
 
   const handleRegister = async () => {
+    const req = {
+      // Nameカラム追加に伴うバックエンド実装完了次第、
+      // プロパティを追加すること
+
+      product: {
+        name: productName,
+        issuesWho: parse.issues.Who,
+        issuesWhat: parse.issues.What,
+        issuesWhen: parse.issues.When,
+        issuesWhere: parse.issues.Where,
+        issuesWhy: parse.issues.Why,
+        issuesHow: parse.issues.How,
+        issuesWhatWhy: parse.issues.What_Why,
+        issuesContent: issuesContent,
+        providedWho: parse.issues.Who,
+        providedWhat: parse.provided.What,
+        providedOutcome: providedOutcome,
+      },
+      department: selectedDepartments.map((name) => ({
+        departmentName: name,
+        officeName: "",
+      })),
+
+      classification: [
+        {
+          mainCategory: mainCategory,
+          subCategory: subCategory,
+          minorCategory: minorCategory,
+        },
+      ],
+    };
     console.log(req);
     try {
       const res = await fetch("/projectdata", {
@@ -131,9 +144,6 @@ export function ProductDialog({ isDialogOpen }) {
       }
 
       const vector = await fetch("/product");
-
-      // バックエンドでエンドポイントのメソッドをGETに変更したらこちらを採用する
-      // const vector = await fetch("/product");
 
       if (!vector.ok) {
         throw new Error(`APIエラー: ${vector.status}`);
@@ -195,13 +205,14 @@ export function ProductDialog({ isDialogOpen }) {
       <TextField
         fullWidth
         value={value}
+        getOptionLabel={(option) => option}
         onChange={onChange}
         {...props}
         sx={{
           bgcolor: "#ffffff",
           "& .MuiOutlinedInput-root": {
             "& fieldset": {
-              borderColor: "ddd",
+              borderColor: "#ddd",
               borderWidth: "2px",
             },
             "&.Mui-focused fieldset": {
@@ -221,14 +232,15 @@ export function ProductDialog({ isDialogOpen }) {
         component="section"
         fullWidth={true}
         maxWidth="lg"
-        PaperProps={{
-          sx: {
-            width: "100%",
-            minHeight: 800,
-            color: "#05101b", //
-            bgcolor: "#7f2222",
-          },
+        // PaperProps={{
+        sx={{
+          width: "100%",
+          minHeight: 800,
+          color: "#05101b",
+          "&.MuiPaper-root": { backgroundColor: "#7f2222" },
+          // "&.MuiDialog-root": { color: "#7f2222" },
         }}
+        // }}
       >
         <Box
           sx={{
@@ -240,25 +252,23 @@ export function ProductDialog({ isDialogOpen }) {
             display: "flex",
             flexDirection: "column",
             height: 800,
+            // "&.MuiBox-root": { bgcolor: "#7f2222" },
           }}
         >
-          <Stack direction="row" justifyContent="flex-end" sx={{ mb: 2 }}>
-            {" "}
+          <Stack direction="row" sx={{ mb: 2, justifyContent: "flex-end" }}>
             <IconButton
               aria-label="close"
               size="large"
-              sx={{ p: 0, color: "#252e37" }}
+              sx={{
+                p: 0,
+                color: "#252e37",
+              }}
               onClick={() => setIsOpen(false)}
             >
               <CloseIcon sx={{ fontSize: 40 }} />
             </IconButton>
           </Stack>
-          <Stack
-            direction="row"
-            alignItems="flex-start"
-            spacing={3}
-            sx={{ flex: 1 }}
-          >
+          <Stack direction="row" spacing={3} sx={{ flex: 1 }}>
             <Box
               sx={{
                 flex: 1,
@@ -289,78 +299,40 @@ export function ProductDialog({ isDialogOpen }) {
                   >
                     ステークホルダー
                   </Typography>
-
                   <Autocomplete
                     multiple
-                    options={selectedDepartments}
+                    options={departmentOptions}
                     value={selectedDepartments}
-                    disableClearable
-                    popupIcon={
-                      <KeyboardArrowDownIcon
-                        sx={{ color: "#252e37", fontSize: 20 }}
-                      />
-                    }
+                    onChange={handleChange}
                     sx={{
-                      maxWidth: 609,
                       "& .MuiOutlinedInput-root": {
-                        minHeight: 50,
-                        py: 0,
-                        pr: 0,
-                        borderRadius: 1,
-                        bgcolor: "background.paper",
-                        "& .MuiAutocomplete-input": { minWidth: 0 },
-                      },
-                      "& .MuiAutocomplete-endAdornment": {
-                        position: "static",
-                        transform: "none",
-                        margin: 0,
-                        alignSelf: "stretch",
-                        display: "flex",
-                        alignItems: "stretch",
-                      },
-                      "& .MuiAutocomplete-popupIndicator": {
-                        borderLeft: "1px solid #49454f",
-                        borderRadius: 0,
-                        px: 1.5,
-                        color: "#252e37",
-                      },
-                      "& .MuiAutocomplete-clearIndicator": {
-                        display: "none",
+                        "& fieldset": {
+                          borderColor: "#b30b0b",
+                          borderWidth: "2px",
+                        },
+                        "&.Mui-focused fieldset": {
+                          borderColor: "#b78f00",
+                        },
                       },
                     }}
-                    renderTags={(value, getTagProps) =>
-                      value.map((option, index) => {
-                        const { key, ...tagProps } = getTagProps({ index });
-                        return (
-                          <Chip
-                            key={key}
-                            label={option}
-                            deleteIcon={<CloseIcon sx={{ fontSize: 14 }} />}
-                            {...tagProps}
-                          />
-                        );
-                      })
-                    }
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        label=""
-                        placeholder=""
-                        InputProps={{ ...params.InputProps, readOnly: true }}
+                        placeholder="部署名を候補から選択"
                       />
                     )}
                   />
                 </Stack>
                 <LabeledTextField
                   label="解決したい課題"
-                  value={issue}
-                  onChange={(e) => setIssue(e.target.value)}
+                  value={issuesContent}
+                  onChange={(e) => setIssuesContent(e.target.value)}
                   typographyVariant="body1"
                 />
                 <LabeledTextField
                   label="提供価値"
-                  value={value}
-                  onChange={(e) => setValue(e.target.value)}
+                  value={providedOutcome}
+                  onChange={(e) => setProvidedOutcome(e.target.value)}
                   typographyVariant="body1"
                 />
                 <Grid
@@ -420,7 +392,7 @@ export function ProductDialog({ isDialogOpen }) {
                 </Stack>
               </Stack>
             </Box>
-          </Stack>{" "}
+          </Stack>
           <Divider sx={{ opacity: 0, my: 2 }} />
           <Stack
             direction="row"
