@@ -29,7 +29,7 @@ class Controller(
 ) {
   @PostMapping("/projectdata")
   fun createProjectData(@RequestBody body: ReqData): String {
-      println(body.product?.name)
+      
     handler.createData(body)
     return "OK"
   }

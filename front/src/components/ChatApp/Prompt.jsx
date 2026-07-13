@@ -46,7 +46,8 @@ export function Prompt() {
             sx={{ width: "100%", maxWidth: "620px" }}
           >
             {/* PromptInputの中で PromptButtonを呼び出すように変更 */}
-            <PromptInput />
+            {/* <PromptInput /> */}
+            <PromptInputArea></PromptInputArea>
             {/* <PromptButton /> */}
           </Stack>
         </Box>

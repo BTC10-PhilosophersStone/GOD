@@ -107,7 +107,9 @@ export function ProductDialog({ isDialogOpen }) {
 
       product: {
         name: productName,
-        issuesWho: parse.issues.Who,
+        issuesWho: Array.isArray(parse.issues.Who)
+          ? parse.issues.Who.join(",")
+          : parse.issues.Who,
         issuesWhat: parse.issues.What,
         issuesWhen: parse.issues.When,
         issuesWhere: parse.issues.Where,
@@ -115,7 +117,9 @@ export function ProductDialog({ isDialogOpen }) {
         issuesHow: parse.issues.How,
         issuesWhatWhy: parse.issues.What_Why,
         issuesContent: issuesContent,
-        providedWho: parse.issues.Who,
+        providedWho: Array.isArray(parse.provided.Who)
+          ? parse.provided.Who.join(",")
+          : parse.provided.Who,
         providedWhat: parse.provided.What,
         providedOutcome: providedOutcome,
       },
