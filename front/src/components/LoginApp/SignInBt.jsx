@@ -34,7 +34,7 @@ export function SignInBt() {
       if (errorCode) {
         switch (errorCode) {
           case "auth/invalid-email":
-            message = "メールアドレスの形式が正しくありません。";
+            message = "メールアドレスが登録されていません。";
             break;
           case "auth/invalid-credential":
             message = "メールアドレスまたはパスワードに誤りがあります。";
@@ -60,6 +60,23 @@ export function SignInBt() {
         maxWidth: "448px",
       }}
     >
+      {authError && (
+        <Typography
+          id="right_button_m"
+          variant="caption"
+          color="error"
+          sx={{
+            width: "100%",
+            textAlign: "left",
+            mt: 0.0,
+            mb: 0.5,
+            px: 1,
+          }}
+        >
+          {authError}
+        </Typography>
+      )}
+
       <Button
         id="right_button"
         variant="contained"
@@ -78,6 +95,12 @@ export function SignInBt() {
             textTransform: "none",
           },
 
+          // クリック状態 (Active) - ボタンが凹むエフェクト
+          "&:active": {
+            boxShadow: "inset 0 4px 6px rgba(0, 0, 0, 0.4)",
+            transform: "translateY(3px)",
+          },
+
           // 3. 無効化状態 (Disabled)
           "&.Mui-disabled": {
             bgcolor: "rgba(228, 202, 77, 1)",
@@ -92,22 +115,6 @@ export function SignInBt() {
       >
         ようこそ
       </Button>
-
-      {authError && (
-        <Typography
-          id="right_button_m"
-          variant="caption"
-          color="error"
-          sx={{
-            width: "100%",
-            textAlign: "left",
-            mt: 0.0,
-            px: 1,
-          }}
-        >
-          {authError}
-        </Typography>
-      )}
     </Box>
   );
 }
