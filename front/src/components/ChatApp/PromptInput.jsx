@@ -3,6 +3,7 @@ import { promptAtom } from "../atoms";
 import { InputAdornment, TextField } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { PromptButton } from "./PromptButton";
+import "@fontsource/zen-kaku-gothic-new";
 
 export function PromptInput() {
   const [prompt, setPrompt] = useAtom(promptAtom);
@@ -34,7 +35,7 @@ export function PromptInput() {
       sx={{
         // "& MuiOutlinedInput-root": { minHeight: 56, pr: 1 },
         "& MuiOutlinedInput-input": {
-          fontFamily: '"Zen Kaku Gothic New", Helvetica,Arial,sans-serif',
+          fontFamily: "Zen Kaku Gothic New",
           fontWeight: 400,
           fontSize: "16px",
           lineHeight: "24px",

@@ -1,4 +1,6 @@
 import { Box, Card, Stack, Typography } from "@mui/material";
+import "@fontsource/hina-mincho";
+import "@fontsource/zen-kaku-gothic-new";
 export function MessageContent({ role, content }) {
   const isGod = role === "GOD";
   return (
@@ -31,10 +33,7 @@ export function MessageContent({ role, content }) {
           component="p"
           align={isGod ? "center" : "justify-content"}
           sx={{
-            fontFamily: isGod
-              ? // ? '"Hina Mincho" , Helvetica, Arial, serif'
-                "Hina Mincho(Regular)"
-              : '"Zen Kaku Gothic New", Helvetica, Arial, sans-serif ',
+            fontFamily: isGod ? "Hina Mincho" : "Zen Kaku Gothic New",
             fontWeight: 400,
             fontSize: "16px",
             lineHeight: "34px",
