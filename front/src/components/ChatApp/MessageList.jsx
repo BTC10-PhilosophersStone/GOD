@@ -10,10 +10,12 @@ export function MessageList() {
     const container = scrollRef.current;
     if (!container || messageList.length === 0) return;
     const lastMessage = messageList[messageList.length - 1];
+    console.log("container", container);
+    console.log("container.children", container.children);
     const lastElement = container.children[messageList.length - 1];
     if (!lastElement) return;
     if (lastMessage.role === "GOD") {
-      lastElement.scrollIntoView({ block: "start" });
+      lastElement.scrollIntoView({ block: "start", behavior: "smooth" });
     } else {
       container.scrollTop = container.scrollHeight;
     }
@@ -32,7 +34,7 @@ export function MessageList() {
         {messageList.map((message) => (
           <MessageListItem key={message.id} message={message} />
         ))}
-        <div style={{ height: "500px" }} aria-hidden="true" />
+        <div style={{ height: "350px" }} aria-hidden="true" />
       </div>
     </>
   );

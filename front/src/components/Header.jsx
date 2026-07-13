@@ -23,25 +23,6 @@ export function Header({}) {
   //   const [link, setLink] = useState(null);
   const [userId, setUserId] = useState(null);
   const authState = false;
-  //   const signOut = async () => {
-  //     const reqSignOut = await fetch("/api/firebase/signOut");
-  //     const json = await reqSignOut.json();
-  //   };
-
-  //   useEffect(() => {
-  //     //今ログインしてるユーザーの情報取得
-  //     const getuserId = async () => {
-  //       try {
-  //         const response = await fetch("api/user");
-  //         const json = await response.json();
-  //         setUserId(json.data.id);
-  //       } catch {
-  //         console.error("error");
-  //       }
-  //     };
-  //     getuserId();
-  //   });
-
   return (
     <Box
       sx={{

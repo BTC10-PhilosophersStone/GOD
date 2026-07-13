@@ -17,16 +17,10 @@ import NorthIcon from "@mui/icons-material/North";
 export function PromptButton() {
   const [prompt, setPrompt] = useAtom(promptAtom);
   const [messageList, setMessageList] = useAtom(messageListAtom);
-  // const setIsFormDialogOpen = useSetAtom(isFormDialogOpenAtom);
   const [productAtom, setProductAtom] = useAtom(productDataAtom);
   const [isShort, setIsShort] = useAtom(isShortProductDataAtom);
   const setIsProductDialogOpen = useSetAtom(isProductDialogOpenAtom);
   const [question, setQuestion] = useState(null);
-
-  // const makeShortageQuestion = (shortageList) => {
-  //   const list = shortageList.map((key) => `・${dataLabels[key] ?? key}`);
-  //   return `以下の項目が議事録から読み取れませんでした。フォームの赤枠欄に入力してください。\n${list.join("\n")}`;
-  // };
 
   const addMessageItem = (role, content) => {
     setMessageList((prev) => {
@@ -36,20 +30,6 @@ export function PromptButton() {
   };
 
   const sessionjsonKey = "productData";
-
-  // const getMessageFromGod = async (content) => {
-  //   const res = await fetch("/datasummary", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({ minutes: prompt }),
-  //   });
-  //   const data = await res.text();
-  //   const cleaned = data
-  //     .replace(/```json/g, "")
-  //     .replace(/```/g, "")
-  //     .trim();
-  //   sessionStorage.setItem(sessionjsonKey, cleaned);
-  // };
 
   const addMessageFromGod = async (content) => {
     try {
@@ -69,7 +49,6 @@ export function PromptButton() {
       const productData = JSON.parse(cleaned);
       // atomに保存と同時にsessionstorageにも保存する（キーはproductDataで固定）
       setProductAtom(productData);
-      // const shortage = checkShortage(productData);
       if (checkShortage(productData)) {
         setIsShort(true);
       } else {
@@ -86,17 +65,12 @@ export function PromptButton() {
   };
 
   const setAnswer = () => {
-    // const obj = getSessionStorage(sessionjsonKey);
-    // console.log("question", question);
-    // const key = question.split(".")[0];
-    // const subKey = question.split(".")[1];
     const [key, subKey] = question.split(".");
     const newObj = {
       ...productAtom,
       [key]: { ...productAtom[key], [subKey]: prompt },
     };
     setProductAtom(newObj);
-    // setQuestion([...question.slice(1)]);
   };
 
   // ストレージからプロダクト情報を取得、不足項目取得、ダイアログ表示切り替え
@@ -119,19 +93,11 @@ export function PromptButton() {
   const handleClick = () => {
     addMessageItem("user", prompt);
     if (!question) {
-      // addMessageItem("user", prompt);
       addMessageFromGod(prompt);
     } else {
-      // addMessageItem("user", prompt);
       setAnswer();
-      // productAtomの更新
-      // const productData = getSessionStorage(sessionjsonKey);
-      // setProductAtom(productData);
-      // setSessionStorage;
-      // console.log("checkShortage実行前");
       setQuestion(null);
     }
-    // !question ? addMessageFromGod(prompt) : setQuestion(null);
     setPrompt("");
   };
 
@@ -154,8 +120,6 @@ export function PromptButton() {
     );
     // 何を聞いているか残す、
     !question && setQuestion(list[0]);
-
-    // isShort && console.log(checkShortage());
   }, [productAtom]);
 
   return (
