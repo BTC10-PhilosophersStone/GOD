@@ -30,5 +30,5 @@ interface ServiceHandler {
 
   fun getSimilarityList(): List<Result>
 
-  fun getProduct(id: Int): Optional<Product?>
+  fun getProduct(id: Long): ProductInfo
 }

@@ -5,7 +5,7 @@ import com.example.bedrock.repository.Department
 import com.example.bedrock.repository.Product
 
 class ReqData {
-    val product: Product? = null
-    val department: List<Department>? = null
-    val classification: List<Classification>? = null
+    var product: Product? = null
+    var department: List<Department>? = null
+    var classification: List<Classification>? = null
 }

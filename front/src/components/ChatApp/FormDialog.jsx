@@ -28,7 +28,7 @@ export function FormDialog() {
     setFormValues((prev) => ({ ...prev, [id]: newValue }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const updated = {
       ...productData,
       issues: { ...productData.issues },
@@ -36,11 +36,24 @@ export function FormDialog() {
     };
     for (const id in formValues) {
       const [sectionName, key] = id.split(".");
-      updated[sectionName][key] =
-        formValues[id].trim() === "" ? "不明" : formValues[id];
+      updated[sectionName][key] = !Array.isArray(formValues[id])
+        ? formValues[id].trim() === ""
+          ? "不明"
+          : formValues[id]
+        : formValues[id];
     }
-    // sessionStorage.setItem(sessionjsonKey, JSON.stringify(updated));
-    setSessionStorage(sessionjsonKey, updated);
+    sessionStorage.setItem(sessionjsonKey, JSON.stringify(updated));
+
+    const res = await fetch("/productmodify", {
+      method: "POST",
+      body: JSON.stringify(updated),
+    });
+    const data = await res.text();
+    const cleaned = data
+      .replace(/```json/g, "")
+      .replace(/```/g, "")
+      .trim();
+    console.log(cleaned);
     setIsOpen(false);
   };
 

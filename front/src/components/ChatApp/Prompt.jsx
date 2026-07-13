@@ -1,5 +1,6 @@
 import { PromptButton } from "./PromptButton";
 import { PromptInput } from "./PromptInput";
+import { PromptInputArea } from "./PromptInputArea";
 
 export function Prompt() {
   return (
@@ -11,8 +12,9 @@ export function Prompt() {
           justifyContent: "center",
         }}
       >
-        <PromptInput />
-        <PromptButton />
+        {/* <PromptInput />
+        <PromptButton /> */}
+        <PromptInputArea></PromptInputArea>
       </div>
     </>
   );

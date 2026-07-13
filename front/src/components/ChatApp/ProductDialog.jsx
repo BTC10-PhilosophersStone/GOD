@@ -37,9 +37,12 @@ const memberImages = [
 
 export function ProductDialog({ isDialogOpen }) {
   const [isOpen, setIsOpen] = useState(isDialogOpen);
+
   const sessionjsonKey = "productData";
-  // const rawData = sessionStorage.getItem(sessionjsonKey);
-  // const parse = JSON.parse(rawData);
+  const rawData = sessionStorage.getItem(sessionjsonKey);
+  const parse = JSON.parse(rawData);
+  console.log(parse);
+
   const [departmentOptions, setDepartmentOptions] = useState([]);
   const [selectedDepartments, setSelectedDepartments] = useState([
     "人事部",
@@ -47,12 +50,12 @@ export function ProductDialog({ isDialogOpen }) {
     "人材開発G",
     // parse.department.map((d) => d.departmentName),
   ]);
-  const [productName, setProductName] = useState(parse.issue.name);
-  const [issue, setIssue] = useState(parse.issue.issue);
-  const [value, setValue] = useState(parse.issue.value);
-  const [category, setCategory] = useState(parse.issue.category);
-  const [domain, setDomain] = useState(parse.issue.domain);
-  const [work, setWork] = useState(parse.issue.work);
+  const [productName, setProductName] = useState(parse.issues.name);
+  const [issue, setIssue] = useState(parse.issues.issue);
+  const [value, setValue] = useState(parse.issues.value);
+  const [category, setCategory] = useState(parse.issues.category);
+  const [domain, setDomain] = useState(parse.issues.domain);
+  const [work, setWork] = useState(parse.issues.work);
   // const [issuesContent, setIssuesContent] = useState(parse.issues.Content);
   // const [providedOutcome, setProvidedOutcome] = useState(
   //   parse.provided.Outcome,
@@ -91,31 +94,32 @@ export function ProductDialog({ isDialogOpen }) {
     fetchDepartments();
   }, []);
 
-  // const req = {
-  //   // Nameカラム追加に伴うバックエンド実装完了次第、
-  //   // プロパティを追加すること
+  const req = {
+    // Nameカラム追加に伴うバックエンド実装完了次第、
+    // プロパティを追加すること
 
-  //   product: {
-  //     name: parse.issues.Name,
-  //     issuesWho: parse.issues.Who,
-  //     issuesWhat,
-  //     issuesWhen: parse.issues.When,
-  //     issuesWhere: parse.issues.Where,
-  //     issuesWhy: parse.issues.Why,
-  //     issuesHow: parse.issues.How,
-  //     issuesWhatWhy: parse.issues.What_Why,
-  //     issuesContent,
-  //     providedWho,
-  //     providedWhy: parse.provided.What,
-  //     providedOutcome,
-  //   },
-  //   department: selectedDepartments.map((name) => ({ departmentName: name })),
-  //   classification: parse.classification,
-  // };
+    product: {
+      name: parse.issues.Name,
+      issuesWho: parse.issues.Who[0],
+      issuesWhat: parse.issues.What,
+      issuesWhen: parse.issues.When,
+      issuesWhere: parse.issues.Where,
+      issuesWhy: parse.issues.Why,
+      issuesHow: parse.issues.How,
+      issuesWhatWhy: parse.issues.What_Why,
+      issuesContent: parse.issues.Content,
+      providedWho: parse.provided.Who[0],
+      providedWhy: parse.provided.What,
+      providedOutcome: parse.provided.Outcome,
+    },
+    department: selectedDepartments.map((name) => ({ departmentName: name })),
+    classification: parse.classification,
+  };
 
   const handleClose = () => onClose();
 
   const handleRegister = async () => {
+    console.log(req);
     try {
       const res = await fetch("/projectdata", {
         method: "POST",
@@ -126,11 +130,7 @@ export function ProductDialog({ isDialogOpen }) {
         throw new Error(`APIエラー: ${res.status}`);
       }
 
-      const vector = await fetch("/product", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(req.product),
-      });
+      const vector = await fetch("/product");
 
       // バックエンドでエンドポイントのメソッドをGETに変更したらこちらを採用する
       // const vector = await fetch("/product");
