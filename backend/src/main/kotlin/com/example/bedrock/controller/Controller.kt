@@ -1,13 +1,16 @@
 package com.example.bedrock.controller
 
+import com.example.bedrock.repository.Product
 import com.example.bedrock.repository.Result
 import com.example.bedrock.prompt.AnalysisPrompt
 import com.example.bedrock.prompt.ModifyPrompt
 import com.example.bedrock.repository.DepartmentMst
 import com.example.bedrock.repository.DepartmentMstRepository
 import com.example.bedrock.service.ServiceHandler
+import java.util.Optional
 import org.springframework.ai.chat.client.ChatClient
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
@@ -49,6 +52,10 @@ class Controller(
 
     return handler.getSimilarityList()
   }
+
+  @GetMapping("/product/{id}")
+  fun product(@PathVariable id: Int): Optional<Product?> {
+    return handler.getProduct(id)
 
     @GetMapping("/department")
     fun department(): List<DepartmentMst> {
