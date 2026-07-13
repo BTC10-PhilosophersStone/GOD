@@ -18,54 +18,60 @@ import CloseIcon from "@mui/icons-material/Close";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useState, useEffect } from "react";
 
-const parse = {
-  issue: {
-    name: "サンプルネーム",
-    issue: "サンプルイッシュー",
-    value: "サンプルバリュー",
-    category: "サンプルカテゴリー",
-    domain: "サンプルドメイン",
-    work: "サンプル業務",
-  },
-};
+// const parse = {
+//   issues: {
+//     Name: "サンプルネーム",
+//     Content: "サンプルイッシュー",
+//     value: "サンプルバリュー",
+//   },
+//   provided: { Outcome: "カチカチ" },
+//   classification: {
+//     mainCategory: "メインカテゴリー",
+//     subCategory: "サブカテゴリー",
+//     minorCategory: "マイクロカテゴリー",
+//   },
+// };
 
 const memberImages = [
-  "front/src/assets/hero.png",
-  "front/src/assets/react.svg",
-  "front/src/assets/vite.svg",
+  "/kkrn_icon_user_1.png",
+  "/kkrn_icon_user_1.png",
+  "/kkrn_icon_user_1.png",
 ];
 
 export function ProductDialog({ isDialogOpen }) {
   const [isOpen, setIsOpen] = useState(isDialogOpen);
   const sessionjsonKey = "productData";
-  // const rawData = sessionStorage.getItem(sessionjsonKey);
-  // const parse = JSON.parse(rawData);
+  const rawData = sessionStorage.getItem(sessionjsonKey);
+  const parse = JSON.parse(rawData);
   const [departmentOptions, setDepartmentOptions] = useState([]);
   const [selectedDepartments, setSelectedDepartments] = useState([
-    "人事部",
-    "人材開発",
-    "人材開発G",
-    // parse.department.map((d) => d.departmentName),
+    parse.department.map((d) => d.departmentName),
   ]);
-  const [productName, setProductName] = useState(parse.issue.name);
-  const [issue, setIssue] = useState(parse.issue.issue);
-  const [value, setValue] = useState(parse.issue.value);
-  const [category, setCategory] = useState(parse.issue.category);
-  const [domain, setDomain] = useState(parse.issue.domain);
-  const [work, setWork] = useState(parse.issue.work);
-  // const [issuesContent, setIssuesContent] = useState(parse.issues.Content);
-  // const [providedOutcome, setProvidedOutcome] = useState(
-  //   parse.provided.Outcome,
-  // );
+  const [productName, setProductName] = useState(parse.issues.Name);
+  const [issuesContent, setIssuesContent] = useState(parse.issues.Content);
+  const [providedOutcome, setProvidedOutcome] = useState(
+    parse.provided.Outcome,
+  );
+  const [mainCategory, setMainCategory] = useState(
+    parse.classification[0].mainCategory,
+  );
+  const [subCategory, setSubCategory] = useState(
+    parse.classification[0].subCategory,
+  );
+  const [minorCategory, setWMinorCategory] = useState(
+    parse.classification[0].minorCategory,
+  );
+  const categoryFields = [
+    { label: "業務カテゴリ", value: mainCategory },
+    { label: "業務領域", value: subCategory },
+    { label: "業務", value: minorCategory },
+  ];
   // const [providedWho, setProvidedWho] = useState(parse.provided.Who);
   // const [issuesWhat, setIssuesWhat] = useState(parse.issues.What);  //これは何？
-  const categoryFields = [
-    { label: "業務カテゴリ", value: category },
-    { label: "業務領域", value: domain },
-    { label: "業務", value: work },
-  ];
 
   useEffect(() => {
+    console.log(parse);
+
     const fetchDepartments = async () => {
       try {
         const res = await fetch("/departments");
@@ -91,31 +97,34 @@ export function ProductDialog({ isDialogOpen }) {
     fetchDepartments();
   }, []);
 
-  // const req = {
-  //   // Nameカラム追加に伴うバックエンド実装完了次第、
-  //   // プロパティを追加すること
-
-  //   product: {
-  //     name: parse.issues.Name,
-  //     issuesWho: parse.issues.Who,
-  //     issuesWhat,
-  //     issuesWhen: parse.issues.When,
-  //     issuesWhere: parse.issues.Where,
-  //     issuesWhy: parse.issues.Why,
-  //     issuesHow: parse.issues.How,
-  //     issuesWhatWhy: parse.issues.What_Why,
-  //     issuesContent,
-  //     providedWho,
-  //     providedWhy: parse.provided.What,
-  //     providedOutcome,
-  //   },
-  //   department: selectedDepartments.map((name) => ({ departmentName: name })),
-  //   classification: parse.classification,
-  // };
-
   const handleClose = () => onClose();
 
   const handleRegister = async () => {
+    const req = {
+      // Nameカラム追加に伴うバックエンド実装完了次第、
+      // プロパティを追加すること
+
+      product: {
+        name: productName,
+        issuesWho: parse.issues.Who,
+        issuesWhat: parse.issues.What,
+        issuesWhen: parse.issues.When,
+        issuesWhere: parse.issues.Where,
+        issuesWhy: parse.issues.Why,
+        issuesHow: parse.issues.How,
+        issuesWhatWhy: parse.issues.What_Why,
+        issuesContent: issuesContent,
+        providedWho: parse.issues.Who,
+        providedWhy: parse.provided.What,
+        providedOutcome: providedOutcome,
+      },
+      department: selectedDepartments.map((name) => ({ departmentName: name })),
+      classification: {
+        mainCategory: mainCategory,
+        subCategory: subCategory,
+        minorCategory: minorCategory,
+      },
+    };
     try {
       const res = await fetch("/projectdata", {
         method: "POST",
@@ -127,7 +136,7 @@ export function ProductDialog({ isDialogOpen }) {
       }
 
       const vector = await fetch("/product", {
-        method: "POST",
+        method: "GET",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(req.product),
       });
@@ -216,19 +225,20 @@ export function ProductDialog({ isDialogOpen }) {
   return (
     <>
       <Dialog
-        open={isOpen}
+        open={true}
         onClose={handleClose}
         component="section"
         fullWidth={true}
         maxWidth="lg"
-        PaperProps={{
-          sx: {
-            width: "100%",
-            minHeight: 800,
-            color: "#05101b", //
-            bgcolor: "#7f2222",
-          },
+        // PaperProps={{
+        sx={{
+          width: "100%",
+          minHeight: 800,
+          color: "#05101b",
+          "&.MuiPaper-root": { backgroundColor: "#7f2222" },
+          // "&.MuiDialog-root": { color: "#7f2222" },
         }}
+        // }}
       >
         <Box
           sx={{
@@ -240,25 +250,24 @@ export function ProductDialog({ isDialogOpen }) {
             display: "flex",
             flexDirection: "column",
             height: 800,
+            // "&.MuiBox-root": { bgcolor: "#7f2222" },
           }}
         >
-          <Stack direction="row" justifyContent="flex-end" sx={{ mb: 2 }}>
+          <Stack direction="row" sx={{ mb: 2, justifyContent: "flex-end" }}>
             {" "}
             <IconButton
               aria-label="close"
               size="large"
-              sx={{ p: 0, color: "#252e37" }}
+              sx={{
+                p: 0,
+                color: "#252e37",
+              }}
               onClick={() => setIsOpen(false)}
             >
               <CloseIcon sx={{ fontSize: 40 }} />
             </IconButton>
           </Stack>
-          <Stack
-            direction="row"
-            alignItems="flex-start"
-            spacing={3}
-            sx={{ flex: 1 }}
-          >
+          <Stack direction="row" spacing={3} sx={{ flex: 1 }}>
             <Box
               sx={{
                 flex: 1,
@@ -292,7 +301,7 @@ export function ProductDialog({ isDialogOpen }) {
 
                   <Autocomplete
                     multiple
-                    options={selectedDepartments}
+                    options={departmentOptions}
                     value={selectedDepartments}
                     disableClearable
                     popupIcon={
@@ -353,14 +362,14 @@ export function ProductDialog({ isDialogOpen }) {
                 </Stack>
                 <LabeledTextField
                   label="解決したい課題"
-                  value={issue}
-                  onChange={(e) => setIssue(e.target.value)}
+                  value={issuesContent}
+                  onChange={(e) => setIssuesContent(e.target.value)}
                   typographyVariant="body1"
                 />
                 <LabeledTextField
                   label="提供価値"
-                  value={value}
-                  onChange={(e) => setValue(e.target.value)}
+                  value={providedOutcome}
+                  onChange={(e) => setProvidedOutcome(e.target.value)}
                   typographyVariant="body1"
                 />
                 <Grid
