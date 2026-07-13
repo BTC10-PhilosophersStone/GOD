@@ -10,8 +10,6 @@ export function MessageList() {
     const container = scrollRef.current;
     if (!container || messageList.length === 0) return;
     const lastMessage = messageList[messageList.length - 1];
-    console.log("container", container);
-    console.log("container.children", container.children);
     const lastElement = container.children[messageList.length - 1];
     if (!lastElement) return;
     if (lastMessage.role === "GOD") {
