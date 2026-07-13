@@ -1,11 +1,11 @@
 package com.example.bedrock.controller
 
-import com.example.bedrock.repository.Product
-import com.example.bedrock.repository.Result
 import com.example.bedrock.prompt.AnalysisPrompt
 import com.example.bedrock.prompt.ModifyPrompt
 import com.example.bedrock.repository.DepartmentMst
 import com.example.bedrock.repository.DepartmentMstRepository
+import com.example.bedrock.repository.Product
+import com.example.bedrock.repository.Result
 import com.example.bedrock.service.ServiceHandler
 import java.util.Optional
 import org.springframework.ai.chat.client.ChatClient
@@ -21,31 +21,33 @@ class Controller(
     private val handler: ServiceHandler,
     private val departmentMstRepository: DepartmentMstRepository,
 ) {
-    @PostMapping("/projectdata")
+  @PostMapping("/projectdata")
   fun createProjectData(@RequestBody body: ReqData): String {
     handler.createData(body)
     return "OK"
   }
 
-    @PostMapping("/datasummary")
-    fun dataSummary(@RequestBody body: SummaryRequest): String {
-        val chatClient = builder.build()
-        val result = chatClient.prompt()
+  @PostMapping("/datasummary")
+  fun dataSummary(@RequestBody body: SummaryRequest): String {
+    val chatClient = builder.build()
+    val result =
+        chatClient
+            .prompt()
             .system(AnalysisPrompt.SYSTEM_PROMPT)
             .user(
                 """
         以下の議事録を分析してください。
 
         ${body.minutes}
-        """.trimIndent()
+        """
+                    .trimIndent()
             )
             .call()
             .content()
-            ?.trim()
-            ?: ""
-        println(result)
-        return result
-    }
+            ?.trim() ?: ""
+    println(result)
+    return result
+  }
 
   @GetMapping("/product")
   fun product(): List<Result> {
@@ -56,28 +58,31 @@ class Controller(
   @GetMapping("/product/{id}")
   fun product(@PathVariable id: Int): Optional<Product?> {
     return handler.getProduct(id)
+  }
 
-    @GetMapping("/department")
-    fun department(): List<DepartmentMst> {
-        return handler.getDepartmentList()
-    }
+  @GetMapping("/department")
+  fun department(): List<DepartmentMst> {
+    return handler.getDepartmentList()
+  }
 
   @PostMapping("/productmodify")
   fun productModify(@RequestBody body: String): String {
     val chatClient = builder.build()
-    val result = chatClient.prompt()
-      .system(ModifyPrompt.SYSTEM_PROMPT)
-      .user(
-        """
+    val result =
+        chatClient
+            .prompt()
+            .system(ModifyPrompt.SYSTEM_PROMPT)
+            .user(
+                """
         以下のデータを分析してください。
 
         $body
-        """.trimIndent()
-      )
-      .call()
-      .content()
-      ?.trim()
-      ?: ""
+        """
+                    .trimIndent()
+            )
+            .call()
+            .content()
+            ?.trim() ?: ""
     return result
   }
 }
