@@ -14,6 +14,8 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import "@fontsource/hina-mincho";
+import "@fontsource/zen-kaku-gothic-new";
 
 export const ListView = () => {
   const [products, setProducts] = useState([]);
@@ -35,7 +37,7 @@ export const ListView = () => {
     <Box
       component="main"
       sx={{
-        bgcolor: "#f5f5f3",
+        bgcolor: "#ffffff",
         minHeight: "100vh",
         width: "100%",
         position: "relative",
@@ -53,7 +55,7 @@ export const ListView = () => {
           color: "text.secoundary",
         }}
       >
-        <MenuIcon sx={{ fontSize: 24 }} />
+        <MenuIcon sx={{ fontSize: 40 }} />
       </IconButton>
       <Container
         maxWidth={false}
@@ -64,7 +66,7 @@ export const ListView = () => {
             component="p"
             align="center"
             sx={{
-              fontFamily: '"Hina Mincho" , Helvetica, Arial, serif',
+              fontFamily: "Hina Mincho",
               fontWeight: 400,
               fontSize: "16px",
               lineHeight: "34px",
@@ -73,7 +75,7 @@ export const ListView = () => {
               mt: "1px",
             }}
           >
-            <Box component="span" sx={{ letterSpacing: "0.8px" }}>
+            <Box component="span" sx={{ letterSpacing: "4px" }}>
               そなたのプロダクトに似たものがないか、神が提案しよう。
               <br />
               <br />
@@ -82,171 +84,178 @@ export const ListView = () => {
               神が総合的に判断した5件が以下のプロダクトじゃ。
             </Box>
           </Typography>
-          <Stack component="section" spacing={2.75} width="100%"></Stack>
-          {products.map((product) => (
-            <Card
-              key={product.id}
-              variant="outlined"
-              sx={{
-                px: 4,
-                py: 3,
-                borderColor: "#b78f00",
-                bgcolor: "background.paper",
-              }}
-              onClick={async () => {
-                try {
-                  const res = await fetch(`/product/${product.id}`);
-                  const data = await res.json();
-                  console.log(data);
-                } catch {
-                  console.error("error");
-                }
-              }}
-            >
-              <Stack
-                direction={{ xs: "column", sm: "row" }}
-                sx={{ justifyContent: "space-between" }}
-                alignitems={{ xs: "flex-start", sm: "flex-start" }}
-                // spacing="280px"
+          <Stack component="section" spacing={2.75} width="100%">
+            {products.map((product) => (
+              <Card
+                key={product.id}
+                variant="outlined"
+                sx={{
+                  px: 4,
+                  py: 3,
+                  borderColor: "#b78f00",
+                  bgcolor: "background.paper",
+                }}
+                onClick={async () => {
+                  try {
+                    const res = await fetch(`/product/${product.id}`);
+                    const data = await res.json();
+                    console.log(data);
+                  } catch {
+                    console.error("error");
+                  }
+                }}
               >
                 <Stack
-                  spacing="9px"
-                  sx={{ minWidth: 0, maxWidth: "317px", width: "100%" }}
+                  direction={{ xs: "column", sm: "row" }}
+                  sx={{ justifyContent: "space-between" }}
+                  alignitems={{ xs: "flex-start", sm: "flex-start" }}
+                  // spacing="280px"
                 >
                   <Stack
-                    direction="row"
-                    spacing={2.5}
-                    alignitems="center"
-                    flexwrap="wrap"
+                    spacing="9px"
+                    sx={{ minWidth: 0, maxWidth: "317px", width: "100%" }}
                   >
-                    <Typography
-                      component="p"
-                      sx={{
-                        fontFamily:
-                          '"Sawarabi Gothic", Helvetica, Arial, sans-serif',
-                        fontWeight: 400,
-                        fontSize: "20px",
-                        lineHeight: "30px",
-                        letterSpacing: "-0.44px",
-                        color: "#252e37",
-                        whiteSpace: "nowrap",
-                      }}
+                    <Stack
+                      direction="row"
+                      spacing={2.5}
+                      sx={{ alignItems: "center" }}
+                      flexwrap="wrap"
                     >
-                      product id : {product.id}
-                    </Typography>
-                    <Chip
-                      label="企画検討"
-                      size="small"
-                      sx={{
-                        "& .MuiChip-label": {
-                          fontFamily:
-                            '"Sawarabi Gothic", Helvetica, Arial, sans-serif',
-                          fontWeight: 400,
-                          fontSize: "13px",
-                          lineHeight: "18px",
-                          letterSpacing: "1px",
-                          color: "text.primary",
-                        },
-                      }}
-                    />
-                  </Stack>
-                  <Typography
-                    component="h2"
-                    sx={{
-                      fontFamily:
-                        '"Zen Kaku Gothic New", Helvetica, Arial, sans-serif ',
-                      fontWeight: 700,
-                      fontSize: "24px",
-                      lineHeight: "34px",
-                      letterSpacing: "5px",
-                      color: "#252e37",
-                      wordBreak: "break-word",
-                    }}
-                  >
-                    {product.name}
-                  </Typography>
-                </Stack>
-                <Stack
-                  spacing="15px"
-                  alignitems="flex-end"
-                  sx={{
-                    width: { xs: "100%", sm: "162px" },
-                    minWidth: { sm: "162px" },
-                  }}
-                >
-                  <Stack
-                    direction="row"
-                    sx={{ justifyContent: "space-between" }}
-                    alignitems="flex-end"
-                    width="100%"
-                  >
-                    <Typography
-                      component="p"
-                      sx={{
-                        fontFamily:
-                          '"Zen Kaku Gothic New", Helvetica, Arial, sans-serif ',
-                        fontWeight: 700,
-                        fontSize: "16px",
-                        lineHeight: "17.8px",
-                        letterSpacing: "0.8px",
-                        color: "#252e37",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      総合関連度
-                    </Typography>
-                    <Stack direction="row" spacing="7px" alignitems="flex-end">
                       <Typography
-                        component="span"
+                        component="p"
                         sx={{
-                          fontFamily:
-                            '"Zen Kaku Gothic New", Helvetica, Arial, sans-serif ',
-                          fontWeight: 700,
-                          fontSize: "32px",
-                          lineHeight: "29.4px",
-                          letterSpacing: "1.6px",
+                          fontFamily: "Zen Kaku Gothic New",
+                          fontWeight: 500,
+                          fontSize: "20px",
+                          lineHeight: "30px",
+                          letterSpacing: "1px",
                           color: "#252e37",
-                          textAlign: "right",
                           whiteSpace: "nowrap",
                         }}
                       >
-                        {product.percent}
+                        D-2026-07-{product.id}
                       </Typography>
-                      <Typography
-                        component="span"
+                      <Chip
+                        label="企画検討"
+                        size="small"
                         sx={{
-                          fontFamily:
-                            '"Zen Kaku Gothic New", Helvetica, Arial, sans-serif ',
-                          fontWeight: 700,
-                          fontSize: "16px",
+                          "& .MuiChip-label": {
+                            fontFamily: "Zen Kaku Gothic New",
+                            fontWeight: 700,
+                            fontSize: "13px",
+                            lineHeight: "18px",
+                            letterSpacing: "1px",
+                            color: "text.primary",
+                            m: 0.8,
+                          },
+                        }}
+                      />
+                    </Stack>
+                    <Typography
+                      component="h2"
+                      sx={{
+                        fontFamily: "Zen Kaku Gothic New",
+                        WebkitTextStroke: "1px currentColor",
+                        fontWeight: "900",
+                        fontSize: "24px",
+                        lineHeight: "34px",
+                        letterSpacing: "5px",
+                        color: "#252e37",
+                        wordBreak: "break-word",
+                      }}
+                    >
+                      {product.name}
+                    </Typography>
+                  </Stack>
+                  <Stack
+                    spacing="13px"
+                    sx={{
+                      width: { xs: "100%", sm: "162px" },
+                      minWidth: { sm: "162px" },
+                      alignItems: "flex-end",
+                    }}
+                  >
+                    <Stack
+                      direction="row"
+                      sx={{
+                        justifyContent: "space-between",
+                        alignItems: "flex-end",
+                      }}
+                      width="100%"
+                      spacing={4}
+                    >
+                      <Typography
+                        component="p"
+                        sx={{
+                          fontFamily: "Zen Kaku Gothic New",
+                          WebkitTextStroke: "0.2px currentColor",
+                          fontWeight: "bold",
+                          fontSize: "15px",
                           lineHeight: "17.8px",
                           letterSpacing: "0.8px",
                           color: "#252e37",
                           whiteSpace: "nowrap",
                         }}
                       >
-                        %
+                        総合関連度
                       </Typography>
+                      <Stack
+                        direction="row"
+                        spacing="7px"
+                        sx={{ alignItems: "flex-end" }}
+                      >
+                        <Typography
+                          component="span"
+                          sx={{
+                            fontFamily: "Zen Kaku Gothic New",
+                            WebkitTextStroke: "1px currentColor",
+                            fontWeight: 900,
+                            fontSize: "28px",
+                            lineHeight: "28px",
+                            letterSpacing: "1.2px",
+                            color: "#252e37",
+                            textAlign: "right",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          88
+                        </Typography>
+                        <Typography
+                          component="span"
+                          sx={{
+                            fontFamily: "Zen Kaku Gothic New",
+                            WebkitTextStroke: "1px currentColor",
+                            fontWeight: 500,
+                            fontSize: "15px",
+                            lineHeight: "17.8px",
+                            letterSpacing: "0.8px",
+                            color: "#252e37",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          %
+                        </Typography>
+                      </Stack>
                     </Stack>
-                  </Stack>
-                  <LinearProgress
-                    variant="determinate"
-                    value={50}
-                    sx={{
-                      width: "100%",
-                      height: 8,
-                      borderRadius: "64px",
-                      bgcolor: "gray.200",
-                      "& .MuiLinearProgress-bar": {
+                    <LinearProgress
+                      variant="determinate"
+                      value={88}
+                      sx={{
+                        width: "100%",
+                        height: 8,
                         borderRadius: "64px",
-                        bgcolor: "#b78f00",
-                      },
-                    }}
-                  ></LinearProgress>
+                        bgcolor: "grey.200",
+                        "& .MuiLinearProgress-bar": {
+                          borderRadius: "64px",
+                          bgcolor: "#b78f00",
+                        },
+                      }}
+                    ></LinearProgress>
+                  </Stack>
                 </Stack>
-              </Stack>
-            </Card>
-          ))}
+              </Card>
+            ))}
+          </Stack>
         </Stack>
       </Container>
       <Box
@@ -258,38 +267,66 @@ export const ListView = () => {
           bottom: 0,
           zIndex: 4,
           bgcolor: "background.paper",
-          borderTop: 1,
-          borderColor: "devider",
           display: "flex",
           justifyContent: "center",
           px: 2,
           py: 2.5,
+
+          "&::before": {
+            content: '""',
+            position: "absolute",
+            top: -25,
+            left: 0,
+            right: 0,
+            height: 40,
+            background:
+              "linear-gradient(to bottom, transparent, rgba(255,255,255,1))",
+            pointerEvents: "none",
+          },
         }}
       >
         <Stack
           direction="row"
-          alignitems="center"
           spacing={2}
-          sx={{ width: "100%", maxWidth: "620px" }}
+          sx={{ width: "100%", maxWidth: "620px", alignItems: "center" }}
         >
           <TextField
             fullWidth
             variant="outlined"
             placeholder="神に話しかけてみる"
-            inputprops={{
-              "aria-label": "神に話しかけてみる",
-            }}
-            inputprops={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <AddIcon sx={{ color: "text.secondary", fontSize: 24 }} />
-                </InputAdornment>
-              ),
+            slotProps={{
+              input: {
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <AddIcon sx={{ color: "text.secondary", fontSize: 24 }} />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <IconButton
+                    aria-label="send"
+                    sx={{
+                      width: 40,
+                      height: 40,
+                      bgcolor: "#466583",
+                      color: "#ffffff",
+                      borderRadius: "4px",
+                      flexShrink: 0,
+                      "&:hover": {
+                        bgcolor: "#466583",
+                      },
+                    }}
+                  >
+                    <ArrowUpWardIcon sx={{ fontSize: 27 }} />
+                  </IconButton>
+                ),
+              },
             }}
             sx={{
+              inputProps: {
+                ariaLabel: "神に話しかけてみる",
+              },
               "& .MuiInputBase-input": {
-                fontFamily:
-                  '"Zen Kaku Gothic New", Helvetica, Arial, sans-serif ',
+                fontFamily: "Zen Kaku Gothic New",
                 fontWeight: 400,
                 fontSize: "16px",
                 lineHeight: "24px",
@@ -298,22 +335,6 @@ export const ListView = () => {
               },
             }}
           />
-          <IconButton
-            aria-label="send"
-            sx={{
-              width: 40,
-              height: 40,
-              bgcolor: "primary.main",
-              color: "primary.contrastText",
-              borderRadius: "4px",
-              flexShrink: 0,
-              "&:hover": {
-                bgcolor: "primary.main",
-              },
-            }}
-          >
-            <ArrowUpWardIcon sx={{ fontSize: 27 }} />
-          </IconButton>
         </Stack>
       </Box>
     </Box>
