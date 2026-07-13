@@ -90,7 +90,7 @@ export const ListView = () => {
               sx={{
                 px: 4,
                 py: 3,
-                borderColor: "secondary.main",
+                borderColor: "#b78f00",
                 bgcolor: "background.paper",
               }}
               onClick={async () => {
@@ -105,9 +105,9 @@ export const ListView = () => {
             >
               <Stack
                 direction={{ xs: "column", sm: "row" }}
-                justifycontent="space-between"
+                sx={{ justifyContent: "space-between" }}
                 alignitems={{ xs: "flex-start", sm: "flex-start" }}
-                spacing={{ xs: 3, sm: 2 }}
+                // spacing="280px"
               >
                 <Stack
                   spacing="9px"
@@ -176,7 +176,7 @@ export const ListView = () => {
                 >
                   <Stack
                     direction="row"
-                    justifycontent="space-between"
+                    sx={{ justifyContent: "space-between" }}
                     alignitems="flex-end"
                     width="100%"
                   >
@@ -231,15 +231,15 @@ export const ListView = () => {
                   </Stack>
                   <LinearProgress
                     variant="determinate"
-                    value={product.percent}
+                    value={50}
                     sx={{
                       width: "100%",
                       height: 8,
                       borderRadius: "64px",
                       bgcolor: "gray.200",
-                      "& MuiLinearProgress-bar": {
+                      "& .MuiLinearProgress-bar": {
                         borderRadius: "64px",
-                        bgcolor: "secondary.main",
+                        bgcolor: "#b78f00",
                       },
                     }}
                   ></LinearProgress>
