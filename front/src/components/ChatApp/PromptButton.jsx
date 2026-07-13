@@ -13,6 +13,9 @@ import { dataLabels } from "./dataLabels";
 import { getSessionStorage, setSessionStorage } from "./sessionStorage";
 import { IconButton } from "@mui/material";
 import NorthIcon from "@mui/icons-material/North";
+import sendIconDefault from "../../assets/send_icon_default.png";
+import sendIconDisabled from "../../assets/send_icon_disabled.png";
+import sendIconHovered from "../../assets/send_icon_hovered.png";
 
 export function PromptButton() {
   const [prompt, setPrompt] = useAtom(promptAtom);
@@ -21,6 +24,7 @@ export function PromptButton() {
   const [isShort, setIsShort] = useAtom(isShortProductDataAtom);
   const setIsProductDialogOpen = useSetAtom(isProductDialogOpenAtom);
   const [question, setQuestion] = useState(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   const addMessageItem = (role, content) => {
     setMessageList((prev) => {
@@ -124,7 +128,7 @@ export function PromptButton() {
 
   return (
     <>
-      <IconButton
+      {/* <IconButton
         onClick={handleClick}
         disabled={!prompt}
         aria-label="send"
@@ -142,14 +146,37 @@ export function PromptButton() {
             backgroundColor: "#7E93A9",
           },
         }}
-      >
-        <NorthIcon
+      > */}
+      {/* <NorthIcon
           sx={{
             fontSize: 27,
             color: "white",
           }}
-        />
-      </IconButton>
+        /> */}
+      {/* </IconButton> */}
+
+      <button
+        style={{
+          background: "none",
+          border: "none",
+          cursor: prompt && "pointer",
+        }}
+        onClick={handleClick}
+        disabled={!prompt}
+        aria-label="send"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        {prompt ? (
+          isHovered ? (
+            <img src={sendIconHovered} width="40" height="40" />
+          ) : (
+            <img src={sendIconDefault} width="40" height="40" />
+          )
+        ) : (
+          <img src={sendIconDisabled} width="40" height="40" />
+        )}
+      </button>
       {/* <button onClick={handleClick} disabled={!prompt}>
         送信
       </button> */}
