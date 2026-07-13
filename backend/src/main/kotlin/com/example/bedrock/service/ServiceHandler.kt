@@ -1,8 +1,10 @@
 package com.example.bedrock.service
 
 import com.example.bedrock.controller.ReqData
+import com.example.bedrock.repository.Product
 import com.example.bedrock.repository.Result
 import com.fasterxml.jackson.databind.ObjectMapper
+import java.util.Optional
 import software.amazon.awssdk.core.SdkBytes
 import software.amazon.awssdk.services.bedrockruntime.BedrockRuntimeClient
 import software.amazon.awssdk.services.bedrockruntime.model.InvokeModelRequest
@@ -25,4 +27,6 @@ interface ServiceHandler {
   }
 
   fun getSimilarityList(): List<Result>
+
+  fun getProduct(id: Int): Optional<Product?>
 }

@@ -3,11 +3,14 @@ package com.example.bedrock.service
 import com.example.bedrock.controller.ReqData
 import com.example.bedrock.repository.ClassificationRepository
 import com.example.bedrock.repository.DepartmentRepository
+import com.example.bedrock.repository.Product
 import com.example.bedrock.repository.ProductRepository
 import com.example.bedrock.repository.Result
+import java.util.Optional
 import kotlin.math.floor
 import kotlin.math.pow
 import kotlin.math.sqrt
+import org.springframework.data.jpa.domain.AbstractPersistable_.id
 import org.springframework.stereotype.Service
 import software.amazon.awssdk.regions.Region
 import software.amazon.awssdk.services.bedrockruntime.BedrockRuntimeClient
@@ -168,6 +171,10 @@ class Service(
         else overall.sortedByDescending { it.percent }.slice(0..4)
 
     return overallRank
+  }
+
+  override fun getProduct(id: Int): Optional<Product?> {
+    return productRepository.findById(id)
   }
 }
 
