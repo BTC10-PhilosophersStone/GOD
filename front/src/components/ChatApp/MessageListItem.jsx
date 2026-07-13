@@ -13,13 +13,13 @@ export function MessageListItem({ message }) {
       >
         {message.role === "GOD" ? (
           <>
-            <Avatar role={message.role} />
+            {/* <Avatar role={message.role} /> */}
             <MessageContent role={message.role} content={message.content} />
           </>
         ) : (
           <>
             <MessageContent role={message.role} content={message.content} />
-            <Avatar role={message.role} />
+            {/* <Avatar role={message.role} /> */}
           </>
         )}
       </div>

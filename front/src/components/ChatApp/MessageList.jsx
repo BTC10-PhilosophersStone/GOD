@@ -2,6 +2,7 @@ import { useAtom } from "jotai";
 import { MessageListItem } from "./MessageListItem";
 import { messageListAtom } from "../atoms";
 import { useEffect, useRef } from "react";
+import { Container } from "@mui/material";
 
 export function MessageList() {
   const [messageList, setMessageList] = useAtom(messageListAtom);
@@ -20,11 +21,13 @@ export function MessageList() {
   }, [messageList]);
   return (
     <>
-      <div
-        style={{
-          border: "solid",
-          height: "500px",
-          overflowY: "auto",
+      <Container
+        maxWidth={false}
+        sx={{
+          maxWidth: "856px",
+          pt: "82px",
+          px: { xs: 3, sm: 4 },
+          height: "1000px",
           whiteSpace: "pre-wrap",
         }}
         ref={scrollRef}
@@ -32,8 +35,8 @@ export function MessageList() {
         {messageList.map((message) => (
           <MessageListItem key={message.id} message={message} />
         ))}
-        <div style={{ height: "350px" }} aria-hidden="true" />
-      </div>
+        <div style={{ height: "850px" }} aria-hidden="true" />
+      </Container>
     </>
   );
 }

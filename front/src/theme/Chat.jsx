@@ -181,6 +181,7 @@ export const Chat = () => {
               popupIcon={null}
               clearIcon={null}
               renderInput={(params) => (
+                // PromptInput.jsxに反映済み
                 <TextField
                   {...params}
                   placeholder="神に話しかけてみる"

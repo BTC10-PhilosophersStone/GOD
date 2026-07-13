@@ -125,26 +125,34 @@ export function PromptButton() {
   return (
     <>
       <IconButton
-        aria-label="send"
         onClick={handleClick}
         disabled={!prompt}
+        aria-label="send"
         sx={{
           width: 40,
           height: 40,
-          bgcolor: "primary.main",
+          bgcolor: prompt ? "#466584" : "#7E93A9",
           color: "primary.contrastText",
-          borderRadius: 1,
+          borderRadius: "4px",
           flexShrink: 0,
           "&:hover": {
-            bgcolor: "primary.main",
+            bgcolor: "#1F3850",
+          },
+          "&.Mui-disabled": {
+            backgroundColor: "#7E93A9",
           },
         }}
       >
-        <NorthIcon sx={{ fontSize: 27 }} />
+        <NorthIcon
+          sx={{
+            fontSize: 27,
+            color: "white",
+          }}
+        />
       </IconButton>
-      <button onClick={handleClick} disabled={!prompt}>
+      {/* <button onClick={handleClick} disabled={!prompt}>
         送信
-      </button>
+      </button> */}
     </>
   );
 }
