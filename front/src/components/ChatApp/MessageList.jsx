@@ -17,11 +17,16 @@ export function MessageList() {
     const lastElement = container.children[messageList.length];
     if (!lastElement) return;
 
-    lastElement.scrollIntoView({ block: "center", behavior: "smooth" });
+    if (lastMessage.role === "GOD") {
+      lastElement.scrollIntoView({ block: "center", behavior: "smooth" });
+      return;
+    }
 
-    if (lastMessage.role === "GOD") return;
+    // userの発言はGODメッセージの下に自然に見えていればよいので、
+    // 画面外に隠れているときだけ最小限スクロールする
+    lastElement.scrollIntoView({ block: "nearest", behavior: "smooth" });
 
-    // userの発言は少し間を置いてから、末尾のspacerへスクロールして
+    // 少し間を置いてから、末尾のspacerへスクロールして
     // 画面上では今の内容が上へスライドして消えるように見せる
     const timer = setTimeout(() => {
       spacerRef.current?.scrollIntoView({ block: "end", behavior: "smooth" });
@@ -46,7 +51,7 @@ export function MessageList() {
           <Fragment key={message.id}>
             {index === messageList.length - 1 && (
               <div
-                style={{ height: "850px", backgroundColor: "#FFFFFF" }}
+                style={{ height: "900px", backgroundColor: "#FFFFFF" }}
                 aria-hidden="true"
               />
             )}
@@ -56,7 +61,7 @@ export function MessageList() {
         {/* <ListView /> */}
         <div
           ref={spacerRef}
-          style={{ height: "850px", backgroundColor: "#FFFFFF" }}
+          style={{ height: "900px", backgroundColor: "#FFFFFF" }}
           aria-hidden="true"
         />
       </Container>
