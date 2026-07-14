@@ -172,7 +172,8 @@ export function PromptInputArea() {
           width: "679px",
           minHeight: "56px",
           "&:focus-within": {
-            borderColor: "#000000",
+            // borderColor: "#000000",
+            borderColor: "#0000003B",
           },
         }}
       >
