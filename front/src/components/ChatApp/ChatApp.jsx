@@ -13,11 +13,16 @@ import { FormDialog } from "./FormDialog";
 import { AppBar, Box, IconButton, Toolbar } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import ThemeProvider from "../../theme/ThemeProvider";
+import { ListView } from "../ListView/ListView";
+import { ProductDetail } from "../ProductDetail/ProductDetail";
 
 export function ChatApp() {
   const [messageList, setMessageList] = useAtom(messageListAtom);
   const [isOpen, setIsOpen] = useAtom(isProductDialogOpenAtom);
   const [isFormOpen] = useAtom(isFormDialogOpenAtom);
+  const [isRegistered, setIsRegistered] = useState(false);
+  // ここからはじめる
+  const [isShowDetail, setIsShowDetail] = useState(false);
 
   const sessionMessagesKey = "messages";
   // メッセージ配列をステートにする、初期値としてデフォルトメッセージを格納、もしくはチャット履歴を取得する
@@ -50,68 +55,72 @@ export function ChatApp() {
   }, []);
 
   return (
-    // <ThemeProvider>
-    <Box
-      component="main"
-      data-model-id="893:26"
-      sx={{
-        bgcolor: "background.default",
-        minHeight: "100vh",
-        width: "100%",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <AppBar
-        position="fixed"
-        color="transparent"
-        elevation={0}
-        sx={{
-          bgcolor: "transparent",
-          boxShadow: "none",
-        }}
-      >
-        <Toolbar
-          disableGutters
+    <>
+      <ThemeProvider>
+        <Box
+          component="main"
+          data-model-id="893:26"
           sx={{
-            px: 3,
-            pt: 3,
-            minHeight: "auto",
-            alignItems: "flex-start",
+            bgcolor: "#ffffff",
+            minHeight: "100vh",
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
           }}
         >
-          <Box sx={{ position: "relative", width: 40, height: 40 }}>
-            <IconButton
-              aria-label="menu"
-              component={Link}
-              to="/"
+          <AppBar
+            position="fixed"
+            color="transparent"
+            elevation={0}
+            sx={{
+              bgcolor: "transparent",
+              boxShadow: "none",
+            }}
+          >
+            <Toolbar
+              disableGutters
               sx={{
-                width: 40,
-                height: 40,
-                color: "custom.menuIcon",
-                p: 0,
+                px: 3,
+                pt: 3,
+                minHeight: "auto",
                 alignItems: "flex-start",
-                justifyContent: "flex-start",
               }}
             >
-              <MenuIcon sx={{ fontSize: 30 }} />
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar>
-      {/* <Link to="/">ログイン画面に戻る</Link>
+              <Box sx={{ position: "relative", width: 40, height: 40 }}>
+                <IconButton
+                  aria-label="menu"
+                  sx={{
+                    position: "fixed",
+                    top: 16,
+                    left: 16,
+                    zIndex: 3,
+                    color: "text.secoundary",
+                  }}
+                >
+                  <MenuIcon sx={{ fontSize: 40 }} />
+                </IconButton>
+              </Box>
+            </Toolbar>
+          </AppBar>
+          {/* <Link to="/">ログイン画面に戻る</Link>
       <Link to="/product">product詳細</Link> */}
-      <MessageList messageList={messageList} />
-      <Prompt />
+          <MessageList messageList={messageList} />
 
-      {/* 確認用 */}
-      {/* <button onClick={() => setIsOpen(!isOpen)}>ダイアログ表示</button> */}
-      {isOpen && (
-        <ProductDialog isDialogOpen={isOpen} onClose={() => setIsOpen(false)} />
-      )}
+          {/* 確認用 */}
+          {/* <button onClick={() => setIsOpen(!isOpen)}>ダイアログ表示</button> */}
+          {isOpen && (
+            <ProductDialog
+              isDialogOpen={isOpen}
+              onClose={() => setIsOpen(false)}
+              setIsRegistered={setIsRegistered}
+            />
+          )}
 
-      {/* {isFormOpen && <FormDialog />} */}
-    </Box>
-    // </ThemeProvider>
+          {/* {isFormOpen && <FormDialog />} */}
+        </Box>{" "}
+      </ThemeProvider>
+      {isRegistered && <ListView setIsShowDetail={setIsShowDetail} />}
+      {!isShowDetail && <Prompt />}
+    </>
   );
 }

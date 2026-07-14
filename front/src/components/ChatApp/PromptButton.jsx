@@ -105,6 +105,42 @@ export function PromptButton() {
     setPrompt("");
   };
 
+  const productModify = async () => {
+    const sessionjsonKey = "json";
+    const rawData = sessionStorage.getItem(sessionjsonKey);
+    const parse = JSON.parse(rawData);
+    console.log(parse.issues.Content);
+    const req = {
+      product: {
+        issuesWho: parse.issues.Who,
+        issuesWhat: parse.issues.What,
+        issuesWhen: parse.issues.When,
+        issuesWhere: parse.issues.Where,
+        issuesWhy: parse.issues.Why,
+        issuesHow: parse.issues.How,
+        issuesWhatWhy: parse.issues.What_Why,
+        issuesContent: parse.issues.Content,
+        providedWho: parse.provided.Who,
+        providedWhy: parse.provided.What,
+        providedOutcome: parse.provided.Outcome,
+      },
+      department: parse.department,
+      classification: parse.classification,
+    };
+    const res = await fetch("/productmodify", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(d),
+    });
+    const data = await res.text();
+    const cleaned = data
+      .replace(/```json/g, "")
+      .replace(/```/g, "")
+      .trim();
+
+    console.log(cleaned);
+  };
+
   useEffect(() => {
     setSessionStorage("messages", [...messageList]);
   }, [messageList]);

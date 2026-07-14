@@ -3,6 +3,7 @@ import { MessageListItem } from "./MessageListItem";
 import { messageListAtom } from "../atoms";
 import { useEffect, useRef } from "react";
 import { Container } from "@mui/material";
+import { ListView } from "../ListView/ListView";
 
 export function MessageList() {
   const [messageList, setMessageList] = useAtom(messageListAtom);
@@ -29,13 +30,18 @@ export function MessageList() {
           px: { xs: 3, sm: 4 },
           height: "1000px",
           whiteSpace: "pre-wrap",
+          backgroundColor: "#FFFFFF",
         }}
         ref={scrollRef}
       >
         {messageList.map((message) => (
           <MessageListItem key={message.id} message={message} />
         ))}
-        <div style={{ height: "850px" }} aria-hidden="true" />
+        {/* <ListView /> */}
+        <div
+          style={{ height: "850px", backgroundColor: "#FFFFFF" }}
+          aria-hidden="true"
+        />
       </Container>
     </>
   );

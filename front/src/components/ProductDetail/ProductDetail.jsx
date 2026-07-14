@@ -30,8 +30,14 @@ import ButtonBase from "@mui/material/ButtonBase";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded";
 
-export function ProductDetail() {
-  const [editModalIsOpen, setEditModalIsOpen] = useState(false);
+export function ProductDetail({
+  editModalIsOpen,
+  setEditModalIsOpen,
+  productDetail,
+  setproductDetail,
+  setIsShowDetail,
+}) {
+  // const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const [tab, setTab] = useState(0);
   const [tabSelected, setTabSelected] = useState("overview");
   const [isHovered, setIsHovered] = useState(false);
@@ -71,6 +77,8 @@ export function ProductDetail() {
       eMail: "satoshi_takeguchi@mail.toyota.co.jp",
     },
   ];
+
+  useEffect(() => {}, []);
 
   const profileCard = (member) => (
     <Card
@@ -165,7 +173,7 @@ export function ProductDetail() {
 
   return (
     <>
-      <Button
+      {/* <Button
         variant="contained"
         color="primary"
         onClick={() => {
@@ -176,11 +184,23 @@ export function ProductDetail() {
         }}
       >
         モーダル開く
-      </Button>
+      </Button> */}
       <Modal
         appElement={document.getElementById("root")}
         isOpen={editModalIsOpen}
-        style={{ content: { borderRadius: "32px" } }}
+        style={{
+          content: {
+            borderRadius: "32px",
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+            position: "absolute",
+            zIndex: "1000",
+          },
+        }}
       >
         <Box
           component="section"
@@ -222,7 +242,7 @@ export function ProductDetail() {
                   letterSpacing: "-0.022em",
                 }}
               >
-                プロダクトID
+                {productDetail.product.id}
               </Typography>
               <Chip
                 label="企画検討"
@@ -257,7 +277,7 @@ export function ProductDetail() {
                 letterSpacing: "0.125em",
               }}
             >
-              AIエージェント構想
+              {productDetail.product.name}
             </Typography>
             <IconButton
               aria-label="close"
@@ -271,6 +291,7 @@ export function ProductDetail() {
               }}
               onClick={async () => {
                 setEditModalIsOpen(false);
+                setIsShowDetail(false);
                 const res = await fetch("/summarize");
               }}
             >
@@ -360,9 +381,7 @@ export function ProductDetail() {
                 minHeight: 0,
                 height: 384,
                 overflowY: "auto",
-                // scrollbarWidth: "thin",
                 scrollbarColor: "#B78F00 #D9D9D9",
-                // "&::-webkit-scrollbar": { width: "px" },
               }}
             >
               <Stack spacing={3}>
@@ -398,7 +417,7 @@ export function ProductDetail() {
                         letterSpacing: "0.15px",
                       }}
                     >
-                      AIエージェントを活用した問い合わせ対応業務の自動化により、問い合わせ対応業務の工数削減と自動化による少人化を実現する。
+                      {productDetail.issuesContent}
                     </Typography>
                   </Box>
                 </Box>
@@ -434,7 +453,7 @@ export function ProductDetail() {
                         letterSpacing: "0.15px",
                       }}
                     >
-                      問い合わせリードタイムの短縮、人員削減
+                      {productDetail.providedOutcome}
                     </Typography>
                   </Box>
                 </Box>
@@ -458,10 +477,10 @@ export function ProductDetail() {
                       ステークホルダー
                     </Typography>
                     <Stack spacing="23px" sx={{ pl: 2 }}>
-                      {stakeholders.map((item, index) => {
+                      {productDetail.department.map((item, index) => {
                         return (
                           <Box
-                            key={`${item}-${index}`}
+                            key={`${item.departmentName}-${index}`}
                             sx={{
                               display: "inline-flex",
                               alignItems: "center",
@@ -482,7 +501,7 @@ export function ProductDetail() {
                                 whiteSpace: "nowrap",
                               }}
                             >
-                              {item}
+                              {item.departmentName}
                             </Typography>
                           </Box>
                         );
@@ -534,7 +553,7 @@ export function ProductDetail() {
                               fontSize: "16px",
                             }}
                           >
-                            問い合わせ対応
+                            {productDetail.classification[0].mainCategory}
                           </Typography>
                         </TimelineContent>
                       </TimelineItem>
@@ -573,7 +592,7 @@ export function ProductDetail() {
                               fontSize: "16px",
                             }}
                           >
-                            業務自動化
+                            {productDetail.classification[0].subCategory}
                           </Typography>
                         </TimelineContent>
                       </TimelineItem>
@@ -606,7 +625,7 @@ export function ProductDetail() {
                               fontSize: "16px",
                             }}
                           >
-                            AIエージェント活用
+                            {productDetail.classification[0].minorCategory}
                           </Typography>
                         </TimelineContent>
                       </TimelineItem>
@@ -688,40 +707,40 @@ export function ProductDetail() {
               </Stack>
             </Box>
           </Stack>
-          <Box
-            component={ButtonBase}
-            onClick={() => setIsBookmark(!isBookmark)}
-            sx={{
-              position: "absolute",
-              top: 96,
-              left: 1350,
-              bgcolor: "#b78f00",
-              borderRadius: "0px 8px 8px 0px",
-              p: 1.25,
-              display: "inline-flex",
-              "&:active": {
-                transform: "scale(0.94) translateY(2px)",
-                boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.1)",
-              },
-            }}
-          >
-            {isBookmark ? (
-              <BookmarkIcon
-                sx={{
-                  fontSize: 40,
-                  color: "#ffffff",
-                }}
-              />
-            ) : (
-              <BookmarkBorderRoundedIcon
-                sx={{
-                  fontWeight: 2,
-                  fontSize: 40,
-                  color: "#ffffff",
-                }}
-              />
-            )}
-          </Box>
+        </Box>
+        <Box
+          component={ButtonBase}
+          onClick={() => setIsBookmark(!isBookmark)}
+          sx={{
+            position: "absolute",
+            top: 96,
+            left: 1230,
+            bgcolor: "#b78f00",
+            borderRadius: "0px 8px 8px 0px",
+            p: 1.25,
+            display: "inline-flex",
+            "&:active": {
+              transform: "scale(0.94) translateY(2px)",
+              boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.1)",
+            },
+          }}
+        >
+          {isBookmark ? (
+            <BookmarkIcon
+              sx={{
+                fontSize: 40,
+                color: "#ffffff",
+              }}
+            />
+          ) : (
+            <BookmarkBorderRoundedIcon
+              sx={{
+                fontWeight: 2,
+                fontSize: 40,
+                color: "#ffffff",
+              }}
+            />
+          )}
         </Box>
       </Modal>
     </>

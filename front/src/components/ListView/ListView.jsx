@@ -13,18 +13,23 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { PromptInputArea } from "../ChatApp/PromptInputArea";
+import { ProductDetail } from "../ProductDetail/ProductDetail";
 import { useEffect, useState } from "react";
 import "@fontsource/hina-mincho";
 import "@fontsource/zen-kaku-gothic-new";
 
-export const ListView = () => {
+export const ListView = ({ setIsShowDetail }) => {
   const [products, setProducts] = useState([]);
+  const [editModalIsOpen, setEditModalIsOpen] = useState(false);
+  const [productDetail, setproductDetail] = useState({});
 
   useEffect(() => {
     const getProduct = async () => {
       try {
         const res = await fetch("/product");
         const data = await res.json();
+        console.log(data);
         setProducts(data);
       } catch {
         console.error("error");
@@ -38,14 +43,24 @@ export const ListView = () => {
       component="main"
       sx={{
         bgcolor: "#ffffff",
-        minHeight: "100vh",
-        width: "100%",
-        position: "relative",
-        overflowX: "hidden",
+        // minHeight: "100vh",
+        // width: "100%",
+        // position: "relative",
+        // overflowX: "hidden",
         pb: "180px",
       }}
     >
-      <IconButton
+      {editModalIsOpen && (
+        <ProductDetail
+          editModalIsOpen={editModalIsOpen}
+          setEditModalIsOpen={setEditModalIsOpen}
+          productDetail={productDetail}
+          setproductDetail={setproductDetail}
+          setIsShowDetail={setIsShowDetail}
+          onClose={() => setEditModalIsOpen(false)}
+        />
+      )}
+      {/* <IconButton
         aria-label="menu"
         sx={{
           position: "fixed",
@@ -56,7 +71,7 @@ export const ListView = () => {
         }}
       >
         <MenuIcon sx={{ fontSize: 40 }} />
-      </IconButton>
+      </IconButton> */}
       <Container
         maxWidth={false}
         sx={{ maxWidth: "856px", pt: "82px", px: { xs: 3, sm: 4 } }}
@@ -100,6 +115,9 @@ export const ListView = () => {
                     const res = await fetch(`/product/${product.id}`);
                     const data = await res.json();
                     console.log(data);
+                    setproductDetail(data);
+                    setEditModalIsOpen(true);
+                    setIsShowDetail(true);
                   } catch {
                     console.error("error");
                   }
@@ -218,7 +236,7 @@ export const ListView = () => {
                             whiteSpace: "nowrap",
                           }}
                         >
-                          88
+                          {product.percent}
                         </Typography>
                         <Typography
                           component="span"
@@ -239,7 +257,7 @@ export const ListView = () => {
                     </Stack>
                     <LinearProgress
                       variant="determinate"
-                      value={88}
+                      value={product.percent}
                       sx={{
                         width: "100%",
                         height: 8,
@@ -258,7 +276,7 @@ export const ListView = () => {
           </Stack>
         </Stack>
       </Container>
-      <Box
+      {/* <Box
         component="footer"
         sx={{
           position: "fixed",
@@ -336,7 +354,7 @@ export const ListView = () => {
             }}
           />
         </Stack>
-      </Box>
+      </Box> */}
     </Box>
   );
 };

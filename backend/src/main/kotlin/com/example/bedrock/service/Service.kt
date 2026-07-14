@@ -8,6 +8,7 @@ import com.example.bedrock.repository.DepartmentRepository
 import com.example.bedrock.repository.Product
 import com.example.bedrock.repository.ProductRepository
 import com.example.bedrock.repository.Result
+import org.apache.commons.math3.stat.StatUtils.product
 import java.util.Optional
 import kotlin.math.floor
 import kotlin.math.pow
@@ -43,10 +44,10 @@ class Service(
       it.classificationVector = generateEmbedding(classificationVectorText, bedrockClient)
     }
     reqData.product?.let {
-      it.issuesVector = generateEmbedding(reqData.product.issuesWhatWhy, bedrockClient)
+      it.issuesVector = generateEmbedding(reqData.product!!.issuesWhatWhy, bedrockClient)
     }
     reqData.product?.let {
-      it.providedVector = generateEmbedding(reqData.product.providedOutcome, bedrockClient)
+      it.providedVector = generateEmbedding(reqData.product!!.providedOutcome, bedrockClient)
     }
 
     reqData.product?.let { it.departmentCombine = departmentVectorText }
@@ -184,8 +185,11 @@ class Service(
     return overallRank
   }
 
-  override fun getProduct(id: Int): Optional<Product?> {
-    return productRepository.findById(id)
+  override fun getProduct(id: Long): ProductInfo {
+    val department = departmentRepository.findByProductId(id)
+    val classification = classificationRepository.findByProductId(id)
+    val productInfo = ProductInfo(productRepository.findById(id), department, classification)
+    return productInfo
   }
 }
 

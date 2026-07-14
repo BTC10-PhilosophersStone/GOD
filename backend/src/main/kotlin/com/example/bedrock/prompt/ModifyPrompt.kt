@@ -26,6 +26,7 @@ object ModifyPrompt {
 
 ### Who
 人物名のみ抽出する
+データは配列型とする
 
 例：
 "篠田さんです"
@@ -98,6 +99,7 @@ object ModifyPrompt {
 
 ### Who
 人物名のみ抽出する
+データは配列型とする
 
 ### What
 業務・テーマのキーワードへ変換する

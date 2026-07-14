@@ -1,6 +1,7 @@
 import { Autocomplete, Box, Stack, TextField } from "@mui/material";
 import { PromptButton } from "./PromptButton";
 import { PromptInput } from "./PromptInput";
+import { PromptInputArea } from "./PromptInputArea";
 import { useAtom } from "jotai";
 import { promptAtom } from "../atoms";
 
@@ -29,15 +30,23 @@ export function Prompt() {
             right: 0,
             bottom: 0,
             zIndex: 4,
-            bgcolor: "rgba(255, 255, 255, 0.6)",
-            backdropFilter: "blur(16px)",
-            WebkitBackdropFilter: "blur(16px)",
-            borderTop: 1,
-            borderColor: "divider",
+            bgcolor: "background.paper",
             display: "flex",
             justifyContent: "center",
             px: 2,
             py: 2.5,
+
+            "&::before": {
+              content: '""',
+              position: "absolute",
+              top: -25,
+              left: 0,
+              right: 0,
+              height: 40,
+              background:
+                "linear-gradient(to bottom, transparent, rgba(255,255,255,1))",
+              pointerEvents: "none",
+            },
           }}
         >
           <Stack
@@ -47,7 +56,8 @@ export function Prompt() {
             sx={{ width: "100%", maxWidth: "620px" }}
           >
             {/* PromptInputの中で PromptButtonを呼び出すように変更 */}
-            <PromptInput />
+            {/* <PromptInput /> */}
+            <PromptInputArea></PromptInputArea>
             {/* <PromptButton /> */}
           </Stack>
         </Box>
@@ -58,8 +68,11 @@ export function Prompt() {
           flexDirection: "row",
           justifyContent: "center",
         }}
-      > */}
-      {/* </div> */}
+
+      >
+        {/* <PromptInput />
+        <PromptButton /> 
+       <PromptInputArea></PromptInputArea>*/}
     </>
   );
 }
