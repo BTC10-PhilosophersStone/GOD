@@ -32,9 +32,9 @@ export function MessageContent({ role, content }) {
       <Stack spacing={7.75} alignitems="center">
         {isGod ? (
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 0 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
+            transition={{ duration: 3, ease: "easeOut" }}
           >
             <Typography
               component="p"
