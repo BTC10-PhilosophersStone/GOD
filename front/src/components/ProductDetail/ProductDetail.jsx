@@ -327,6 +327,7 @@ export function ProductDetail({
                   label="概要"
                   sx={{
                     fontWeight: tabSelected === "overview" ? 700 : 400,
+                    fontFamily: "Zen Kaku Gothic New",
                     fontSize: "20px",
                     lineHeight: "24px",
                     letterSpacing: "0.15px",
@@ -417,6 +418,7 @@ export function ProductDetail({
                         fontSize: "16px",
                         lineHeight: "24px",
                         letterSpacing: "0.15px",
+                        maxWidth: "110ch",
                       }}
                     >
                       {productDetail.product.issuesContent}
