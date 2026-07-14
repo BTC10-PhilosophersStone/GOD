@@ -38,7 +38,7 @@ const memberImages = [
   "/kkrn_icon_user_1.png",
 ];
 
-export function ProductDialog({ isDialogOpen }) {
+export function ProductDialog({ isDialogOpen, setIsRegistered }) {
   const [isOpen, setIsOpen] = useState(isDialogOpen);
   const sessionjsonKey = "productData";
   const rawData = sessionStorage.getItem(sessionjsonKey);
@@ -154,6 +154,8 @@ export function ProductDialog({ isDialogOpen }) {
       }
       const data = await vector.json();
       console.log(data);
+      setIsRegistered(true);
+      setIsOpen(false);
     } catch (error) {
       console.error("プロダクト登録に失敗しました", error);
     }

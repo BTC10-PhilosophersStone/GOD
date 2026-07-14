@@ -31,12 +31,22 @@ export function Prompt() {
             bottom: 0,
             zIndex: 4,
             bgcolor: "background.paper",
-            borderTop: 1,
-            borderColor: "devider",
             display: "flex",
             justifyContent: "center",
             px: 2,
             py: 2.5,
+
+            "&::before": {
+              content: '""',
+              position: "absolute",
+              top: -25,
+              left: 0,
+              right: 0,
+              height: 40,
+              background:
+                "linear-gradient(to bottom, transparent, rgba(255,255,255,1))",
+              pointerEvents: "none",
+            },
           }}
         >
           <Stack

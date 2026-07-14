@@ -20,7 +20,7 @@ const appTheme = createTheme({
       main: "#d4af37",
     },
     background: {
-      default: "#f5f5f3",
+      default: "#ffffff",
       paper: "#ffffff",
     },
     text: {
@@ -110,7 +110,7 @@ const appTheme = createTheme({
         },
         body: {
           margin: 0,
-          backgroundColor: "#f5f5f3",
+          backgroundColor: "#ffffff",
           color: "rgba(0, 0, 0, 1)",
           WebkitFontSmoothing: "antialiased",
           MozOsxFontSmoothing: "grayscale",

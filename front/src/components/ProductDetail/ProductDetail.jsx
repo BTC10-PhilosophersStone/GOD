@@ -35,6 +35,7 @@ export function ProductDetail({
   setEditModalIsOpen,
   productDetail,
   setproductDetail,
+  setIsShowDetail,
 }) {
   // const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const [tab, setTab] = useState(0);
@@ -77,9 +78,7 @@ export function ProductDetail({
     },
   ];
 
-  useEffect(() => {
-    console.log(productDetail);
-  }, []);
+  useEffect(() => {}, []);
 
   const profileCard = (member) => (
     <Card
@@ -198,6 +197,8 @@ export function ProductDetail({
             bottom: "auto",
             marginRight: "-50%",
             transform: "translate(-50%, -50%)",
+            position: "absolute",
+            zIndex: "1000",
           },
         }}
       >
@@ -290,6 +291,7 @@ export function ProductDetail({
               }}
               onClick={async () => {
                 setEditModalIsOpen(false);
+                setIsShowDetail(false);
                 const res = await fetch("/summarize");
               }}
             >

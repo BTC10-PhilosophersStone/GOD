@@ -152,6 +152,7 @@ export function PromptInputArea() {
       setQuestion(null);
     }
     setPrompt("");
+    setFile(false);
   };
 
   return (

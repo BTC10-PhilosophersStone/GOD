@@ -19,7 +19,7 @@ import { useEffect, useState } from "react";
 import "@fontsource/hina-mincho";
 import "@fontsource/zen-kaku-gothic-new";
 
-export const ListView = () => {
+export const ListView = ({ setIsShowDetail }) => {
   const [products, setProducts] = useState([]);
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const [productDetail, setproductDetail] = useState({});
@@ -43,34 +43,35 @@ export const ListView = () => {
       component="main"
       sx={{
         bgcolor: "#ffffff",
-        minHeight: "100vh",
-        width: "100%",
-        position: "relative",
-        overflowX: "hidden",
+        // minHeight: "100vh",
+        // width: "100%",
+        // position: "relative",
+        // overflowX: "hidden",
         pb: "180px",
       }}
     >
-        {editModalIsOpen && (
-          <ProductDetail
-            editModalIsOpen={editModalIsOpen}
-            setEditModalIsOpen={setEditModalIsOpen}
-            productDetail={productDetail}
-            setproductDetail={setproductDetail}
-            onClose={() => setEditModalIsOpen(false)}
-          />
-        )}
-        <IconButton
-          aria-label="menu"
-          sx={{
-            position: "fixed",
-            top: 16,
-            left: 16,
-            zIndex: 3,
-            color: "text.secoundary",
-          }}
-        >
+      {editModalIsOpen && (
+        <ProductDetail
+          editModalIsOpen={editModalIsOpen}
+          setEditModalIsOpen={setEditModalIsOpen}
+          productDetail={productDetail}
+          setproductDetail={setproductDetail}
+          setIsShowDetail={setIsShowDetail}
+          onClose={() => setEditModalIsOpen(false)}
+        />
+      )}
+      {/* <IconButton
+        aria-label="menu"
+        sx={{
+          position: "fixed",
+          top: 16,
+          left: 16,
+          zIndex: 3,
+          color: "text.secoundary",
+        }}
+      >
         <MenuIcon sx={{ fontSize: 40 }} />
-      </IconButton>
+      </IconButton> */}
       <Container
         maxWidth={false}
         sx={{ maxWidth: "856px", pt: "82px", px: { xs: 3, sm: 4 } }}
@@ -116,6 +117,7 @@ export const ListView = () => {
                     console.log(data);
                     setproductDetail(data);
                     setEditModalIsOpen(true);
+                    setIsShowDetail(true);
                   } catch {
                     console.error("error");
                   }
@@ -274,7 +276,7 @@ export const ListView = () => {
           </Stack>
         </Stack>
       </Container>
-      <Box
+      {/* <Box
         component="footer"
         sx={{
           position: "fixed",
@@ -306,7 +308,7 @@ export const ListView = () => {
           spacing={2}
           sx={{ width: "100%", maxWidth: "620px", alignItems: "center" }}
         >
-           <TextField
+          <TextField
             fullWidth
             variant="outlined"
             placeholder="神に話しかけてみる"
@@ -352,7 +354,7 @@ export const ListView = () => {
             }}
           />
         </Stack>
-      </Box>
+      </Box> */}
     </Box>
   );
 };
