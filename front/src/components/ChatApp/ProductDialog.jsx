@@ -185,10 +185,9 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
           "& .MuiOutlinedInput-root": {
             "& fieldset": {
               borderColor: "ddd",
-              borderWidth: "2px",
             },
             "&.Mui-focused fieldset": {
-              borderColor: "#b78f00",
+              borderColor: "#252e37",
             },
           },
         }}
@@ -219,10 +218,9 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
           "& .MuiOutlinedInput-root": {
             "& fieldset": {
               borderColor: "#ddd",
-              borderWidth: "2px",
             },
             "&.Mui-focused fieldset": {
-              borderColor: "#b78f00",
+              borderColor: "#252e37",
             },
           },
         }}
@@ -243,8 +241,6 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
           width: "100%",
           minHeight: 800,
           color: "#05101b",
-          "&.MuiPaper-root": { backgroundColor: "#7f2222" },
-          // "&.MuiDialog-root": { color: "#7f2222" },
         }}
         // }}
       >
@@ -254,11 +250,10 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
             mx: "auto",
             px: 4,
             pt: 3.5,
-            pb: 3,
+            pb: 6,
             display: "flex",
             flexDirection: "column",
             height: 800,
-            // "&.MuiBox-root": { bgcolor: "#7f2222" },
           }}
         >
           <Stack direction="row" sx={{ mb: 2, justifyContent: "flex-end" }}>
@@ -312,12 +307,8 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
                     onChange={handleChange}
                     sx={{
                       "& .MuiOutlinedInput-root": {
-                        "& fieldset": {
-                          borderColor: "#b30b0b",
-                          borderWidth: "2px",
-                        },
                         "&.Mui-focused fieldset": {
-                          borderColor: "#b78f00",
+                          borderColor: "#252e37",
                         },
                       },
                     }}
@@ -417,6 +408,7 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
               sx={{
                 minWidth: 91,
                 color: "#b78f00",
+                fontWeight: "bold",
                 borderColor: "#b78f00",
                 "&:hover": {
                   borderColor: "#b78f00",
@@ -432,6 +424,7 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
               color="#b78f00"
               sx={{
                 minWidth: 187,
+                fontWeight: "bold",
                 bgcolor: "#b78f00",
                 color: "#ffffff",
                 "&:hover": {
