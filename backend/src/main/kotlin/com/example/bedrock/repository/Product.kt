@@ -22,7 +22,7 @@ class Product(
     @field:ColumnTransformer(write = "?::vector")
     var issuesVector: FloatArray? = null,
     @Column(name = "issues_content") val issuesContent: String? = null,
-    @Column(name = "provided_who") val providedWho: String? = null,
+    @Column(name = "provided_how") val providedHow: String? = null,
     @Column(name = "provided_why") val providedWhy: String? = null,
     @Column(name = "provided_outcome") val providedOutcome: String? = null,
     @field:Column(name = "provided_vector", columnDefinition = "vector")

@@ -35,7 +35,7 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
   const [issuesContent, setIssuesContent] = useState(parse.issues.Content);
 
   const [providedOutcome, setProvidedOutcome] = useState(
-    `${parse.provided.What}で、${parse.provided.Outcome}`,
+    `${parse.provided.Why}より、${parse.provided.Outcome}`,
   );
   const [mainCategory, setMainCategory] = useState(
     parse.classification[0].mainCategory,
@@ -89,11 +89,11 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
         issuesHow: parse.issues.How,
         issuesWhatWhy: parse.issues.What_Why,
         issuesContent: issuesContent,
-        providedWho: Array.isArray(parse.provided.Who)
-          ? parse.provided.Who.join(",")
-          : parse.provided.Who,
-        providedWhat: parse.provided.What,
-        providedOutcome: providedOutcome,
+        providedHow: Array.isArray(parse.provided.How)
+          ? parse.provided.How.join(",")
+          : parse.provided.How,
+        providedWhy: parse.provided.Why,
+        providedOutcome: parse.provided.Outcome,
       },
       department: selectedDepartments.map((name) => ({
         departmentName: name,

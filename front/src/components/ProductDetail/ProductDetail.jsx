@@ -78,7 +78,9 @@ export function ProductDetail({
     },
   ];
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log(productDetail);
+  }, []);
 
   const profileCard = (member) => (
     <Card
@@ -417,7 +419,7 @@ export function ProductDetail({
                         letterSpacing: "0.15px",
                       }}
                     >
-                      {productDetail.issuesContent}
+                      {productDetail.product.issuesContent}
                     </Typography>
                   </Box>
                 </Box>
@@ -453,7 +455,11 @@ export function ProductDetail({
                         letterSpacing: "0.15px",
                       }}
                     >
-                      {productDetail.providedOutcome}
+                      {productDetail.product.providedWhy
+                        ? `${
+                            productDetail.product.providedWhy
+                          }より、${productDetail.product.providedOutcome}`
+                        : productDetail.product.providedOutcome}
                     </Typography>
                   </Box>
                 </Box>
