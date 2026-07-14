@@ -18,20 +18,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useState, useEffect } from "react";
 
-// const parse = {
-//   issues: {
-//     Name: "サンプルネーム",
-//     Content: "サンプルイッシュー",
-//     value: "サンプルバリュー",
-//   },
-//   provided: { Outcome: "カチカチ" },
-//   classification: {
-//     mainCategory: "メインカテゴリー",
-//     subCategory: "サブカテゴリー",
-//     minorCategory: "マイクロカテゴリー",
-//   },
-// };
-
 const memberImages = [
   "/kkrn_icon_user_1.png",
   "/kkrn_icon_user_1.png",
@@ -49,7 +35,7 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
   const [issuesContent, setIssuesContent] = useState(parse.issues.Content);
 
   const [providedOutcome, setProvidedOutcome] = useState(
-    parse.provided.Outcome,
+    `${parse.provided.What}で、${parse.provided.Outcome}`,
   );
   const [mainCategory, setMainCategory] = useState(
     parse.classification[0].mainCategory,
@@ -66,8 +52,7 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
     { label: "業務領域", value: subCategory },
     { label: "業務", value: minorCategory },
   ];
-  // const [providedWho, setProvidedWho] = useState(parse.provided.Who);
-  // const [issuesWhat, setIssuesWhat] = useState(parse.issues.What);  //これは何？
+
   const datas = [];
   useEffect(() => {
     console.log(parse);
@@ -81,30 +66,17 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
         }
         const data = await res.json();
         setDepartmentOptions(data.map((d) => d.departmentName));
-
-        // 動作確認用の配列
-        // setDepartmentOptions([
-        //   "ＴＧＲ－ＷＲＴ",
-        //   "Ｂ．Ｎ．Ｉ．Ｎ．",
-        //   "Ｔ．Ｍ．Ｍ．Ｔ．",
-        //   "国際エネルギー機関",
-        //   "連合燃料電池システム研究開発",
-        // ]);
       } catch (error) {
         console.error("部署一覧の取得に失敗しました", error);
       }
     };
     fetchDepartments();
-    console.log(departmentOptions);
   }, []);
 
   const handleClose = () => onClose();
 
   const handleRegister = async () => {
     const req = {
-      // Nameカラム追加に伴うバックエンド実装完了次第、
-      // プロパティを追加すること
-
       product: {
         name: productName,
         issuesWho: Array.isArray(parse.issues.Who)
@@ -146,16 +118,8 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
       if (!res.ok) {
         throw new Error(`APIエラー: ${res.status}`);
       }
-
-      const vector = await fetch("/product");
-
-      if (!vector.ok) {
-        throw new Error(`APIエラー: ${vector.status}`);
-      }
-      const data = await vector.json();
-      console.log(data);
-      setIsRegistered(true);
       setIsOpen(false);
+      setIsRegistered(true);
     } catch (error) {
       console.error("プロダクト登録に失敗しました", error);
     }
