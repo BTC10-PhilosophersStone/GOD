@@ -18,20 +18,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useState, useEffect } from "react";
 
-// const parse = {
-//   issues: {
-//     Name: "サンプルネーム",
-//     Content: "サンプルイッシュー",
-//     value: "サンプルバリュー",
-//   },
-//   provided: { Outcome: "カチカチ" },
-//   classification: {
-//     mainCategory: "メインカテゴリー",
-//     subCategory: "サブカテゴリー",
-//     minorCategory: "マイクロカテゴリー",
-//   },
-// };
-
 const memberImages = [
   "/kkrn_icon_user_1.png",
   "/kkrn_icon_user_1.png",
@@ -49,7 +35,7 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
   const [issuesContent, setIssuesContent] = useState(parse.issues.Content);
 
   const [providedOutcome, setProvidedOutcome] = useState(
-    parse.provided.Outcome,
+    `${parse.provided.What}で、${parse.provided.Outcome}`,
   );
   const [mainCategory, setMainCategory] = useState(
     parse.classification[0].mainCategory,
@@ -66,8 +52,7 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
     { label: "業務領域", value: subCategory },
     { label: "業務", value: minorCategory },
   ];
-  // const [providedWho, setProvidedWho] = useState(parse.provided.Who);
-  // const [issuesWhat, setIssuesWhat] = useState(parse.issues.What);  //これは何？
+
   const datas = [];
   useEffect(() => {
     console.log(parse);
@@ -81,30 +66,17 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
         }
         const data = await res.json();
         setDepartmentOptions(data.map((d) => d.departmentName));
-
-        // 動作確認用の配列
-        // setDepartmentOptions([
-        //   "ＴＧＲ－ＷＲＴ",
-        //   "Ｂ．Ｎ．Ｉ．Ｎ．",
-        //   "Ｔ．Ｍ．Ｍ．Ｔ．",
-        //   "国際エネルギー機関",
-        //   "連合燃料電池システム研究開発",
-        // ]);
       } catch (error) {
         console.error("部署一覧の取得に失敗しました", error);
       }
     };
     fetchDepartments();
-    console.log(departmentOptions);
   }, []);
 
   const handleClose = () => onClose();
 
   const handleRegister = async () => {
     const req = {
-      // Nameカラム追加に伴うバックエンド実装完了次第、
-      // プロパティを追加すること
-
       product: {
         name: productName,
         issuesWho: Array.isArray(parse.issues.Who)
@@ -146,16 +118,8 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
       if (!res.ok) {
         throw new Error(`APIエラー: ${res.status}`);
       }
-
-      const vector = await fetch("/product");
-
-      if (!vector.ok) {
-        throw new Error(`APIエラー: ${vector.status}`);
-      }
-      const data = await vector.json();
-      console.log(data);
-      setIsRegistered(true);
       setIsOpen(false);
+      setIsRegistered(true);
     } catch (error) {
       console.error("プロダクト登録に失敗しました", error);
     }
@@ -185,10 +149,9 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
           "& .MuiOutlinedInput-root": {
             "& fieldset": {
               borderColor: "ddd",
-              borderWidth: "2px",
             },
             "&.Mui-focused fieldset": {
-              borderColor: "#b78f00",
+              borderColor: "#252e37",
             },
           },
         }}
@@ -219,10 +182,9 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
           "& .MuiOutlinedInput-root": {
             "& fieldset": {
               borderColor: "#ddd",
-              borderWidth: "2px",
             },
             "&.Mui-focused fieldset": {
-              borderColor: "#b78f00",
+              borderColor: "#252e37",
             },
           },
         }}
@@ -243,8 +205,6 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
           width: "100%",
           minHeight: 800,
           color: "#05101b",
-          "&.MuiPaper-root": { backgroundColor: "#7f2222" },
-          // "&.MuiDialog-root": { color: "#7f2222" },
         }}
         // }}
       >
@@ -254,11 +214,10 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
             mx: "auto",
             px: 4,
             pt: 3.5,
-            pb: 3,
+            pb: 6,
             display: "flex",
             flexDirection: "column",
             height: 800,
-            // "&.MuiBox-root": { bgcolor: "#7f2222" },
           }}
         >
           <Stack direction="row" sx={{ mb: 2, justifyContent: "flex-end" }}>
@@ -312,12 +271,8 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
                     onChange={handleChange}
                     sx={{
                       "& .MuiOutlinedInput-root": {
-                        "& fieldset": {
-                          borderColor: "#b30b0b",
-                          borderWidth: "2px",
-                        },
                         "&.Mui-focused fieldset": {
-                          borderColor: "#b78f00",
+                          borderColor: "#252e37",
                         },
                       },
                     }}
@@ -417,6 +372,7 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
               sx={{
                 minWidth: 91,
                 color: "#b78f00",
+                fontWeight: "bold",
                 borderColor: "#b78f00",
                 "&:hover": {
                   borderColor: "#b78f00",
@@ -432,6 +388,7 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
               color="#b78f00"
               sx={{
                 minWidth: 187,
+                fontWeight: "bold",
                 bgcolor: "#b78f00",
                 color: "#ffffff",
                 "&:hover": {
