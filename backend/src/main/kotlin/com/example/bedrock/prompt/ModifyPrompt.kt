@@ -123,9 +123,42 @@ mainCategory
 subCategory
 minorCategory
 
-はそのまま保持する
+はそのまま保持し、配列型で返す
+例：
+[{}]
 
 # 出力形式
+{
+  "issues": {
+    "Name: "",
+    "Who": [],
+    "What": "",
+    "When": "",
+    "Where": "",
+    "Why": "",
+    "How": "",
+    "What_Why": "",
+    "Content": "",
+  },
+  "provided": {
+    "How": "",
+    "Why": "",
+    "Outcome": "",
+  },
+  "department": [
+    {
+      "departmentName": "",
+      "officeName": "",
+    }
+  ],
+  "classification": [
+    {
+      "mainCategory": "",
+      "subCategory": "",
+      "minorCategory": "",
+    }
+  ]
+}
 
 入力と同じJSON構造を維持し、加工後の値のみを出力する。
 """
