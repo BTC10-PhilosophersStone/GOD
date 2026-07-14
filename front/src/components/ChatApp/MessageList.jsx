@@ -22,9 +22,8 @@ export function MessageList() {
       return;
     }
 
-    // userの発言はGODメッセージの下に自然に見えていればよいので、
-    // 画面外に隠れているときだけ最小限スクロールする
-    lastElement.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    // userの発言はGODメッセージの下に自然に見えているはずなので、
+    // ここではスクロールしない（余計な1回目の動きを増やさない）
 
     // 少し間を置いてから、末尾のspacerへスクロールして
     // 画面上では今の内容が上へスライドして消えるように見せる
