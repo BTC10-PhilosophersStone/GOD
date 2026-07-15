@@ -202,6 +202,9 @@ export function ProductDetail({
             position: "absolute",
             zIndex: "1000",
           },
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+          },
         }}
       >
         <Box
