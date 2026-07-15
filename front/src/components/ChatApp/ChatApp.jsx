@@ -42,10 +42,6 @@ export function ChatApp() {
   });
 
   useEffect(() => {
-    // async () => {
-    // const res = await fetch(`/api/message/${}`);
-    // const data = res.json();
-    // };
     const defaultMessage = {
       id: 1,
       role: "GOD",
