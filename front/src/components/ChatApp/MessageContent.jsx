@@ -31,41 +31,42 @@ export function MessageContent({ role, content }) {
       </Card> */}
       <Stack spacing={7.75} alignitems="center">
         {isGod ? (
-          <motion.div
-            initial={{ opacity: 0, y: 0 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 3, ease: "easeOut" }}
+          // <motion.div
+          //   initial={{ opacity: 0, y: 0 }}
+          //   animate={{ opacity: 1, y: 0 }}
+          //   transition={{ duration: 3, ease: "easeOut" }}
+          // >
+          <Typography
+            component="p"
+            align="center"
+            sx={{
+              fontFamily: "Hina Mincho",
+              fontWeight: 400,
+              fontSize: "16px",
+              lineHeight: "34px",
+              letterSpacing: "5px",
+              mt: "1px",
+              backgroundColor: "none",
+              color: "#252e37",
+              borderRadius: "24px 24px 0 24px",
+              padding: "24px 24px",
+              width: "800px",
+              animation: "colorChange 3s ease-in-out",
+              "@keyframes colorChange": {
+                "0%": { color: "#FFFFFF" },
+                "25%": { color: "#c8c8c8" },
+                "50%": { color: "#808080" },
+                "100%": { color: "#252e37" },
+              },
+              whiteSpace: "pre-line",
+            }}
           >
-            <Typography
-              component="p"
-              align="center"
-              sx={{
-                fontFamily: "Hina Mincho",
-                fontWeight: 400,
-                fontSize: "16px",
-                lineHeight: "34px",
-                letterSpacing: "5px",
-                mt: "1px",
-                backgroundColor: "none",
-                color: "#252e37",
-                borderRadius: "24px 24px 0 24px",
-                padding: "24px 24px",
-                width: "800px",
-                // animation: "colorChange 2s ease-in-out",
-                // "@keyframes colorChange": {
-                //   "0%": { color: "#FFFFFF" },
-                //   "50%": { color: "#808080" },
-                //   "100%": { color: "#252e37" },
-                // },
-                whiteSpace: "pre-line",
-              }}
-            >
-              <Box component="span" sx={{ letterSpacing: "0.8px" }}>
-                {content}
-              </Box>
-            </Typography>
-          </motion.div>
+            <Box component="span" sx={{ letterSpacing: "0.8px" }}>
+              {content}
+            </Box>
+          </Typography>
         ) : (
+          // </motion.div>
           <Typography
             component="p"
             align="justify-content"
