@@ -59,6 +59,7 @@ export function MessageContent({ role, content }) {
                 "50%": { color: "#808080" },
                 "100%": { color: "#252e37" },
               },
+              animationPlayState: "paused",
               whiteSpace: "pre-line",
             }}
           >

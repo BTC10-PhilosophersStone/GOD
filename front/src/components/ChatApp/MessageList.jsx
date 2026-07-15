@@ -3,12 +3,10 @@ import { MessageListItem } from "./MessageListItem";
 import { messageListAtom } from "../atoms";
 import { Fragment, useEffect, useRef } from "react";
 import { Container } from "@mui/material";
-import { ListView } from "../ListView/ListView";
 
 export function MessageList({ isRegistered }) {
   const [messageList, setMessageList] = useAtom(messageListAtom);
   const scrollRef = useRef(null);
-  const spacerRef = useRef(null);
   useEffect(() => {
     const container = scrollRef.current;
     if (!container || messageList.length === 0) return;
@@ -19,18 +17,22 @@ export function MessageList({ isRegistered }) {
 
     if (lastMessage.role === "GOD") {
       lastElement.scrollIntoView({ block: "center", behavior: "smooth" });
-      // lastElement.scrollBy({ top: 1000, behavior: "smooth" });
-      // setTimeout(() => {
-      //   window.scrollBy({ top: 500, behavior: "smooth" });
-      // }, 300);
-      return;
-    }
 
-    // 画面上では今の内容が上へスライドして消えるように見せる
-    const timer = setTimeout(() => {
-      spacerRef.current?.scrollIntoView({ block: "end", behavior: "smooth" });
-    }, 800);
-    return () => clearTimeout(timer);
+      // スクロールが本当に止まったときに呼ばれる関数
+      function handleScrollEnd() {
+        const textElement = lastElement.querySelector("p");
+        if (textElement) {
+          textElement.style.animationPlayState = "running";
+        }
+      }
+      window.addEventListener("scrollend", handleScrollEnd);
+
+      // 次にuseEffectが実行される直前に呼ばれる「片付け」の関数
+      function removeScrollEndListener() {
+        window.removeEventListener("scrollend", handleScrollEnd);
+      }
+      return removeScrollEndListener;
+    }
   }, [messageList]);
 
   return (
@@ -44,8 +46,6 @@ export function MessageList({ isRegistered }) {
           height: "auto",
           whiteSpace: "pre-wrap",
           backgroundColor: "#FFFFFF",
-          // paddingBottom: "200px",
-          // scrollMarginBottom: "500px",
         }}
         ref={scrollRef}
       >
@@ -60,7 +60,6 @@ export function MessageList({ isRegistered }) {
             <MessageListItem message={message} />
           </Fragment>
         ))}
-        {/* <ListView /> */}
         {!isRegistered && (
           <div
             style={{ height: "1003px", backgroundColor: "#FFFFFF" }}
