@@ -19,7 +19,7 @@ create table product (
                          issues_what_why TEXT,
                          issues_vector vector(1536),
                          issues_content TEXT,
-                         provided_who VARCHAR(250),
+                         provided_how VARCHAR(250),
                          provided_why VARCHAR(250),
                          provided_outcome VARCHAR(250),
                          provided_vector vector(1536),

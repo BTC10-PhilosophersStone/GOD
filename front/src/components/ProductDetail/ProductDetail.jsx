@@ -78,7 +78,9 @@ export function ProductDetail({
     },
   ];
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log(productDetail);
+  }, []);
 
   const profileCard = (member) => (
     <Card
@@ -200,6 +202,9 @@ export function ProductDetail({
             position: "absolute",
             zIndex: "1000",
           },
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+          },
         }}
       >
         <Box
@@ -233,8 +238,7 @@ export function ProductDetail({
               <Typography
                 variant="h2"
                 sx={{
-                  fontFamily:
-                    '"Sawarabi Gothic","Zen kaku Gothic New","Roboto",sans-serif',
+                  fontFamily: "Zen Kaku Gothic New",
                   fontWeight: 400,
                   color: "#252e37",
                   fontSize: "20px",
@@ -252,8 +256,7 @@ export function ProductDetail({
                   bgcolor: "rgba(37, 46, 55, 0.08)",
                   "& .MuiChip-label": {
                     px: 1.5,
-                    fontFamily:
-                      '"Sawarabi Gothic","Zen kaku Gothic New","Roboto",sans-serif',
+                    fontFamily: "Zen Kaku Gothic New",
                     fontWeight: 400,
                     fontSize: 13,
                     lineHeight: "18px",
@@ -269,7 +272,7 @@ export function ProductDetail({
               sx={{
                 mt: "29px",
                 ml: "51px",
-                fontFamily: '"Zen Kaku Gothic New","Roboto",sans-serif',
+                fontFamily: "Zen Kaku Gothic New",
                 fontWeight: 700,
                 color: "#252e37",
                 fontSize: "40px",
@@ -327,6 +330,7 @@ export function ProductDetail({
                   label="概要"
                   sx={{
                     fontWeight: tabSelected === "overview" ? 700 : 400,
+                    fontFamily: "Zen Kaku Gothic New",
                     fontSize: "20px",
                     lineHeight: "24px",
                     letterSpacing: "0.15px",
@@ -389,6 +393,7 @@ export function ProductDetail({
                   <Typography
                     variant="subtitle2"
                     sx={{
+                      fontFamily: "Zen Kaku Gothic New",
                       mb: 1,
                       fontWeight: 600,
                       color: "#252e37",
@@ -410,14 +415,16 @@ export function ProductDetail({
                     <Typography
                       variant="body1"
                       sx={{
+                        fontFamily: "Zen Kaku Gothic New",
                         color: "#252e37",
                         fontWeight: 400,
                         fontSize: "16px",
                         lineHeight: "24px",
                         letterSpacing: "0.15px",
+                        maxWidth: "110ch",
                       }}
                     >
-                      {productDetail.issuesContent}
+                      {productDetail.product.issuesContent}
                     </Typography>
                   </Box>
                 </Box>
@@ -425,6 +432,7 @@ export function ProductDetail({
                   <Typography
                     variant="subtitle2"
                     sx={{
+                      fontFamily: "Zen Kaku Gothic New",
                       mb: 1,
                       fontWeight: 600,
                       color: "#252e37",
@@ -446,6 +454,7 @@ export function ProductDetail({
                     <Typography
                       variant="body1"
                       sx={{
+                        fontFamily: "Zen Kaku Gothic New",
                         color: "#252e37",
                         fontWeight: 400,
                         fontSize: "16px",
@@ -453,7 +462,11 @@ export function ProductDetail({
                         letterSpacing: "0.15px",
                       }}
                     >
-                      {productDetail.providedOutcome}
+                      {productDetail.product.providedWhy
+                        ? `${
+                            productDetail.product.providedWhy
+                          }より、${productDetail.product.providedOutcome}`
+                        : productDetail.product.providedOutcome}
                     </Typography>
                   </Box>
                 </Box>
@@ -466,7 +479,7 @@ export function ProductDetail({
                     <Typography
                       sx={{
                         md: 2,
-                        fontFamily: '"Noto Sans JP","Roboto",sans-serif',
+                        fontFamily: "Zen Kaku Gothic New",
                         fontWeight: 700,
                         fontSize: 16,
                         lineHeight: "normal",
@@ -492,8 +505,7 @@ export function ProductDetail({
                           >
                             <Typography
                               sx={{
-                                fontFamily:
-                                  '"Zen Kaku Gothic New","Roboto",sans-self',
+                                fontFamily: "Zen Kaku Gothic New",
                                 fontWeight: 400,
                                 fontSize: 16,
                                 lineHeight: "34px",
@@ -537,6 +549,7 @@ export function ProductDetail({
                           <Typography
                             variant="subtitle2"
                             sx={{
+                              fontFamily: "Zen Kaku Gothic New",
                               fontWeight: 600,
                               color: "#252e37",
                               fontSize: "16px",
@@ -547,6 +560,7 @@ export function ProductDetail({
                           <Typography
                             variant="body1"
                             sx={{
+                              fontFamily: "Zen Kaku Gothic New",
                               pl: "8px",
                               color: "#252e37",
                               whiteSpace: "nowrap",
@@ -576,6 +590,7 @@ export function ProductDetail({
                           <Typography
                             variant="subtitle2"
                             sx={{
+                              fontFamily: "Zen Kaku Gothic New",
                               fontWeight: 600,
                               color: "#252e37",
                               fontSize: "16px",
@@ -586,6 +601,7 @@ export function ProductDetail({
                           <Typography
                             variant="body1"
                             sx={{
+                              fontFamily: "Zen Kaku Gothic New",
                               pl: "8px",
                               color: "#252e37",
                               whiteSpace: "nowrap",
@@ -609,6 +625,7 @@ export function ProductDetail({
                           <Typography
                             variant="subtitle2"
                             sx={{
+                              fontFamily: "Zen Kaku Gothic New",
                               fontWeight: 600,
                               color: "#252e37",
                               fontSize: "16px",
@@ -619,6 +636,7 @@ export function ProductDetail({
                           <Typography
                             variant="body1"
                             sx={{
+                              fontFamily: "Zen Kaku Gothic New",
                               pl: "8px",
                               color: "#252e37",
                               whiteSpace: "nowrap",
@@ -636,6 +654,7 @@ export function ProductDetail({
                   <Typography
                     variant="subtitle2"
                     sx={{
+                      fontFamily: "Zen Kaku Gothic New",
                       mb: "19px",
                       fontWeight: 700,
                       color: "#252e37",
