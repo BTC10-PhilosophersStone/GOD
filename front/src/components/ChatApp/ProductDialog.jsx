@@ -197,7 +197,11 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
             },
             '& .MuiInputBase-input': {
               padding: '0', 
-            }
+            },
+              scrollbarWidth: 'none',
+            '&::-webkit-scrollbar': {
+              display: 'none', 
+            },
           },
         }}
       />
@@ -208,17 +212,15 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
     <>
       <Dialog
         open={isOpen}
+        id="product-dialog"
         onClose={handleClose}
         component="section"
         fullWidth={true}
-        maxWidth="false"
+        maxWidth="lg"
         sx={{
-          width: "80%",
+          width: "100%",
           minHeight: 800,
           color: "#05101b",
-          display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
            '& .MuiPaper-root': {
               borderRadius: '24px'}
         }}
@@ -229,8 +231,8 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
             justifyContent: "center",
             minHeight: 800,
             height: "90%",
-    }
-  }}
+            }
+          }}
       >
           <Stack direction="row" sx={{ mb: 2,px: 4,pt: 3.5, justifyContent: "flex-end" }}>
             <IconButton
@@ -249,8 +251,7 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
         id="test"
           sx={{
             maxWidth: "None",
-            width: "100%",
-
+            width: "98%",
             mx: "auto",
             px: 4,
             pb: 6,
@@ -258,7 +259,6 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            alignItems: "center", 
           }}
         >
 
@@ -272,7 +272,8 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
                 width: 1000,
                 maxHeight: 603,
                 overflowY: "auto",
-                pr: 3,
+                pr: 10,
+                pl:8,
                 scrollbarColor: "#B78F00 #D9D9D9",
 
               }}
@@ -426,7 +427,7 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
               variant="contained"
               color="#b78f00"
               sx={{
-                minWidth: 187,
+                minWidth: 170,
                 fontWeight: "bold",
                 bgcolor: "#b78f00",
                 color: "#ffffff",
