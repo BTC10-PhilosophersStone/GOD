@@ -126,6 +126,7 @@ export function PromptInputArea() {
     if (!list) {
       setIsShort(false);
       const loadData = async () => {
+        addMessageItem("GOD", "これで情報が揃ったぞ。");
         const res = await fetch("/productmodify", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -139,7 +140,6 @@ export function PromptInputArea() {
         const productData = JSON.parse(cleaned);
         // atomに保存と同時にsessionstorageにも保存する（キーはproductDataで固定）
         sessionStorage.setItem("productData", cleaned);
-        addMessageItem("GOD", "これで情報が揃ったぞ。");
         setIsProductDialogOpen(true);
       };
       loadData();
