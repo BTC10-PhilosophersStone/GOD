@@ -19,6 +19,10 @@ export function MessageList({ isRegistered }) {
 
     if (lastMessage.role === "GOD") {
       lastElement.scrollIntoView({ block: "center", behavior: "smooth" });
+      // lastElement.scrollBy({ top: 1000, behavior: "smooth" });
+      // setTimeout(() => {
+      //   window.scrollBy({ top: 500, behavior: "smooth" });
+      // }, 300);
       return;
     }
 
@@ -28,6 +32,7 @@ export function MessageList({ isRegistered }) {
     }, 800);
     return () => clearTimeout(timer);
   }, [messageList]);
+
   return (
     <>
       <Container
@@ -39,6 +44,8 @@ export function MessageList({ isRegistered }) {
           height: "auto",
           whiteSpace: "pre-wrap",
           backgroundColor: "#FFFFFF",
+          // paddingBottom: "200px",
+          // scrollMarginBottom: "500px",
         }}
         ref={scrollRef}
       >
@@ -56,7 +63,7 @@ export function MessageList({ isRegistered }) {
         {/* <ListView /> */}
         {!isRegistered && (
           <div
-            style={{ height: "900px", backgroundColor: "#FFFFFF" }}
+            style={{ height: "1003px", backgroundColor: "#FFFFFF" }}
             aria-hidden="true"
           />
         )}
