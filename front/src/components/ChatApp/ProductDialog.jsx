@@ -216,11 +216,17 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
           width: "80%",
           minHeight: 800,
           color: "#05101b",
+          display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
            '& .MuiPaper-root': {
               borderRadius: '24px'}
         }}
         PaperProps={{
           sx: {
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
             minHeight: 800,
             height: "90%",
     }
