@@ -462,11 +462,7 @@ export function ProductDetail({
                         letterSpacing: "0.15px",
                       }}
                     >
-                      {productDetail.product.providedWhy
-                        ? `${
-                            productDetail.product.providedWhy
-                          }より、${productDetail.product.providedOutcome}`
-                        : productDetail.product.providedOutcome}
+                      {productDetail.product.providedOutcome}
                     </Typography>
                   </Box>
                 </Box>
