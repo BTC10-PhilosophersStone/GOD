@@ -52,10 +52,10 @@ export function MessageContent({ role, content }) {
               padding: "24px 24px",
               paddingBottom: "103px",
               width: "800px",
-              animation: "colorChange 2s ease-in-out",
+              animation: "colorChange 3s ease-in-out",
               "@keyframes colorChange": {
                 "0%": { color: "#FFFFFF" },
-                "25%": { color: "#c8c8c8" },
+                "25%": { color: "#FFFFFF" },
                 "50%": { color: "#808080" },
                 "100%": { color: "#252e37" },
               },
