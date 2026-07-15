@@ -113,7 +113,8 @@ export function PromptInputArea() {
       if (Array.isArray(data[key])) {
       } else {
         for (const subKey in data[key]) {
-          data[key][subKey] === "不明" && shortageList.push(`${key}.${subKey}`);
+          (data[key][subKey] === "不明" || data[key][subKey] === "") &&
+            shortageList.push(`${key}.${subKey}`);
         }
       }
     }
