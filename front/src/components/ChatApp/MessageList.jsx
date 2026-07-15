@@ -57,7 +57,10 @@ export function MessageList({ isRegistered }) {
                 aria-hidden="true"
               />
             )}
-            <MessageListItem message={message} />
+            <MessageListItem
+              message={message}
+              isLatest={index === messageList.length - 1}
+            />
           </Fragment>
         ))}
         {!isRegistered && (

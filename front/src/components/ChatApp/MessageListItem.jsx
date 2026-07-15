@@ -1,7 +1,7 @@
 import { Avatar } from "./Avatar";
 import { MessageContent } from "./MessageContent";
 
-export function MessageListItem({ message }) {
+export function MessageListItem({ message, isLatest }) {
   return (
     <>
       <div
@@ -14,11 +14,19 @@ export function MessageListItem({ message }) {
         {message.role === "GOD" ? (
           <>
             {/* <Avatar role={message.role} /> */}
-            <MessageContent role={message.role} content={message.content} />
+            <MessageContent
+            role={message.role}
+            content={message.content}
+            isLatest={isLatest}
+          />
           </>
         ) : (
           <>
-            <MessageContent role={message.role} content={message.content} />
+            <MessageContent
+            role={message.role}
+            content={message.content}
+            isLatest={isLatest}
+          />
             {/* <Avatar role={message.role} /> */}
           </>
         )}
