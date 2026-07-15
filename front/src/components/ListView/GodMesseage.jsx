@@ -25,6 +25,7 @@ export const GodMesseage = ({ scrollRef }) => {
             "50%": { color: "#808080" },
             "100%": { color: "#252e37" },
           },
+          paddingTop: "100px",
         }}
         ref={scrollRef}
       >
