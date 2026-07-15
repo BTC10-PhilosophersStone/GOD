@@ -15,14 +15,15 @@ import {
 } from "@mui/material";
 import { PromptInputArea } from "../ChatApp/PromptInputArea";
 import { ProductDetail } from "../ProductDetail/ProductDetail";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "@fontsource/hina-mincho";
 import "@fontsource/zen-kaku-gothic-new";
 
-export const ListView = ({ setIsShowDetail }) => {
+export const ListView = ({ setIsShowDetail, isRegistered }) => {
   const [products, setProducts] = useState([]);
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const [productDetail, setproductDetail] = useState({});
+  const scrollRef = useRef(null);
 
   useEffect(() => {
     const getProduct = async () => {
@@ -38,6 +39,14 @@ export const ListView = ({ setIsShowDetail }) => {
     getProduct();
   }, []);
 
+  useEffect(() => {
+    console.log(scrollRef.current);
+    scrollRef.current.scrollIntoView({
+      block: "start",
+      behavior: "smooth",
+    });
+  }, [products]);
+
   return (
     <Box
       component="main"
@@ -45,7 +54,7 @@ export const ListView = ({ setIsShowDetail }) => {
         bgcolor: "#ffffff",
         // minHeight: "100vh",
         // width: "100%",
-        // position: "relative",
+        position: "relative",
         // overflowX: "hidden",
         pb: "180px",
       }}
@@ -89,6 +98,7 @@ export const ListView = ({ setIsShowDetail }) => {
               color: "#252e37",
               mt: "1px",
             }}
+            ref={scrollRef}
           >
             <Box component="span" sx={{ letterSpacing: "4px" }}>
               そなたのプロダクトに似たものがないか、神が提案しよう。

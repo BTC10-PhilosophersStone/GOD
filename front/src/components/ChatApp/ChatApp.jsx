@@ -104,7 +104,7 @@ export function ChatApp() {
           </AppBar>
           {/* <Link to="/">ログイン画面に戻る</Link>
       <Link to="/product">product詳細</Link> */}
-          <MessageList messageList={messageList} />
+          <MessageList messageList={messageList} isRegistered={isRegistered} />
 
           {/* 確認用 */}
           {/* <button onClick={() => setIsOpen(!isOpen)}>ダイアログ表示</button> */}
@@ -119,7 +119,12 @@ export function ChatApp() {
           {/* {isFormOpen && <FormDialog />} */}
         </Box>{" "}
       </ThemeProvider>
-      {isRegistered && <ListView setIsShowDetail={setIsShowDetail} />}
+      {isRegistered && (
+        <ListView
+          setIsShowDetail={setIsShowDetail}
+          isRegistered={isRegistered}
+        />
+      )}
       {!isShowDetail && <Prompt />}
     </>
   );

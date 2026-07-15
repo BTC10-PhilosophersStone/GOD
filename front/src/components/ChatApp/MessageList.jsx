@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 import { Container } from "@mui/material";
 import { ListView } from "../ListView/ListView";
 
-export function MessageList() {
+export function MessageList({ isRegistered }) {
   const [messageList, setMessageList] = useAtom(messageListAtom);
   const scrollRef = useRef(null);
   useEffect(() => {
@@ -19,6 +19,7 @@ export function MessageList() {
     } else {
       container.scrollTop = container.scrollHeight;
     }
+    console.log(container.scrollHeight);
   }, [messageList]);
   return (
     <>
@@ -28,7 +29,7 @@ export function MessageList() {
           maxWidth: "856px",
           pt: "82px",
           px: { xs: 3, sm: 4 },
-          height: "1000px",
+          height: "auto",
           whiteSpace: "pre-wrap",
           backgroundColor: "#FFFFFF",
         }}
@@ -38,10 +39,12 @@ export function MessageList() {
           <MessageListItem key={message.id} message={message} />
         ))}
         {/* <ListView /> */}
-        <div
-          style={{ height: "850px", backgroundColor: "#FFFFFF" }}
-          aria-hidden="true"
-        />
+        {!isRegistered && (
+          <div
+            style={{ height: "850px", backgroundColor: "#FFFFFF" }}
+            aria-hidden="true"
+          />
+        )}
       </Container>
     </>
   );
