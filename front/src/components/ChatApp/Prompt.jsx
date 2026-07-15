@@ -36,14 +36,15 @@ export function Prompt() {
             px: 2,
             py: 2.5,
             borderTop: "1px solid",
+            borderColor: "rgba(0,0,0,0.08)",
 
             "&::before": {
               content: '""',
               position: "absolute",
-              top: -25,
+              top: -50,
               left: 0,
               right: 0,
-              height: 40,
+              height: 49,
               background:
                 "linear-gradient(to bottom, transparent, rgba(255,255,255,1))",
               pointerEvents: "none",
