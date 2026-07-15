@@ -97,15 +97,16 @@ object ModifyPrompt {
 
 ## provided
 
-### Who
-人物名のみ抽出する
-データは配列型とする
+### Why
+- どんな課題を抱えていているか
 
-### What
-業務・テーマのキーワードへ変換する
+### How
+-このプロダクトを使うことで
 
 ### Outcome
-期待成果をキーワード化する
+- どんな状態になれるのか
+- 最終成果または効果。
+- 記載がなければ「不明」。
 
 例：
 "問い合わせリードタイムの短縮、人員削減"
@@ -122,9 +123,42 @@ mainCategory
 subCategory
 minorCategory
 
-はそのまま保持する
+はそのまま保持し、配列型で返す
+例：
+[{}]
 
 # 出力形式
+{
+  "issues": {
+    "Name: "",
+    "Who": [],
+    "What": "",
+    "When": "",
+    "Where": "",
+    "Why": "",
+    "How": "",
+    "What_Why": "",
+    "Content": "",
+  },
+  "provided": {
+    "How": "",
+    "Why": "",
+    "Outcome": "",
+  },
+  "department": [
+    {
+      "departmentName": "",
+      "officeName": "",
+    }
+  ],
+  "classification": [
+    {
+      "mainCategory": "",
+      "subCategory": "",
+      "minorCategory": "",
+    }
+  ]
+}
 
 入力と同じJSON構造を維持し、加工後の値のみを出力する。
 """
