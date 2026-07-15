@@ -7,10 +7,18 @@ import {
   messageListAtom,
   isFormDialogOpenAtom,
   isProductDialogOpenAtom,
+  isLoadingAtom,
 } from "../atoms";
 import { ProductDialog } from "./ProductDialog";
 import { FormDialog } from "./FormDialog";
-import { AppBar, Box, IconButton, Toolbar } from "@mui/material";
+import {
+  AppBar,
+  Backdrop,
+  Box,
+  CircularProgress,
+  IconButton,
+  Toolbar,
+} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import ThemeProvider from "../../theme/ThemeProvider";
 import { ListView } from "../ListView/ListView";
@@ -23,6 +31,7 @@ export function ChatApp() {
   const [isRegistered, setIsRegistered] = useState(false);
   // ここからはじめる
   const [isShowDetail, setIsShowDetail] = useState(false);
+  const [isLoading, setIsLoading] = useAtom(isLoadingAtom);
 
   const sessionMessagesKey = "messages";
   // メッセージ配列をステートにする、初期値としてデフォルトメッセージを格納、もしくはチャット履歴を取得する
@@ -126,8 +135,11 @@ export function ChatApp() {
         />
       )}
       {/* ここをフッターにすれば画面中央にくる？ */}
-
       <footer>{!isShowDetail && <Prompt />}</footer>
+      {/* <Backdrop open={isLoading}>
+        <CircularProgress />
+      </Backdrop> */}
+      {/* {isLoading && <CircularProgress />} */}
     </>
   );
 }

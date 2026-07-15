@@ -18,6 +18,7 @@ import {
   productDataAtom,
   isShortProductDataAtom,
   isProductDialogOpenAtom,
+  isLoadingAtom,
 } from "../atoms";
 import { postMessage } from "./api/ChatAppApi";
 import { dataLabels } from "./dataLabels";
@@ -36,6 +37,7 @@ export function PromptInputArea() {
   const setIsProductDialogOpen = useSetAtom(isProductDialogOpenAtom);
   const [question, setQuestion] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [isLoading, setIsLoading] = useAtom(isLoadingAtom);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     multiple: false,
