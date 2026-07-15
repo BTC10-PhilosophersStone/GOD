@@ -216,7 +216,15 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
           width: "100%",
           minHeight: 800,
           color: "#05101b",
+           '& .MuiPaper-root': {
+              borderRadius: '24px'}
         }}
+        PaperProps={{
+          sx: {
+            minHeight: 800,
+            height: "90%",
+    }
+  }}
       >
           <Stack direction="row" sx={{ mb: 2,px: 4,pt: 3.5, justifyContent: "flex-end" }}>
             <IconButton
@@ -234,27 +242,33 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
         <Box
         id="test"
           sx={{
-            maxWidth: 1257,
-            mx: "10%",
+            maxWidth: "None",
+            width: "100%",
+
+            mx: "auto",
             px: 4,
-            pt: 3.5,
             pb: 6,
+            flexFlex: 1, 
             display: "flex",
             flexDirection: "column",
-            height: 800,
+            justifyContent: "center",
+            alignItems: "center", 
           }}
         >
 
           <Stack direction="row" spacing={3} sx={{ flex: 1 }}>
             <Box
+            id="aaa"
               sx={{
                 flex: 1,
                 minWidth: 0,
+                maxWidth: 1400,
+                width: 1000,
                 maxHeight: 603,
                 overflowY: "auto",
                 pr: 3,
-                scrollbarWidth: "none",
-                "&::-webkit-scrollbar": { display: "none" },
+                scrollbarColor: "#B78F00 #D9D9D9",
+
               }}
             >
               <Stack spacing={7.5} sx={{ px: { xs: 0, md: 2 }}}>
