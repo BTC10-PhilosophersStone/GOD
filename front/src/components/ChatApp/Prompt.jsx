@@ -51,6 +51,7 @@ export function Prompt() {
             },
           }}
         >
+          {" "}
           <Stack
             direction="row"
             alignitems="center"

@@ -50,8 +50,9 @@ export function MessageContent({ role, content }) {
               color: "#252e37",
               borderRadius: "24px 24px 0 24px",
               padding: "24px 24px",
+              paddingBottom: "103px",
               width: "800px",
-              animation: "colorChange 3s ease-in-out",
+              animation: "colorChange 2s ease-in-out",
               "@keyframes colorChange": {
                 "0%": { color: "#FFFFFF" },
                 "25%": { color: "#c8c8c8" },
