@@ -88,7 +88,13 @@ export const ListView = ({ setIsShowDetail, isRegistered }) => {
         <Stack spacing={7.75} alignitems="center">
           <GodMesseage scrollRef={scrollRef} />
           {displayList ? (
-            <ProductList products={products} />
+            <ProductList
+              products={products}
+              setEditModalIsOpen={setEditModalIsOpen}
+              productDetail={productDetail}
+              setproductDetail={setproductDetail}
+              setIsShowDetail={setIsShowDetail}
+            />
           ) : (
             <div
               style={{ height: "900px", backgroundColor: "#FFFFFF" }}

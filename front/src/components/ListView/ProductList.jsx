@@ -1,7 +1,13 @@
 import { Card, Stack, Typography, Chip, LinearProgress } from "@mui/material";
 import { useEffect } from "react";
 
-export const ProductList = ({ products }) => {
+export const ProductList = ({
+  products,
+  setEditModalIsOpen,
+  productDetail,
+  setproductDetail,
+  setIsShowDetail,
+}) => {
   return (
     <Stack
       component="section"
