@@ -18,6 +18,7 @@ import { ProductDetail } from "../ProductDetail/ProductDetail";
 import { useEffect, useState, useRef } from "react";
 import "@fontsource/hina-mincho";
 import "@fontsource/zen-kaku-gothic-new";
+import { GodMesseage } from "./GodMesseage";
 
 export const ListView = ({ setIsShowDetail, isRegistered }) => {
   const [products, setProducts] = useState([]);
@@ -86,7 +87,7 @@ export const ListView = ({ setIsShowDetail, isRegistered }) => {
         sx={{ maxWidth: "856px", pt: "82px", px: { xs: 3, sm: 4 } }}
       >
         <Stack spacing={7.75} alignitems="center">
-          <Typography
+          {/* <Typography
             component="p"
             align="center"
             sx={{
@@ -108,7 +109,8 @@ export const ListView = ({ setIsShowDetail, isRegistered }) => {
               <br />
               神が総合的に判断した5件が以下のプロダクトじゃ。
             </Box>
-          </Typography>
+          </Typography> */}
+          <GodMesseage scrollRef={scrollRef} />
           <Stack component="section" spacing={3.85} width="100%">
             {products.map((product) => (
               <Card
