@@ -268,7 +268,7 @@ export function PromptInputArea() {
               },
             }}
           /> */}
-          {prompt ? (
+          {prompt || file ? (
             isHovered ? (
               <img src={sendIconHovered} width="40" height="40" />
             ) : (
