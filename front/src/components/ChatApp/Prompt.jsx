@@ -35,6 +35,7 @@ export function Prompt() {
             justifyContent: "center",
             px: 2,
             py: 2.5,
+            borderTop: "1px solid",
 
             "&::before": {
               content: '""',

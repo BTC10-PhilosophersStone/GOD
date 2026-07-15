@@ -22,6 +22,9 @@ import {
 import { postMessage } from "./api/ChatAppApi";
 import { dataLabels } from "./dataLabels";
 import { getSessionStorage, setSessionStorage } from "./sessionStorage";
+import sendIconDefault from "../../assets/send_icon_default.png";
+import sendIconDisabled from "../../assets/send_icon_disabled.png";
+import sendIconHovered from "../../assets/send_icon_hovered.png";
 
 export function PromptInputArea() {
   const [text, setText] = useState("");
@@ -32,6 +35,7 @@ export function PromptInputArea() {
   const [isShort, setIsShort] = useAtom(isShortProductDataAtom);
   const setIsProductDialogOpen = useSetAtom(isProductDialogOpenAtom);
   const [question, setQuestion] = useState(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     multiple: false,
@@ -168,7 +172,8 @@ export function PromptInputArea() {
           width: "679px",
           minHeight: "56px",
           "&:focus-within": {
-            borderColor: "#000000",
+            // borderColor: "#000000",
+            borderColor: "#0000003B",
           },
         }}
       >
@@ -239,8 +244,10 @@ export function PromptInputArea() {
             },
           }}
           onClick={handleClick}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
-          <ArrowUpwardIcon
+          {/* <ArrowUpwardIcon
             sx={{
               fontSize: 40,
               backgroundColor: prompt === "" && !file ? "#7E93A9" : "#466584",
@@ -250,7 +257,16 @@ export function PromptInputArea() {
                 backgroundColor: "#1F3850",
               },
             }}
-          />
+          /> */}
+          {prompt ? (
+            isHovered ? (
+              <img src={sendIconHovered} width="40" height="40" />
+            ) : (
+              <img src={sendIconDefault} width="40" height="40" />
+            )
+          ) : (
+            <img src={sendIconDisabled} width="40" height="40" />
+          )}
         </IconButton>
       </Box>
     </>
