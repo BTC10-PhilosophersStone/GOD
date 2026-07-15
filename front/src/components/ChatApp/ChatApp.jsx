@@ -31,7 +31,7 @@ export function ChatApp() {
       id: 1,
       role: "GOD",
       content:
-        "そなたのやりたいプロダクトに近しいプロダクト情報がないか、教えてやろう。そなたのしたいことはなんだ？？　議事録でも良いぞ",
+        "そなたのやりたいプロダクトに近しいプロダクト情報がないか、教えてやろう。\nそなたのしたいことはなんだ？？　議事録でも良いぞ",
     };
     const sessionMessages = sessionStorage.getItem(sessionMessagesKey);
     const res = sessionMessages
@@ -66,6 +66,9 @@ export function ChatApp() {
             width: "100%",
             display: "flex",
             flexDirection: "column",
+            // scrollMarginBottom: "500px",
+            // padding: "500px",
+            // marginBottom: "500px",
           }}
         >
           <AppBar
@@ -125,7 +128,9 @@ export function ChatApp() {
           isRegistered={isRegistered}
         />
       )}
-      {!isShowDetail && <Prompt />}
+      {/* ここをフッターにすれば画面中央にくる？ */}
+
+      <footer>{!isShowDetail && <Prompt />}</footer>
     </>
   );
 }
