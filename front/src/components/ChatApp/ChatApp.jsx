@@ -31,7 +31,8 @@ export function ChatApp() {
       id: 1,
       role: "GOD",
       content:
-        "そなたのやりたいプロダクトに近しいプロダクト情報がないか、教えてやろう。\nそなたのしたいことはなんだ？？　議事録でも良いぞ",
+        // "そなたのやりたいプロダクトに近しいプロダクト情報がないか、教えてやろう。\nそなたのしたいことはなんだ？？　議事録でも良いぞ",
+        "そなたのやりたいプロダクトに近しいプロダクト情報がないか、教えてやろう。\nまずはそなたのプロダクトについて教えてくれぬか？\n議事録でもあると話が早いぞ。",
     };
     const sessionMessages = sessionStorage.getItem(sessionMessagesKey);
     const res = sessionMessages
