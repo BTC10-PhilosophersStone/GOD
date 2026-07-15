@@ -93,7 +93,7 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
           ? parse.provided.How.join(",")
           : parse.provided.How,
         providedWhy: parse.provided.Why,
-        providedOutcome: parse.provided.Outcome,
+        providedOutcome: providedOutcome,
       },
       department: selectedDepartments.map((name) => ({
         departmentName: name,

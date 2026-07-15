@@ -129,21 +129,31 @@ export function PromptInputArea() {
     const list = checkShortage(productAtom);
     if (!list) {
       setIsShort(false);
-      addMessageItem("GOD", "これで情報が揃ったぞ。");
-      fetch("/productmodify", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(productAtom),
-      })
-        .then((res) => res.text())
-        .then((res) => console.log(res));
-      setIsProductDialogOpen(true);
+      const loadData = async () => {
+        addMessageItem("GOD", "これで情報が揃ったぞ。");
+        const res = await fetch("/productmodify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(productAtom),
+        });
+        const data = await res.text();
+        const cleaned = data
+          .replace(/```json/g, "")
+          .replace(/```/g, "")
+          .trim();
+        const productData = JSON.parse(cleaned);
+        // atomに保存と同時にsessionstorageにも保存する（キーはproductDataで固定）
+        sessionStorage.setItem("productData", cleaned);
+        setIsProductDialogOpen(true);
+      };
+      loadData();
       return;
+    } else {
+      addMessageItem(
+        "GOD",
+        `さすがの神でももう少し情報が欲しいところがある。\n${dataLabels[list[0]] ?? list[0]}はなんじゃ？`,
+      );
     }
-    addMessageItem(
-      "GOD",
-      `さすがの神でももう少し情報が欲しいところがある。\n${dataLabels[list[0]] ?? list[0]}はなんじゃ？`,
-    );
     !question && setQuestion(list[0]);
   }, [productAtom]);
 
