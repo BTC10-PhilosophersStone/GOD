@@ -109,7 +109,7 @@ export const ListView = ({ setIsShowDetail, isRegistered }) => {
               神が総合的に判断した5件が以下のプロダクトじゃ。
             </Box>
           </Typography>
-          <Stack component="section" spacing={2.75} width="100%">
+          <Stack component="section" spacing={3.85} width="100%">
             {products.map((product) => (
               <Card
                 key={product.id}
@@ -118,6 +118,7 @@ export const ListView = ({ setIsShowDetail, isRegistered }) => {
                   px: 4,
                   py: 3,
                   borderColor: "#b78f00",
+                  borderRadius: "8px",
                   bgcolor: "background.paper",
                 }}
                 onClick={async () => {
@@ -137,10 +138,9 @@ export const ListView = ({ setIsShowDetail, isRegistered }) => {
                   direction={{ xs: "column", sm: "row" }}
                   sx={{ justifyContent: "space-between" }}
                   alignitems={{ xs: "flex-start", sm: "flex-start" }}
-                  // spacing="280px"
                 >
                   <Stack
-                    spacing="9px"
+                    spacing="12px"
                     sx={{ minWidth: 0, maxWidth: "317px", width: "100%" }}
                   >
                     <Stack
@@ -153,10 +153,10 @@ export const ListView = ({ setIsShowDetail, isRegistered }) => {
                         component="p"
                         sx={{
                           fontFamily: "Zen Kaku Gothic New",
-                          fontWeight: 500,
+                          fontWeight: 600,
                           fontSize: "20px",
                           lineHeight: "30px",
-                          letterSpacing: "1px",
+                          letterSpacing: "0.25px",
                           color: "#252e37",
                           whiteSpace: "nowrap",
                         }}
@@ -173,7 +173,6 @@ export const ListView = ({ setIsShowDetail, isRegistered }) => {
                             fontSize: "13px",
                             lineHeight: "18px",
                             letterSpacing: "1px",
-                            color: "text.primary",
                             m: 0.8,
                           },
                         }}
@@ -182,8 +181,9 @@ export const ListView = ({ setIsShowDetail, isRegistered }) => {
                     <Typography
                       component="h2"
                       sx={{
+                        width: "500px",
                         fontFamily: "Zen Kaku Gothic New",
-                        WebkitTextStroke: "1px currentColor",
+                        WebkitTextStroke: "0.09px currentColor",
                         fontWeight: "900",
                         fontSize: "24px",
                         lineHeight: "34px",
@@ -208,6 +208,7 @@ export const ListView = ({ setIsShowDetail, isRegistered }) => {
                       sx={{
                         justifyContent: "space-between",
                         alignItems: "flex-end",
+                        paddingTop: "4px",
                       }}
                       width="100%"
                       spacing={4}
@@ -216,8 +217,8 @@ export const ListView = ({ setIsShowDetail, isRegistered }) => {
                         component="p"
                         sx={{
                           fontFamily: "Zen Kaku Gothic New",
-                          WebkitTextStroke: "0.2px currentColor",
-                          fontWeight: "bold",
+                          // WebkitTextStroke: "0.01px currentColor",
+                          fontWeight: "600",
                           fontSize: "15px",
                           lineHeight: "17.8px",
                           letterSpacing: "0.8px",
@@ -236,11 +237,11 @@ export const ListView = ({ setIsShowDetail, isRegistered }) => {
                           component="span"
                           sx={{
                             fontFamily: "Zen Kaku Gothic New",
-                            WebkitTextStroke: "1px currentColor",
+                            WebkitTextStroke: "0.8px currentColor",
                             fontWeight: 900,
-                            fontSize: "28px",
-                            lineHeight: "28px",
-                            letterSpacing: "1.2px",
+                            fontSize: "30px",
+                            lineHeight: "30px",
+                            letterSpacing: "2px",
                             color: "#252e37",
                             textAlign: "right",
                             whiteSpace: "nowrap",
