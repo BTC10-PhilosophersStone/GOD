@@ -196,7 +196,7 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
               minHeight: 'auto', 
             },
             '& .MuiInputBase-input': {
-              padding: '1px', 
+              padding: '0', 
             }
           },
         }}
@@ -211,9 +211,9 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
         onClose={handleClose}
         component="section"
         fullWidth={true}
-        maxWidth="lg"
+        maxWidth="false"
         sx={{
-          width: "100%",
+          width: "80%",
           minHeight: 800,
           color: "#05101b",
            '& .MuiPaper-root': {
@@ -248,7 +248,7 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
             mx: "auto",
             px: 4,
             pb: 6,
-            flexFlex: 1, 
+            flex: 1, 
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
@@ -343,7 +343,10 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
                   ))}
                 </Grid>
                 <Stack spacing={2.375} maxWidth={572}>
-                  <Typography variant="body1" component="h2">
+                  <Typography variant="body1" component="h2" sx={{
+                      fontFamily:"Hina Mincho",
+                      color: "#333",
+                    }}>
                     開発メンバー
                   </Typography>
                   <Stack
