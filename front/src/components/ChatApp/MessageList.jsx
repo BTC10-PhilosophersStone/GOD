@@ -22,10 +22,6 @@ export function MessageList() {
       return;
     }
 
-    // userの発言はGODメッセージの下に自然に見えているはずなので、
-    // ここではスクロールしない（余計な1回目の動きを増やさない）
-
-    // 少し間を置いてから、末尾のspacerへスクロールして
     // 画面上では今の内容が上へスライドして消えるように見せる
     const timer = setTimeout(() => {
       spacerRef.current?.scrollIntoView({ block: "end", behavior: "smooth" });
