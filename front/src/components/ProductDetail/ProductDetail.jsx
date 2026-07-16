@@ -746,7 +746,7 @@ export function ProductDetail({
         sx={{
           position: "fixed",
           top: 165,
-          left: 1360,
+          left: 1348,
           bgcolor: "#b78f00",
           borderRadius: "0px 8px 8px 0px",
           p: 1.25,
