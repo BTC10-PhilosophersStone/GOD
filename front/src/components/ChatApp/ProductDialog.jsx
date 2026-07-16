@@ -136,7 +136,10 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
     fullWidth = true,
   }) => (
     <Stack spacing={1.625} width={fullWidth ? "100%" : "auto"}>
-      <Typography variant="body1" component="label">
+      <Typography variant="body1" component="label" sx={{
+          fontFamily:"Hina Mincho",
+          color: "#333",
+        }}>
         {label}
       </Typography>
       <TextField
@@ -160,12 +163,12 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
   );
   const LabeledTextField = ({ label, value, onChange, ...props }) => (
     <Stack spacing={1}>
-      {" "}
+      
       <Typography
         variant="body1"
         component="label"
         sx={{
-          fontFamily: '"Noto Sans JP", "Roboto", Helvetica, Arial, sans-serif',
+          fontFamily:"Hina Mincho",
           color: "#333",
         }}
       >
@@ -173,6 +176,9 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
       </Typography>
       <TextField
         fullWidth
+        multiline
+        minRows={1}
+        maxRows={4}
         value={value}
         getOptionLabel={(option) => option}
         onChange={onChange}
@@ -186,6 +192,16 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
             "&.Mui-focused fieldset": {
               borderColor: "#252e37",
             },
+            '& .MuiInputBase-root': {
+              minHeight: 'auto', 
+            },
+            '& .MuiInputBase-input': {
+              padding: '0', 
+            },
+              scrollbarWidth: 'none',
+            '&::-webkit-scrollbar': {
+              display: 'none', 
+            },
           },
         }}
       />
@@ -196,31 +212,29 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
     <>
       <Dialog
         open={isOpen}
+        id="product-dialog"
         onClose={handleClose}
         component="section"
         fullWidth={true}
         maxWidth="lg"
-        // PaperProps={{
         sx={{
           width: "100%",
           minHeight: 800,
           color: "#05101b",
+           '& .MuiPaper-root': {
+              borderRadius: '24px'}
         }}
-        // }}
-      >
-        <Box
-          sx={{
-            maxWidth: 1257,
-            mx: "auto",
-            px: 4,
-            pt: 3.5,
-            pb: 6,
+        PaperProps={{
+          sx: {
             display: "flex",
             flexDirection: "column",
-            height: 800,
+            justifyContent: "center",
+            minHeight: 800,
+            height: "90%",
+            }
           }}
-        >
-          <Stack direction="row" sx={{ mb: 2, justifyContent: "flex-end" }}>
+      >
+          <Stack direction="row" sx={{ mb: 2,px: 4,pt: 3.5, justifyContent: "flex-end" }}>
             <IconButton
               aria-label="close"
               size="large"
@@ -233,19 +247,38 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
               <CloseIcon sx={{ fontSize: 40 }} />
             </IconButton>
           </Stack>
+        <Box
+        id="test"
+          sx={{
+            maxWidth: "None",
+            width: "98%",
+            mx: "auto",
+            px: 4,
+            pb: 6,
+            flex: 1, 
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+
           <Stack direction="row" spacing={3} sx={{ flex: 1 }}>
             <Box
+            id="aaa"
               sx={{
                 flex: 1,
                 minWidth: 0,
+                maxWidth: 1400,
+                width: 1000,
                 maxHeight: 603,
                 overflowY: "auto",
-                pr: 3,
-                scrollbarWidth: "none",
-                "&::-webkit-scrollbar": { display: "none" },
+                pr: 10,
+                pl:8,
+                scrollbarColor: "#B78F00 #D9D9D9",
+
               }}
             >
-              <Stack spacing={2.875} sx={{ px: { xs: 0, md: 2 } }}>
+              <Stack spacing={7.5} sx={{ px: { xs: 0, md: 2 }}}>
                 <LabeledTextField
                   label="プロダクト名"
                   value={productName}
@@ -257,8 +290,8 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
                     variant="body1"
                     component="label"
                     sx={{
-                      fontFamily:
-                        '"Noto Sans JP", "Roboto", Helvetica, Arial, sans-serif',
+                      fontFamily:"Hina Mincho",
+                      color: "#333",
                       letterSpacing: 0,
                     }}
                   >
@@ -280,6 +313,10 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
                       <TextField
                         {...params}
                         placeholder="部署名を候補から選択"
+                        sx={{
+                          fontFamily:"Hina Mincho",
+                          color: "#333",
+                        }}
                       />
                     )}
                   />
@@ -313,7 +350,10 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
                   ))}
                 </Grid>
                 <Stack spacing={2.375} maxWidth={572}>
-                  <Typography variant="body1" component="h2">
+                  <Typography variant="body1" component="h2" sx={{
+                      fontFamily:"Hina Mincho",
+                      color: "#333",
+                    }}>
                     開発メンバー
                   </Typography>
                   <Stack
@@ -387,7 +427,7 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
               variant="contained"
               color="#b78f00"
               sx={{
-                minWidth: 187,
+                minWidth: 170,
                 fontWeight: "bold",
                 bgcolor: "#b78f00",
                 color: "#ffffff",
