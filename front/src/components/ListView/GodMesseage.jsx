@@ -1,11 +1,16 @@
 import { Typography, Box } from "@mui/material";
 
-export const GodMesseage = ({ scrollRef }) => {
+export const GodMesseage = ({ scrollRef, messeagePadding, startRef }) => {
   return (
     <>
       <div
         style={{ height: "900px", backgroundColor: "#FFFFFF" }}
         aria-hidden="true"
+      />
+      <div
+        style={{ height: "60px", backgroundColor: "#FFFFFF" }}
+        aria-hidden="true"
+        ref={startRef}
       />
       <Typography
         component="p"
@@ -25,7 +30,7 @@ export const GodMesseage = ({ scrollRef }) => {
             "50%": { color: "#808080" },
             "100%": { color: "#252e37" },
           },
-          paddingTop: "100px",
+          // paddingTop: messeagePadding && "100px",
         }}
         ref={scrollRef}
       >

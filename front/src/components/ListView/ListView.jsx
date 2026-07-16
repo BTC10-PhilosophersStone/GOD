@@ -25,8 +25,10 @@ export const ListView = ({ setIsShowDetail, isRegistered }) => {
   const [products, setProducts] = useState([]);
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const [displayList, setDisplayList] = useState(false);
+  const [messeagePadding, setMesseagePadding] = useState(false);
   const [productDetail, setproductDetail] = useState({});
   const scrollRef = useRef(null);
+  const startRef = useRef(null);
 
   useEffect(() => {
     const getProduct = async () => {
@@ -48,10 +50,11 @@ export const ListView = ({ setIsShowDetail, isRegistered }) => {
       behavior: "smooth",
     });
     const timer = setTimeout(() => {
-      scrollRef.current.scrollIntoView({
+      startRef.current.scrollIntoView({
         block: "start",
         behavior: "smooth",
       });
+      // setMesseagePadding(true);
     }, 4000);
     return () => clearTimeout(timer);
   }, [products]);
@@ -86,7 +89,11 @@ export const ListView = ({ setIsShowDetail, isRegistered }) => {
         sx={{ maxWidth: "856px", pt: "82px", px: { xs: 3, sm: 4 } }}
       >
         <Stack spacing={7.75} alignitems="center">
-          <GodMesseage scrollRef={scrollRef} />
+          <GodMesseage
+            scrollRef={scrollRef}
+            messeagePadding={messeagePadding}
+            startRef={startRef}
+          />
           {displayList ? (
             <ProductList
               products={products}
