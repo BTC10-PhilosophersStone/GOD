@@ -53,10 +53,17 @@ export function PromptInputArea() {
     },
   });
 
-  const addMessageItem = (role, content) => {
+  const addMessageItem = (role, content, file) => {
     setMessageList((prev) => {
       const maxId = prev[prev.length - 1].id;
-      return [...prev, { id: maxId + 1, role, content }];
+      return [
+        ...prev,
+        {
+          id: maxId + 1,
+          role,
+          content: file ? `${file.name}　を献上いたします。` : content,
+        },
+      ];
     });
   };
   const sessionjsonKey = "productData";
@@ -166,7 +173,7 @@ export function PromptInputArea() {
   }, [productAtom]);
 
   const handleClick = () => {
-    addMessageItem("user", prompt);
+    addMessageItem("user", prompt, file);
     if (!question) {
       addMessageFromGod(prompt);
     } else {
