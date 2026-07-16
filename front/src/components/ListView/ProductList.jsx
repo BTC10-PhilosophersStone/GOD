@@ -8,14 +8,6 @@ export const ProductList = ({ products }) => {
       spacing={3.85}
       width="100%"
       sx={{
-        // animation: "colorChange 2s ease-in-out",
-        // "@keyframes colorChange": {
-        //   "0%": { color: "#FFFFFF" },
-        //   "25%": { color: "#c8c8c8" },
-        //   "50%": { color: "#808080" },
-        //   "100%": { color: "#252e37" },
-        // },
-
         opacity: 0,
         animation: "fadeIn 0.5s ease-out forwards",
 
