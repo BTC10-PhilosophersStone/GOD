@@ -54,28 +54,32 @@ export function ProductDetail({
   // そうなると、issuesWhoの部分から、対象のユーザーを取得する
   const members = [
     {
-      name: "中山 晋之介",
-      department: "トヨタ車体",
-      position: "Devs",
-      eMail: "shinnosuke_nakayama@mail.toyota.co.jp",
-    },
-    {
-      name: "下川 和希",
-      department: "トヨタ記念病院",
-      position: "Devs",
-      eMail: "simo@mail.toyota.co.jp",
-    },
-    {
       name: "上谷 圭人",
       department: "トヨタ記念病院",
       position: "PM",
       eMail: "keito_kamiya@mail.toyota.co.jp",
+      img: "/keity-san.png",
     },
     {
       name: "竹口 慧",
       department: "設計部",
       position: "PD",
       eMail: "satoshi_takeguchi@mail.toyota.co.jp",
+      img: "/makochi-san.png",
+    },
+    {
+      name: "下川 和希",
+      department: "トヨタ記念病院",
+      position: "Devs",
+      eMail: "simo@mail.toyota.co.jp",
+      img: "/nurse-san.png",
+    },
+    {
+      name: "中山 晋之介",
+      department: "トヨタ車体",
+      position: "Devs",
+      eMail: "shinnosuke_nakayama@mail.toyota.co.jp",
+      img: "/sin-san.png",
     },
   ];
 
@@ -709,7 +713,7 @@ export function ProductDetail({
                       >
                         <Avatar
                           key={`${src.name}-${index}`}
-                          src={src.name}
+                          src={src.img}
                           alt={`${src.name}-${index + 1}`}
                           component={ButtonBase}
                           sx={{
@@ -727,7 +731,7 @@ export function ProductDetail({
                           }}
                           onClick={() =>
                             window.open(
-                              `https://teams.microsoft.com/l/chat/0/0?users=${src.eMail}&message=【メッセージ欄】`,
+                              `https://teams.microsoft.com/l/chat/0/0?users=${src.eMail}&message=【${productDetail.product.name}】について`,
                             )
                           }
                         />
