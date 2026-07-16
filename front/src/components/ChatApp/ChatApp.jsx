@@ -7,10 +7,18 @@ import {
   messageListAtom,
   isFormDialogOpenAtom,
   isProductDialogOpenAtom,
+  isLoadingAtom,
 } from "../atoms";
 import { ProductDialog } from "./ProductDialog";
 import { FormDialog } from "./FormDialog";
-import { AppBar, Box, IconButton, Toolbar } from "@mui/material";
+import {
+  AppBar,
+  Backdrop,
+  Box,
+  CircularProgress,
+  IconButton,
+  Toolbar,
+} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import ThemeProvider from "../../theme/ThemeProvider";
 import { ListView } from "../ListView/ListView";
@@ -23,6 +31,7 @@ export function ChatApp() {
   const [isRegistered, setIsRegistered] = useState(false);
   // ここからはじめる
   const [isShowDetail, setIsShowDetail] = useState(false);
+  const [isLoading, setIsLoading] = useAtom(isLoadingAtom);
 
   const sessionMessagesKey = "messages";
   // メッセージ配列をステートにする、初期値としてデフォルトメッセージを格納、もしくはチャット履歴を取得する
@@ -31,7 +40,8 @@ export function ChatApp() {
       id: 1,
       role: "GOD",
       content:
-        "そなたのやりたいプロダクトに近しいプロダクト情報がないか、教えてやろう。\nそなたのしたいことはなんだ？？　議事録でも良いぞ",
+        // "そなたのやりたいプロダクトに近しいプロダクト情報がないか、教えてやろう。\nそなたのしたいことはなんだ？？　議事録でも良いぞ",
+        "そなたのやりたいプロダクトに近しいプロダクト情報がないか、教えてやろう。\nまずはそなたのプロダクトについて教えてくれぬか？\n議事録でもあると話が早いぞ。",
     };
     const sessionMessages = sessionStorage.getItem(sessionMessagesKey);
     const res = sessionMessages
@@ -41,10 +51,6 @@ export function ChatApp() {
   });
 
   useEffect(() => {
-    // async () => {
-    // const res = await fetch(`/api/message/${}`);
-    // const data = res.json();
-    // };
     const defaultMessage = {
       id: 1,
       role: "GOD",
@@ -129,8 +135,11 @@ export function ChatApp() {
         />
       )}
       {/* ここをフッターにすれば画面中央にくる？ */}
-
       <footer>{!isShowDetail && <Prompt />}</footer>
+      {/* <Backdrop open={isLoading}>
+        <CircularProgress />
+      </Backdrop> */}
+      {/* {isLoading && <CircularProgress />} */}
     </>
   );
 }

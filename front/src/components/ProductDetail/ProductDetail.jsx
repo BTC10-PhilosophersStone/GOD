@@ -29,6 +29,7 @@ import WorkIcon from "@mui/icons-material/Work";
 import ButtonBase from "@mui/material/ButtonBase";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded";
+import IosShareIcon from "@mui/icons-material/IosShare";
 
 export function ProductDetail({
   editModalIsOpen,
@@ -212,7 +213,7 @@ export function ProductDetail({
           data-model-id="1261:1488"
           sx={{
             minWidth: 1257,
-            minHeight: 700,
+            minHeight: 600,
             position: "relative",
           }}
         >
@@ -221,7 +222,7 @@ export function ProductDetail({
             sx={{
               position: "relative",
               minWidth: 1257,
-              height: "240px", // 固定高さにする
+              height: "160px", // 固定高さにする
               bgcolor: "background.paper",
               borderRadius: "40px",
               overflow: "hidden",
@@ -278,16 +279,20 @@ export function ProductDetail({
                 fontSize: "40px",
                 lineHeight: "34px",
                 letterSpacing: "0.125em",
+                paddingBottom: "40px",
               }}
             >
               {productDetail.product.name}
+              <IosShareIcon
+                sx={{ fontSize: 34, marginLeft: 2, color: "#757575" }}
+              />
             </Typography>
             <IconButton
               aria-label="close"
               sx={{
                 position: "absolute",
                 top: 20,
-                right: 48,
+                right: 8,
                 width: 40,
                 height: 40,
                 color: "#252e37",
@@ -300,73 +305,74 @@ export function ProductDetail({
             >
               <CloseIcon sx={{ fontSize: 40 }} />
             </IconButton>
-            <Box sx={{ mt: "32px" }}>
-              <Tabs
-                value={tab}
-                onChange={(_, newValue) => {
-                  setTab(newValue);
-                  setTabSelected((ele) =>
-                    ele === "overview" ? "transition" : "overview",
-                  );
-                }}
-                aria-label="content tabs"
-                textColor="inherit"
-                sx={{
-                  minHeight: 76,
-                  px: 0,
-                  borderTop: "1px solid #ebebe7",
-                  borderBottom: "1px solid #ebebe7",
-                  "& .MuiTabs-flexContainer": {
-                    pl: "53px",
-                    pr: 10,
-                  },
-                  "& .MuiTabs-indicator": {
-                    backgroundColor: "#b78f00",
-                    height: 4,
-                  },
-                }}
-              >
-                <Tab
-                  label="概要"
-                  sx={{
-                    fontWeight: tabSelected === "overview" ? 700 : 400,
-                    fontFamily: "Zen Kaku Gothic New",
-                    fontSize: "20px",
-                    lineHeight: "24px",
-                    letterSpacing: "0.15px",
-                    color: "#252e37",
-                    minHeight: 76,
-                    paddingLeft: "40px",
-                    paddingRight: "40px",
-                    textTransform: "none",
-                    opacity: 1,
-                    "& Mui-selected": {
-                      color: "#252e37",
-                    },
-                  }}
-                />
-                <Tab
-                  label="変遷"
-                  disabled
-                  sx={{
-                    fontWeight: tabSelected === "transition" ? 700 : 400,
-                    fontSize: "20px",
-                    lineHeight: "24px",
-                    letterSpacing: "0.15px",
-                    color: "#252e37",
-                    minHeight: 76,
-                    paddingLeft: "40px",
-                    paddingRight: "40px",
-                    textTransform: "none",
-                    opacity: 1,
-                    "& Mui-selected": {
-                      color: "#252e37",
-                    },
-                  }}
-                />
-              </Tabs>
-            </Box>
+            {/* <Box> */}
+            {/* </Box> */}
           </Box>
+          <Tabs
+            value={tab}
+            onChange={(_, newValue) => {
+              setTab(newValue);
+              setTabSelected((ele) =>
+                ele === "overview" ? "transition" : "overview",
+              );
+            }}
+            aria-label="content tabs"
+            textColor="inherit"
+            sx={{
+              minHeight: 76,
+              px: 0,
+              borderTop: "1px solid #ebebe7",
+              borderBottom: "1px solid #ebebe7",
+              "& .MuiTabs-flexContainer": {
+                pl: "53px",
+                pr: 10,
+              },
+              "& .MuiTabs-indicator": {
+                backgroundColor: "#b78f00",
+                height: 4,
+              },
+            }}
+          >
+            <Tab
+              label="概要"
+              sx={{
+                fontWeight: tabSelected === "overview" ? 700 : 400,
+                fontFamily: "Zen Kaku Gothic New",
+                fontSize: "20px",
+                lineHeight: "24px",
+                letterSpacing: "0.15px",
+                color: "#252e37",
+                minHeight: 76,
+                paddingLeft: "40px",
+                paddingRight: "40px",
+                textTransform: "none",
+                borderBottom: "1px solid #ebebe7",
+                opacity: 1,
+                "& Mui-selected": {
+                  color: "#252e37",
+                },
+              }}
+            />
+            <Tab
+              label="変遷"
+              disabled
+              sx={{
+                fontWeight: tabSelected === "transition" ? 700 : 400,
+                fontSize: "20px",
+                lineHeight: "24px",
+                letterSpacing: "0.15px",
+                color: "#252e37",
+                minHeight: 76,
+                paddingLeft: "40px",
+                paddingRight: "40px",
+                textTransform: "none",
+                opacity: 1,
+                "& Mui-selected": {
+                  color: "#252e37",
+                },
+              }}
+            />
+          </Tabs>
           <Stack
             direction="row"
             spacing={3}
@@ -393,7 +399,7 @@ export function ProductDetail({
                   <Typography
                     variant="subtitle2"
                     sx={{
-                      fontFamily: "Zen Kaku Gothic New",
+                      // fontFamily: "Zen Kaku Gothic New",
                       mb: 1,
                       fontWeight: 600,
                       color: "#252e37",
@@ -432,7 +438,7 @@ export function ProductDetail({
                   <Typography
                     variant="subtitle2"
                     sx={{
-                      fontFamily: "Zen Kaku Gothic New",
+                      // fontFamily: "Zen Kaku Gothic New",
                       mb: 1,
                       fontWeight: 600,
                       color: "#252e37",
@@ -475,7 +481,7 @@ export function ProductDetail({
                     <Typography
                       sx={{
                         md: 2,
-                        fontFamily: "Zen Kaku Gothic New",
+                        // fontFamily: "Zen Kaku Gothic New",
                         fontWeight: 700,
                         fontSize: 16,
                         lineHeight: "normal",
@@ -497,6 +503,7 @@ export function ProductDetail({
                               px: "11px",
                               bgcolor: "#ebebe7",
                               alignSelf: "flex-start",
+                              borderRadius: "4px",
                             }}
                           >
                             <Typography
@@ -545,10 +552,11 @@ export function ProductDetail({
                           <Typography
                             variant="subtitle2"
                             sx={{
-                              fontFamily: "Zen Kaku Gothic New",
+                              // fontFamily: "Zen Kaku Gothic New",
                               fontWeight: 600,
                               color: "#252e37",
                               fontSize: "16px",
+                              margin: "4px",
                             }}
                           >
                             業務カテゴリ
@@ -561,6 +569,7 @@ export function ProductDetail({
                               color: "#252e37",
                               whiteSpace: "nowrap",
                               fontSize: "16px",
+                              margin: "4px",
                             }}
                           >
                             {productDetail.classification[0].mainCategory}
@@ -586,10 +595,11 @@ export function ProductDetail({
                           <Typography
                             variant="subtitle2"
                             sx={{
-                              fontFamily: "Zen Kaku Gothic New",
+                              // fontFamily: "Zen Kaku Gothic New",
                               fontWeight: 600,
                               color: "#252e37",
                               fontSize: "16px",
+                              margin: "4px",
                             }}
                           >
                             業務領域
@@ -602,6 +612,7 @@ export function ProductDetail({
                               color: "#252e37",
                               whiteSpace: "nowrap",
                               fontSize: "16px",
+                              margin: "4px",
                             }}
                           >
                             {productDetail.classification[0].subCategory}
@@ -621,7 +632,7 @@ export function ProductDetail({
                           <Typography
                             variant="subtitle2"
                             sx={{
-                              fontFamily: "Zen Kaku Gothic New",
+                              // fontFamily: "Zen Kaku Gothic New",
                               fontWeight: 600,
                               color: "#252e37",
                               fontSize: "16px",
@@ -637,6 +648,7 @@ export function ProductDetail({
                               color: "#252e37",
                               whiteSpace: "nowrap",
                               fontSize: "16px",
+                              margin: "4px",
                             }}
                           >
                             {productDetail.classification[0].minorCategory}
@@ -650,7 +662,7 @@ export function ProductDetail({
                   <Typography
                     variant="subtitle2"
                     sx={{
-                      fontFamily: "Zen Kaku Gothic New",
+                      // fontFamily: "Zen Kaku Gothic New",
                       mb: "19px",
                       fontWeight: 700,
                       color: "#252e37",
@@ -703,10 +715,14 @@ export function ProductDetail({
                           sx={{
                             width: 84,
                             height: 84,
-                            backgroundColor: "#b78f00",
+                            backgroundColor: "#466584",
                             "&:active": {
                               transform: "scale(0.94) translateY(2px)",
                               boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.1)",
+                            },
+                            "&:hover": {
+                              border: "4px solid #b78f00",
+                              cursor: "pointer",
                             },
                           }}
                           onClick={() =>
@@ -723,41 +739,42 @@ export function ProductDetail({
             </Box>
           </Stack>
         </Box>
-        <Box
-          component={ButtonBase}
-          onClick={() => setIsBookmark(!isBookmark)}
-          sx={{
-            position: "absolute",
-            top: 96,
-            left: 1230,
-            bgcolor: "#b78f00",
-            borderRadius: "0px 8px 8px 0px",
-            p: 1.25,
-            display: "inline-flex",
-            "&:active": {
-              transform: "scale(0.94) translateY(2px)",
-              boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.1)",
-            },
-          }}
-        >
-          {isBookmark ? (
-            <BookmarkIcon
-              sx={{
-                fontSize: 40,
-                color: "#ffffff",
-              }}
-            />
-          ) : (
-            <BookmarkBorderRoundedIcon
-              sx={{
-                fontWeight: 2,
-                fontSize: 40,
-                color: "#ffffff",
-              }}
-            />
-          )}
-        </Box>
       </Modal>
+      <Box
+        component={ButtonBase}
+        onClick={() => setIsBookmark(!isBookmark)}
+        sx={{
+          position: "fixed",
+          top: 165,
+          left: 1348,
+          bgcolor: "#b78f00",
+          borderRadius: "0px 8px 8px 0px",
+          p: 1.25,
+          display: "inline-flex",
+          "&:active": {
+            transform: "scale(0.94) translateY(2px)",
+            boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.1)",
+          },
+          zIndex: 1400,
+        }}
+      >
+        {isBookmark ? (
+          <BookmarkIcon
+            sx={{
+              fontSize: 40,
+              color: "#ffffff",
+            }}
+          />
+        ) : (
+          <BookmarkBorderRoundedIcon
+            sx={{
+              fontWeight: 2,
+              fontSize: 40,
+              color: "#ffffff",
+            }}
+          />
+        )}
+      </Box>
     </>
   );
 }

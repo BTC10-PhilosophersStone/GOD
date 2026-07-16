@@ -10,6 +10,7 @@ const productDataAtom = atomWithStorage("productData", null, storage, {
   getOnInit: true,
 });
 const isProductDialogOpenAtom = atom(false);
+const isLoadingAtom = atom(false);
 
 export {
   messageListAtom,
@@ -18,4 +19,5 @@ export {
   productDataAtom,
   isShortProductDataAtom,
   isProductDialogOpenAtom,
+  isLoadingAtom,
 };

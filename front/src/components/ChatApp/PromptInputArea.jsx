@@ -18,6 +18,7 @@ import {
   productDataAtom,
   isShortProductDataAtom,
   isProductDialogOpenAtom,
+  isLoadingAtom,
 } from "../atoms";
 import { postMessage } from "./api/ChatAppApi";
 import { dataLabels } from "./dataLabels";
@@ -36,6 +37,7 @@ export function PromptInputArea() {
   const setIsProductDialogOpen = useSetAtom(isProductDialogOpenAtom);
   const [question, setQuestion] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [isLoading, setIsLoading] = useAtom(isLoadingAtom);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     multiple: false,
@@ -51,10 +53,17 @@ export function PromptInputArea() {
     },
   });
 
-  const addMessageItem = (role, content) => {
+  const addMessageItem = (role, content, file) => {
     setMessageList((prev) => {
       const maxId = prev[prev.length - 1].id;
-      return [...prev, { id: maxId + 1, role, content }];
+      return [
+        ...prev,
+        {
+          id: maxId + 1,
+          role,
+          content: file ? `${file.name}　を献上いたします。` : content,
+        },
+      ];
     });
   };
   const sessionjsonKey = "productData";
@@ -113,7 +122,8 @@ export function PromptInputArea() {
       if (Array.isArray(data[key])) {
       } else {
         for (const subKey in data[key]) {
-          data[key][subKey] === "不明" && shortageList.push(`${key}.${subKey}`);
+          (data[key][subKey] === "不明" || data[key][subKey] === "") &&
+            shortageList.push(`${key}.${subKey}`);
         }
       }
     }
@@ -131,34 +141,40 @@ export function PromptInputArea() {
       setIsShort(false);
       const loadData = async () => {
         addMessageItem("GOD", "これで情報が揃ったぞ。");
-        const res = await fetch("/productmodify", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(productAtom),
-        });
-        const data = await res.text();
-        const cleaned = data
-          .replace(/```json/g, "")
-          .replace(/```/g, "")
-          .trim();
-        const productData = JSON.parse(cleaned);
-        // atomに保存と同時にsessionstorageにも保存する（キーはproductDataで固定）
-        sessionStorage.setItem("productData", cleaned);
-        setIsProductDialogOpen(true);
+        setTimeout(async () => {
+          const res = await fetch("/productmodify", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(productAtom),
+          });
+          const data = await res.text();
+          const cleaned = data
+            .replace(/```json/g, "")
+            .replace(/```/g, "")
+            .trim();
+          const productData = JSON.parse(cleaned);
+          // atomに保存と同時にsessionstorageにも保存する（キーはproductDataで固定）
+          sessionStorage.setItem("productData", cleaned);
+          setIsProductDialogOpen(true);
+        }, 2000);
       };
       loadData();
       return;
     } else {
+      const info = dataLabels[list[0]];
       addMessageItem(
         "GOD",
-        `さすがの神でももう少し情報が欲しいところがある。\n${dataLabels[list[0]] ?? list[0]}はなんじゃ？`,
+        info
+          ? // ? `さすがの神でももう少し情報が欲しいところがある。\n${info.question}\n${info.example}`
+            `さすがの神でももう少し情報が欲しいところがある。\n${info.question}`
+          : `さすがの神でももう少し情報が欲しいところがある。\n${list[0]}はなんじゃ？`,
       );
     }
     !question && setQuestion(list[0]);
   }, [productAtom]);
 
   const handleClick = () => {
-    addMessageItem("user", prompt);
+    addMessageItem("user", prompt, file);
     if (!question) {
       addMessageFromGod(prompt);
     } else {
