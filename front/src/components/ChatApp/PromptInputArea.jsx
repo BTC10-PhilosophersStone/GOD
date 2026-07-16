@@ -153,10 +153,6 @@ export function PromptInputArea() {
       loadData();
       return;
     } else {
-      addMessageItem(
-        "GOD",
-        `さすがの神でももう少し情報が欲しいところがある。\n${dataLabels[list[0]] ?? list[0]}はなんじゃ？`,
-      );
       const info = dataLabels[list[0]];
       addMessageItem(
         "GOD",
