@@ -19,10 +19,106 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useState, useEffect } from "react";
 
 const memberImages = [
-  "/kkrn_icon_user_1.png",
-  "/kkrn_icon_user_1.png",
-  "/kkrn_icon_user_1.png",
+  "/sin-san.png",
+  "/makochi-san.png",
+  "/nurse-san.png",
+  "/keity-san.png",
 ];
+
+
+const CustomTextField = ({
+    label,
+    value,
+    onChange,
+    typographyVariant = "body1",
+    fullWidth = true,
+  }) => (
+    <Stack spacing={1.5} width={fullWidth ? "100%" : "auto"}>
+      <Typography variant="body1" component="label" sx={{
+          fontFamily: "Zen Kaku Gothic New",
+          color: "#333",
+          p: 2.5,
+          fontWeight: "bold",
+
+        }}>
+        {label}
+      </Typography>
+      <TextField
+        fullWidth={fullWidth}
+        value={value}
+        onChange={onChange}
+        sx={{
+          bgcolor: "#ffffff",
+          "& .MuiOutlinedInput-root": {
+            fontFamily: '"Zen Kaku Gothic New", sans-serif',
+            padding: 0, 
+            "& fieldset": {
+              borderColor: "#ddd",
+            },
+            "&.Mui-focused fieldset": {
+              borderColor: "#252e37",
+            },
+            scrollbarWidth: 'none',
+            "&::-webkit-scrollbar": {
+              display: "none",
+            },
+          },
+          "& .MuiInputBase-input": {
+            padding: 2.5, 
+            minHeight: 'auto',
+          },
+        }}
+      />
+    </Stack>
+  );
+  const LabeledTextField = ({ label, value, onChange, ...props }) => (
+    <Stack spacing={1} >     
+      <Typography
+        variant="body1"
+        component="label"
+        sx={{
+          fontFamily: "Zen Kaku Gothic New",
+          color: "#333",
+          fontWeight: "bold",
+          p: 2.5,
+        }}
+      >
+        {label}
+      </Typography>
+      <TextField
+        fullWidth
+        multiline
+        minRows={1}
+        maxRows={4}
+        value={value}
+        getOptionLabel={(option) => option}
+        onChange={onChange}
+        {...props}
+         sx={{
+          bgcolor: "#ffffff",
+          "& .MuiOutlinedInput-root": {
+            fontFamily: '"Zen Kaku Gothic New", sans-serif',
+            padding: 0, 
+            "& fieldset": {
+              borderColor: "#ddd",
+            },
+            "&.Mui-focused fieldset": {
+              borderColor: "#252e37",
+            },
+            scrollbarWidth: 'none',
+            "&::-webkit-scrollbar": {
+              display: "none",
+            },
+          },
+          "& .MuiInputBase-input": {
+            padding: 2.5, 
+            minHeight: 'auto',
+          },
+        }}
+      />
+    </Stack>
+  );
+
 
 export function ProductDialog({ isDialogOpen, setIsRegistered }) {
   const [isOpen, setIsOpen] = useState(isDialogOpen);
@@ -30,10 +126,9 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
   const rawData = sessionStorage.getItem(sessionjsonKey);
   const parse = JSON.parse(rawData);
   const [departmentOptions, setDepartmentOptions] = useState([]);
-  const [selectedDepartments, setSelectedDepartments] = useState([]);
+  const [selectedDepartments, setSelectedDepartments] = useState(parse.department.map((d) => d.departmentName !== "不明" ? d.departmentName : null).filter((name) => name !== null));
   const [productName, setProductName] = useState(parse.issues.Name);
   const [issuesContent, setIssuesContent] = useState(parse.issues.Content);
-
   const [providedOutcome, setProvidedOutcome] = useState(
     `${parse.provided.Why}より、${parse.provided.Outcome}`,
   );
@@ -128,86 +223,7 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
     setSelectedDepartments(newValue);
   };
 
-  const CustomTextField = ({
-    label,
-    value,
-    onChange,
-    typographyVariant = "body1",
-    fullWidth = true,
-  }) => (
-    <Stack spacing={1.625} width={fullWidth ? "100%" : "auto"}>
-      <Typography variant="body1" component="label" sx={{
-          fontFamily:"Hina Mincho",
-          color: "#333",
-        }}>
-        {label}
-      </Typography>
-      <TextField
-        fullWidth={fullWidth}
-        value={value}
-        onChange={onChange}
-        sx={{
-          "& input": { typography: typographyVariant },
-          bgcolor: "#ffffff",
-          "& .MuiOutlinedInput-root": {
-            "& fieldset": {
-              borderColor: "ddd",
-            },
-            "&.Mui-focused fieldset": {
-              borderColor: "#252e37",
-            },
-          },
-        }}
-      />
-    </Stack>
-  );
-  const LabeledTextField = ({ label, value, onChange, ...props }) => (
-    <Stack spacing={1}>
-      
-      <Typography
-        variant="body1"
-        component="label"
-        sx={{
-          fontFamily:"Hina Mincho",
-          color: "#333",
-        }}
-      >
-        {label}
-      </Typography>
-      <TextField
-        fullWidth
-        multiline
-        minRows={1}
-        maxRows={4}
-        value={value}
-        getOptionLabel={(option) => option}
-        onChange={onChange}
-        {...props}
-        sx={{
-          bgcolor: "#ffffff",
-          "& .MuiOutlinedInput-root": {
-            "& fieldset": {
-              borderColor: "#ddd",
-            },
-            "&.Mui-focused fieldset": {
-              borderColor: "#252e37",
-            },
-            '& .MuiInputBase-root': {
-              minHeight: 'auto', 
-            },
-            '& .MuiInputBase-input': {
-              padding: '0', 
-            },
-              scrollbarWidth: 'none',
-            '&::-webkit-scrollbar': {
-              display: 'none', 
-            },
-          },
-        }}
-      />
-    </Stack>
-  );
-
+  
   return (
     <>
       <Dialog
@@ -234,7 +250,8 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
             }
           }}
       >
-          <Stack direction="row" sx={{ mb: 2,px: 4,pt: 3.5, justifyContent: "flex-end" }}>
+          {/* <Stack direction="row" sx={{ mb: 5,px: 5,pt: 5, justifyContent: "flex-end" }}> */}
+          <Stack direction="row" sx={{ mb: 5,px: 10,pt: 10, justifyContent: "flex-end" }}>
             <IconButton
               aria-label="close"
               size="large"
@@ -254,6 +271,7 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
             width: "98%",
             mx: "auto",
             px: 4,
+            pr: 10,
             pb: 6,
             flex: 1, 
             display: "flex",
@@ -262,7 +280,7 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
           }}
         >
 
-          <Stack direction="row" spacing={3} sx={{ flex: 1 }}>
+          <Stack direction="row" spacing={4} sx={{ flex: 1 }}>
             <Box
             id="aaa"
               sx={{
@@ -275,24 +293,40 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
                 pr: 10,
                 pl:8,
                 scrollbarColor: "#B78F00 #D9D9D9",
+                scrollbarWidth: "thin", 
 
+                "&::-webkit-scrollbar": {
+                  width: "4px",           
+                  height: "8px",          // 水平スクロールバーの高さ
+                },
+                "&::-webkit-scrollbar-track": {
+                  backgroundColor: "#D9D9D9", 
+                  borderRadius: "4px",        
+                },
+                "&::-webkit-scrollbar-thumb": {
+                  backgroundColor: "#B78F00", 
+                  borderRadius: "4px",        
+                },
               }}
             >
-              <Stack spacing={7.5} sx={{ px: { xs: 0, md: 2 }}}>
+              <Stack spacing={4} sx={{ px: { xs: 0, md: 2 }}}>
                 <LabeledTextField
                   label="プロダクト名"
                   value={productName}
                   onChange={(e) => setProductName(e.target.value)}
                   typographyVariant="body1"
                 />
-                <Stack spacing={1.625} maxWidth={609}>
+                <Stack spacing={1.5} maxWidth={609}>
                   <Typography
                     variant="body1"
                     component="label"
                     sx={{
-                      fontFamily:"Hina Mincho",
+                      fontFamily: "Zen Kaku Gothic New",
                       color: "#333",
                       letterSpacing: 0,
+                      p: 2.5,
+                      fontWeight: "bold",
+
                     }}
                   >
                     ステークホルダー
@@ -303,18 +337,40 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
                     value={selectedDepartments}
                     onChange={handleChange}
                     sx={{
+                      bgcolor: "#ffffff",
                       "& .MuiOutlinedInput-root": {
+                        fontFamily: '"Zen Kaku Gothic New", sans-serif',
+                        padding: 1.25, 
+                        "& fieldset": {
+                          borderColor: "#ddd",
+                        },
                         "&.Mui-focused fieldset": {
                           borderColor: "#252e37",
                         },
+                        scrollbarWidth: 'none',
+                        "&::-webkit-scrollbar": {
+                          display: "none",
+                        },
+                      },
+                      "& .MuiInputBase-input": {
+                        padding: 3, 
+                        minHeight: 'auto',
                       },
                     }}
+                    // sx={{
+                    //   fontFamily: "Zen Kaku Gothic New",
+                    //   "& .MuiOutlinedInput-root": {
+                    //     "&.Mui-focused fieldset": {
+                    //       borderColor: "#252e37",
+                    //     },
+                    //   },
+                    // }}
                     renderInput={(params) => (
                       <TextField
                         {...params}
                         placeholder="部署名を候補から選択"
                         sx={{
-                          fontFamily:"Hina Mincho",
+                          fontFamily: "Zen Kaku Gothic New",
                           color: "#333",
                         }}
                       />
@@ -350,9 +406,11 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
                   ))}
                 </Grid>
                 <Stack spacing={2.375} maxWidth={572}>
-                  <Typography variant="body1" component="h2" sx={{
-                      fontFamily:"Hina Mincho",
+                  <Typography variant="body1" sx={{
+                      fontFamily: "Zen Kaku Gothic New",
                       color: "#333",
+                      p: 2.5,
+                      fontWeight: "bold",
                     }}>
                     開発メンバー
                   </Typography>
@@ -385,9 +443,12 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
                         alignItems: "center",
                         justifyContent: "center",
                         cursor: "pointer",
+                        "&:hover": {
+                          border: "1px solid #000000",
+                        },
                       }}
                     >
-                      <AddIcon sx={{ fontSize: 28, color: "#252e37" }} />
+                      <AddIcon sx={{ fontSize: 28, color: "#252e37" ,}} />
                     </Box>
                   </Stack>
                 </Stack>
@@ -398,21 +459,27 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
           <Stack
             direction="row"
             justifyContent="center"
-            spacing={5}
+            spacing={10}
             sx={{
               width: "100%",
-              maxWidth: 400,
+              maxWidth: 450,
               mx: "auto",
               alignSelf: "center",
               mt: "auto",
+              pt: 2,
+              pl: 16,
             }}
           >
             <Button
               variant="outlined"
               sx={{
-                minWidth: 91,
+                fontFamily: "Zen Kaku Gothic New",
+                fontSize: '16px',
+                minWidth: 90,
+                padding: 4,
                 color: "#b78f00",
                 fontWeight: "bold",
+                // height: 40,
                 borderColor: "#b78f00",
                 "&:hover": {
                   borderColor: "#b78f00",
@@ -427,7 +494,10 @@ export function ProductDialog({ isDialogOpen, setIsRegistered }) {
               variant="contained"
               color="#b78f00"
               sx={{
-                minWidth: 170,
+                fontFamily: "Zen Kaku Gothic New",
+                fontSize: '16px',
+                padding: 4,
+                minWidth: 210,
                 fontWeight: "bold",
                 bgcolor: "#b78f00",
                 color: "#ffffff",
