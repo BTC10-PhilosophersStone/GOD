@@ -2,7 +2,7 @@ import { Box, Card, Stack, Typography } from "@mui/material";
 import { motion } from "motion/react";
 import "@fontsource/hina-mincho";
 import "@fontsource/zen-kaku-gothic-new";
-export function MessageContent({ role, content }) {
+export function MessageContent({ role, content, isLatest }) {
   const isGod = role === "GOD";
   return (
     <>
@@ -31,43 +31,65 @@ export function MessageContent({ role, content }) {
       </Card> */}
       <Stack spacing={7.75} alignitems="center">
         {isGod ? (
-          // <motion.div
-          //   initial={{ opacity: 0, y: 0 }}
-          //   animate={{ opacity: 1, y: 0 }}
-          //   transition={{ duration: 3, ease: "easeOut" }}
-          // >
-          <Typography
-            component="p"
-            align="center"
-            sx={{
-              fontFamily: "Hina Mincho",
-              fontWeight: 400,
-              fontSize: "16px",
-              lineHeight: "34px",
-              letterSpacing: "5px",
-              mt: "1px",
-              backgroundColor: "none",
-              color: "#252e37",
-              borderRadius: "24px 24px 0 24px",
-              padding: "24px 24px",
-              paddingBottom: "103px",
-              width: "800px",
-              animation: "colorChange 3s ease-in-out",
-              "@keyframes colorChange": {
-                "0%": { color: "#FFFFFF" },
-                "25%": { color: "#FFFFFF" },
-                "50%": { color: "#808080" },
-                "100%": { color: "#252e37" },
-              },
-              whiteSpace: "pre-line",
-            }}
-          >
-            <Box component="span" sx={{ letterSpacing: "0.8px" }}>
-              {content}
-            </Box>
-          </Typography>
+          isLatest ? (
+            <Typography
+              component="p"
+              align="center"
+              sx={{
+                fontFamily: "Hina Mincho",
+                fontWeight: 400,
+                fontSize: "16px",
+                lineHeight: "34px",
+                letterSpacing: "5px",
+                mt: "1px",
+                backgroundColor: "none",
+                color: "#252e37",
+                borderRadius: "24px 24px 0 24px",
+                padding: "24px 24px",
+                paddingBottom: "103px",
+                width: "800px",
+                animation: "colorChange 3s ease-in-out",
+                "@keyframes colorChange": {
+                  "0%": { color: "#FFFFFF" },
+                  "25%": { color: "#FFFFFF" },
+                  "50%": { color: "#808080" },
+                  "100%": { color: "#252e37" },
+                },
+                animationPlayState: "paused",
+                whiteSpace: "pre-line",
+              }}
+            >
+              <Box component="span" sx={{ letterSpacing: "0.8px" }}>
+                {content}
+              </Box>
+            </Typography>
+          ) : (
+            // 過去のGODのメッセージはアニメーション無しで表示（リロード時に消えるのを防ぐため）
+            <Typography
+              component="p"
+              align="center"
+              sx={{
+                fontFamily: "Hina Mincho",
+                fontWeight: 400,
+                fontSize: "16px",
+                lineHeight: "34px",
+                letterSpacing: "5px",
+                mt: "1px",
+                backgroundColor: "none",
+                color: "#252e37",
+                borderRadius: "24px 24px 0 24px",
+                padding: "24px 24px",
+                paddingBottom: "103px",
+                width: "800px",
+                whiteSpace: "pre-line",
+              }}
+            >
+              <Box component="span" sx={{ letterSpacing: "0.8px" }}>
+                {content}
+              </Box>
+            </Typography>
+          )
         ) : (
-          // </motion.div>
           <Typography
             component="p"
             align="justify-content"
@@ -83,12 +105,6 @@ export function MessageContent({ role, content }) {
               borderRadius: "24px 24px 0 24px",
               padding: "24px 24px",
               width: "800px",
-              // animation: "colorChange 2s ease-in-out",
-              // "@keyframes colorChange": {
-              //   "0%": { color: "#FFFFFF" },
-              //   "50%": { color: "#808080" },
-              //   "100%": { color: "white" },
-              // },
               whiteSpace: "pre-line",
             }}
           >

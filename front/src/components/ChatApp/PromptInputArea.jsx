@@ -18,6 +18,7 @@ import {
   productDataAtom,
   isShortProductDataAtom,
   isProductDialogOpenAtom,
+  isLoadingAtom,
 } from "../atoms";
 import { postMessage } from "./api/ChatAppApi";
 import { dataLabels } from "./dataLabels";
@@ -36,6 +37,7 @@ export function PromptInputArea() {
   const setIsProductDialogOpen = useSetAtom(isProductDialogOpenAtom);
   const [question, setQuestion] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [isLoading, setIsLoading] = useAtom(isLoadingAtom);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     multiple: false,
@@ -51,10 +53,17 @@ export function PromptInputArea() {
     },
   });
 
-  const addMessageItem = (role, content) => {
+  const addMessageItem = (role, content, file) => {
     setMessageList((prev) => {
       const maxId = prev[prev.length - 1].id;
-      return [...prev, { id: maxId + 1, role, content }];
+      return [
+        ...prev,
+        {
+          id: maxId + 1,
+          role,
+          content: file ? `${file.name}　を献上いたします。` : content,
+        },
+      ];
     });
   };
   const sessionjsonKey = "productData";
@@ -152,10 +161,6 @@ export function PromptInputArea() {
       loadData();
       return;
     } else {
-      addMessageItem(
-        "GOD",
-        `さすがの神でももう少し情報が欲しいところがある。\n${dataLabels[list[0]] ?? list[0]}はなんじゃ？`,
-      );
       const info = dataLabels[list[0]];
       addMessageItem(
         "GOD",
@@ -169,7 +174,7 @@ export function PromptInputArea() {
   }, [productAtom]);
 
   const handleClick = () => {
-    addMessageItem("user", prompt);
+    addMessageItem("user", prompt, file);
     if (!question) {
       addMessageFromGod(prompt);
     } else {
